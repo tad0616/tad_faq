@@ -1,0 +1,43 @@
+
+a.Q {
+  display: block;
+  margin-left: 0px;
+  height:24px;
+
+  padding: 5px 10px 5px 10px;
+  font-size: 16px;
+  color: rgb(80,80,80);
+  text-decoration: none;
+}
+/*
+
+a.Q:hover {
+  background-color: rgb(240,255,64);
+  color: rgb(255,0,128);
+  border-top: 1px solid #717171;
+  border-left: 1px solid #717171;
+  border-bottom: 1px solid #FFFFFF;
+  border-right: 1px solid #FFFFFF;
+}
+*/
+
+a.unable {
+  color: #B3B3B3;
+}
+
+a.unable:hover {
+  color: red;
+}
+
+
+
+.faq_content {
+  padding: 4px 5px 4px 30px;
+}
+
+.counter {
+  float: right;
+  margin: 10px 10px 5px 10px;
+  font-size: 11pt;
+  color: rgb(180,180,180);
+}

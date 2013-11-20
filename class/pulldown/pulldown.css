@@ -1,0 +1,16 @@
+/* Don't delete anything below here */
+.dhtmlgoodies_contentBox{
+	border:1px solid #317082;
+	height:0px;
+	visibility:hidden;
+	position:absolute;
+	background-color:#E2EBED;
+	overflow:hidden;
+	padding:10px 10px 20px 10px;
+	width:400px;
+
+}
+.dhtmlgoodies_content{
+	position:relative;
+	width:100%;
+	}
