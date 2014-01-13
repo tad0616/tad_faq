@@ -2,33 +2,33 @@
 
 function xoops_module_update_tad_faq(&$module, $old_version) {
     GLOBAL $xoopsDB;
-    
-		if(!chk_chk1()) go_update1();
-		
-		$old_fckeditor=XOOPS_ROOT_PATH."/modules/tad_faq/fckeditor";
-		if(is_dir($old_fckeditor)){
-			delete_directory($old_fckeditor);
-		}
-		
-		
+
+    if(!chk_chk1()) go_update1();
+
+    $old_fckeditor=XOOPS_ROOT_PATH."/modules/tad_faq/fckeditor";
+    if(is_dir($old_fckeditor)){
+      delete_directory($old_fckeditor);
+    }
+
+
     return true;
 }
 
 function chk_chk1(){
-	global $xoopsDB;
-	$sql="select count(`counter`) from ".$xoopsDB->prefix("tad_faq_content");
-	$result=$xoopsDB->query($sql);
-	if(empty($result)) return false;
-	return true;
+  global $xoopsDB;
+  $sql="select count(`counter`) from ".$xoopsDB->prefix("tad_faq_content");
+  $result=$xoopsDB->query($sql);
+  if(empty($result)) return false;
+  return true;
 }
 
 
 function go_update1(){
-	global $xoopsDB;
-	$sql="ALTER TABLE ".$xoopsDB->prefix("tad_faq_content")." ADD `counter` smallint(5) NOT NULL";
-	$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  global $xoopsDB;
+  $sql="ALTER TABLE ".$xoopsDB->prefix("tad_faq_content")." ADD `counter` smallint(5) NOT NULL";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
 
-	return true;
+  return true;
 }
 
 
@@ -46,25 +46,25 @@ function mk_dir($dir=""){
 
 //«þ¨©¥Ø¿ý
 function full_copy( $source="", $target=""){
-	if ( is_dir( $source ) ){
-		@mkdir( $target );
-		$d = dir( $source );
-		while ( FALSE !== ( $entry = $d->read() ) ){
-			if ( $entry == '.' || $entry == '..' ){
-				continue;
-			}
+  if ( is_dir( $source ) ){
+    @mkdir( $target );
+    $d = dir( $source );
+    while ( FALSE !== ( $entry = $d->read() ) ){
+      if ( $entry == '.' || $entry == '..' ){
+        continue;
+      }
 
-			$Entry = $source . '/' . $entry;
-			if ( is_dir( $Entry ) )	{
-				full_copy( $Entry, $target . '/' . $entry );
-				continue;
-			}
-			copy( $Entry, $target . '/' . $entry );
-		}
-		$d->close();
-	}else{
-		copy( $source, $target );
-	}
+      $Entry = $source . '/' . $entry;
+      if ( is_dir( $Entry ) ) {
+        full_copy( $Entry, $target . '/' . $entry );
+        continue;
+      }
+      copy( $Entry, $target . '/' . $entry );
+    }
+    $d->close();
+  }else{
+    copy( $source, $target );
+  }
 }
 
 
@@ -83,36 +83,36 @@ function rename_win($oldfile,$newfile) {
 //°µÁY¹Ï
 function thumbnail($filename="",$thumb_name="",$type="image/jpeg",$width="120"){
 
-	ini_set('memory_limit', '50M');
-	// Get new sizes
-	list($old_width, $old_height) = getimagesize($filename);
+  ini_set('memory_limit', '50M');
+  // Get new sizes
+  list($old_width, $old_height) = getimagesize($filename);
 
-	$percent=($old_width>$old_height)?round($width/$old_width,2):round($width/$old_height,2);
+  $percent=($old_width>$old_height)?round($width/$old_width,2):round($width/$old_height,2);
 
-	$newwidth = ($old_width>$old_height)?$width:$old_width * $percent;
-	$newheight = ($old_width>$old_height)?$old_height * $percent:$width;
+  $newwidth = ($old_width>$old_height)?$width:$old_width * $percent;
+  $newheight = ($old_width>$old_height)?$old_height * $percent:$width;
 
-	// Load
-	$thumb = imagecreatetruecolor($newwidth, $newheight);
-	if($type=="image/jpeg" or $type=="image/jpg" or $type=="image/pjpg" or $type=="image/pjpeg"){
-		$source = imagecreatefromjpeg($filename);
-		$type="image/jpeg";
-	}elseif($type=="image/png"){
-		$source = imagecreatefrompng($filename);
-		$type="image/png";
-	}elseif($type=="image/gif"){
-		$source = imagecreatefromgif($filename);
-		$type="image/gif";
-	}
+  // Load
+  $thumb = imagecreatetruecolor($newwidth, $newheight);
+  if($type=="image/jpeg" or $type=="image/jpg" or $type=="image/pjpg" or $type=="image/pjpeg"){
+    $source = imagecreatefromjpeg($filename);
+    $type="image/jpeg";
+  }elseif($type=="image/png"){
+    $source = imagecreatefrompng($filename);
+    $type="image/png";
+  }elseif($type=="image/gif"){
+    $source = imagecreatefromgif($filename);
+    $type="image/gif";
+  }
 
-	// Resize
-	imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
+  // Resize
+  imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
 
   header("Content-type: image/png");
-	imagepng($thumb,$thumb_name);
+  imagepng($thumb,$thumb_name);
 
-	return;
-	exit;
+  return;
+  exit;
 }
 
 function delete_directory($dirname) {
