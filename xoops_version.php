@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADFAQ_NAME;
-$modversion['version'] = 2.00;
+$modversion['version'] = 2.1;
 $modversion['description'] = _MI_TADFAQ_DESC;
 $modversion['author'] = _MI_TADFAQ_AUTHOR;
 $modversion['credits'] = _MI_TADFAQ_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/11/20';
+$modversion['release_date'] = '2014/01/21';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -45,6 +45,11 @@ $modversion['tables'][2] = "tad_faq_content";
 $modversion['onInstall'] = "include/onInstall.php";
 $modversion['onUpdate'] = "include/onUpdate.php";
 $modversion['onUninstall'] = "include/onUninstall.php";
+
+//---搜尋設定---//
+$modversion['hasSearch'] = 1;
+$modversion['search']['file'] = "include/tad_faq_search.php";
+$modversion['search']['func'] = "tad_faq_search";
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;

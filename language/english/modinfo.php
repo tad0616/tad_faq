@@ -15,8 +15,4 @@ define("_MI_TADFAQ_BDESC1","List all FAQ categories");
 define("_MI_TADFAQ_MODULE_TITLE","Module Title");
 define("_MI_TADFAQ_MODULE_TITLE_DESC","Module Title will display in module front page.");
 define("_MI_TADFAQ_MODULE_TITLE_VAL","FAQ");
-
-//1.2
-define("_MI_TADFAQ_BNAME2","List All FAQ");
-define("_MI_TADFAQ_BDESC2","List All FAQ");
 ?>

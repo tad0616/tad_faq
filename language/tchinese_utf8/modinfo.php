@@ -14,8 +14,4 @@ define("_MI_TADFAQ_BDESC1","會列出所有常見問題的分類");
 define("_MI_TADFAQ_MODULE_TITLE","模組顯示標題");
 define("_MI_TADFAQ_MODULE_TITLE_DESC","會顯示在模組首頁上方的文字");
 define("_MI_TADFAQ_MODULE_TITLE_VAL","常見問題");
-
-//1.2
-define("_MI_TADFAQ_BNAME2","列出所有分類");
-define("_MI_TADFAQ_BDESC2","和常見問題首頁一樣列出所有分類的區塊");
 ?>
