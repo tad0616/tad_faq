@@ -39,14 +39,14 @@
 
       $('.faq_content').hide();
 
-      $('.Q').toggle(function(){
+      $('.QQ').toggle(function(){
         var fqsn=$(this).attr('id');
         $.post('ajax.php', { sn: fqsn}, function(data) {
           $('#counter'+fqsn).html(data);
         });
         $('.faq_content').css("border","none");
         $(this).parent().children('.faq_content').slideDown();
-        $(this).parent().children('.faq_content').slideDown().css("border","3px solid #B5D9EE");
+        $(this).parent().children('.faq_content').slideDown().css("border","3px solid #B5D9EE").css("line-height","1.8");
       },function(){
         $(this).parent().children('.faq_content').slideUp();
       });
@@ -68,7 +68,7 @@
             <{/if}>
             <span id='counter<{$faq.fqsn}>'><{$faq.counter}></span>
           </div>
-          <a name="#<{$faq.fqsn}>" id="<{$faq.fqsn}>" class="Q btn <{if $faq.enable!='1'}> unable<{/if}>" style="text-align:left">
+          <a name="#<{$faq.fqsn}>" id="<{$faq.fqsn}>" class="btn btn-block QQ <{if $faq.enable!='1'}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
           <{if $faq.enable=='1'}>
           <{$n}>.
             <{assign var="n" value=$n+1}>

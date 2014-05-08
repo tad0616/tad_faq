@@ -70,6 +70,9 @@ $modversion['templates'][$i]['description'] = 'tad_faq_adm_power.html';
 $i++;
 $modversion['templates'][$i]['file'] = 'tad_faq_index.html';
 $modversion['templates'][$i]['description'] = 'tad_faq_index.html';
+$i++;
+$modversion['templates'][$i]['file'] = 'tad_faq_adm_sfaq.html';
+$modversion['templates'][$i]['description'] = 'tad_faq_adm_sfaq.html';
 
 
 //---°Ï¶ô³]©w---//
