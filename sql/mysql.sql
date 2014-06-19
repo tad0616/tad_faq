@@ -15,7 +15,7 @@ CREATE TABLE `tad_faq_content` (
   `fcsn` smallint(5) unsigned NOT NULL default 0,
   `title` varchar(255) NOT NULL default '',
   `sort` smallint(5) unsigned NOT NULL default 0,
-  `uid` smallint(5) unsigned NOT NULL default 0,
+  `uid` mediumint(8) unsigned NOT NULL default 0,
   `post_date` varchar(255) NOT NULL default '',
   `content` text NOT NULL,
   `enable` enum('1','0') NOT NULL default '1',
