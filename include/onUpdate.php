@@ -9,6 +9,7 @@ function xoops_module_update_tad_faq(&$module, $old_version) {
     if(is_dir($old_fckeditor)){
       delete_directory($old_fckeditor);
     }
+    if(chk_uid()) go_update_uid();
 
 
     return true;
@@ -31,6 +32,25 @@ function go_update1(){
   return true;
 }
 
+
+//修正uid欄位
+function chk_uid(){
+  global $xoopsDB;
+  $sql="SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
+  WHERE table_name = '".$xoopsDB->prefix("tad_faq_content")."' AND COLUMN_NAME = 'uid'";
+  $result=$xoopsDB->query($sql);
+  list($type)=$xoopsDB->fetchRow($result);
+  if($type=='smallint')return true;
+  return false;
+}
+
+//執行更新
+function go_update_uid(){
+  global $xoopsDB;
+  $sql="ALTER TABLE `".$xoopsDB->prefix("tad_faq_content")."` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+  $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  return true;
+}
 
 //建立目錄
 function mk_dir($dir=""){
