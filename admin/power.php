@@ -1,45 +1,42 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 $xoopsOption['template_main'] = "tad_faq_adm_power.html";
 include_once "header.php";
 include_once "../function.php";
-include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.php";
-include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.admin.php";
-include_once XOOPS_ROOT_PATH.'/class/xoopsform/grouppermform.php';
+include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";
+include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php";
+include_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 $module_id = $xoopsModule->getVar('mid');
 
-$jquery_path=get_jquery(true);  //TadTools¤Þ¤Jjquery ui
+$jquery_path = get_jquery(true); //TadToolså¼•å…¥jquery ui
 $xoopsTpl->assign('jquery_path', $jquery_path);
 
+//æŠ“å–æ‰€æœ‰è³‡æ–™å¤¾
 
-//§ì¨ú©Ò¦³¸ê®Æ§¨
-
-$sql = "select fcsn,title from ".$xoopsDB->prefix("tad_faq_cate");
-$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-while(list($fcsn,$title)=$xoopsDB->fetchRow($result)){
-	$item_list[$fcsn]=$title;
+$sql    = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate");
+$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
+    $item_list[$fcsn] = $title;
 }
 
-$perm_desc="";
-$formi = new XoopsGroupPermForm("", $module_id, 'faq_read',$perm_desc);
+$perm_desc = "";
+$formi     = new XoopsGroupPermForm("", $module_id, 'faq_read', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
-	$formi->addItem($item_id, $item_name);
+    $formi->addItem($item_id, $item_name);
 }
 
-$main1=$formi->render();
+$main1 = $formi->render();
 $xoopsTpl->assign('main1', $main1);
 
-
-$formi = new XoopsGroupPermForm("", $module_id, 'faq_edit',$perm_desc);
+$formi = new XoopsGroupPermForm("", $module_id, 'faq_edit', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
-	$formi->addItem($item_id, $item_name);
+    $formi->addItem($item_id, $item_name);
 }
 
-$main2=$formi->render();
+$main2 = $formi->render();
 $xoopsTpl->assign('main2', $main2);
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 include_once 'footer.php';
-?>

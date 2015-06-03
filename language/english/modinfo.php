@@ -3,7 +3,7 @@ include_once XOOPS_ROOT_PATH . "/modules/tadtools/language/{$xoopsConfig['langua
 
 define('_MI_TADFAQ_NAME', 'FAQ');
 define('_MI_TADFAQ_AUTHOR', 'Tad(tad0616@gmail.com)');
-define('_MI_TADFAQ_CREDITS', '');
+define('_MI_TADFAQ_CREDITS', 'Michael Beck');
 define('_MI_TADFAQ_DESC', 'FAQ Module');
 define('_MI_TADFAQ_ADMENU1', 'Categories');
 define('_MI_TADFAQ_ADMENU2', 'Permission');
@@ -21,4 +21,3 @@ define('_MI_TADFAQ_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
 define('_MI_TADFAQ_HELP_OVERVIEW', 'Overview');
-
