@@ -142,8 +142,10 @@ function get_max_sort()
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = !isset($_REQUEST['op']) ? "" : $_REQUEST['op'];
-$fcsn = !isset($_REQUEST['fcsn']) ? "" : intval($_REQUEST['fcsn']);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
+$fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
 
 switch ($op) {
 

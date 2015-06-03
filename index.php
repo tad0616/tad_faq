@@ -228,9 +228,10 @@ function get_max_faq_sort($fcsn = "")
 }
 
 /*-----------執行動作判斷區----------*/
-$op   = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$fcsn = (empty($_REQUEST['fcsn'])) ? "" : intval($_REQUEST['fcsn']);
-$fqsn = (empty($_REQUEST['fqsn'])) ? "" : intval($_REQUEST['fqsn']);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op   = system_CleanVars($_REQUEST, 'op', '', 'string');
+$fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
+$fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
 
 switch ($op) {
 
