@@ -1,7 +1,7 @@
 <?php
 $modversion = array();
 
-//---¼Ò²Õ°ò¥»¸ê°T---//
+//---æ¨¡çµ„åŸºæœ¬è³‡è¨Š---//
 $modversion['name']        = _MI_TADFAQ_NAME;
 $modversion['version']     = 2.3;
 $modversion['description'] = _MI_TADFAQ_DESC;
@@ -13,7 +13,7 @@ $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
 $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
-//---¼Ò²Õª¬ºA¸ê°T---//
+//---æ¨¡çµ„ç‹€æ…‹è³‡è¨Š---//
 $modversion['release_date']        = '2014/09/25';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
@@ -24,40 +24,40 @@ $modversion['min_php']             = 5.2;
 $modversion['min_xoops']           = '2.5';
 $modversion['min_tadtools']        = '2.02';
 
-//---paypal¸ê°T---//
+//---paypalè³‡è¨Š---//
 $modversion['paypal']                  = array();
 $modversion['paypal']['business']      = 'tad0616@gmail.com';
 $modversion['paypal']['item_name']     = 'Donation : ' . _MI_TAD_WEB;
 $modversion['paypal']['amount']        = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
-//---±Ò°Ê«á¥xºÞ²z¬É­±¿ï³æ---//
+//---å•Ÿå‹•å¾Œå°ç®¡ç†ç•Œé¢é¸å–®---//
 $modversion['system_menu'] = 1;
 
-//---¸ê®Æªí¬[ºc---//
+//---è³‡æ–™è¡¨æž¶æ§‹---//
 $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1]        = "tad_faq_cate";
 $modversion['tables'][2]        = "tad_faq_content";
 
-//---¦w¸Ë³]©w---//
+//---å®‰è£è¨­å®š---//
 $modversion['onInstall']   = "include/onInstall.php";
 $modversion['onUpdate']    = "include/onUpdate.php";
 $modversion['onUninstall'] = "include/onUninstall.php";
 
-//---·j´M³]©w---//
+//---æœå°‹è¨­å®š---//
 $modversion['hasSearch']      = 1;
 $modversion['search']['file'] = "include/tad_faq_search.php";
 $modversion['search']['func'] = "tad_faq_search";
 
-//---ºÞ²z¤¶­±³]©w---//
+//---ç®¡ç†ä»‹é¢è¨­å®š---//
 $modversion['hasAdmin']   = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu']  = "admin/menu.php";
 
-//---¨Ï¥ÎªÌ¥D¿ï³æ³]©w---//
+//---ä½¿ç”¨è€…ä¸»é¸å–®è¨­å®š---//
 $modversion['hasMain'] = 1;
 
-//---¼ËªO³]©w---//
+//---æ¨£æ¿è¨­å®š---//
 $modversion['templates']                    = array();
 $i                                          = 1;
 $modversion['templates'][$i]['file']        = 'tad_faq_adm_main.html';
@@ -72,14 +72,14 @@ $i++;
 $modversion['templates'][$i]['file']        = 'tad_faq_adm_sfaq.html';
 $modversion['templates'][$i]['description'] = 'tad_faq_adm_sfaq.html';
 
-//---°Ï¶ô³]©w---//
+//---å€å¡Šè¨­å®š---//
 $modversion['blocks'][1]['file']        = "tad_faq_block.php";
 $modversion['blocks'][1]['name']        = _MI_TADFAQ_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADFAQ_BDESC1;
 $modversion['blocks'][1]['show_func']   = "tad_faq_show";
 $modversion['blocks'][1]['template']    = "tad_faq_block.html";
 
-//---°¾¦n³]©w---//
+//---åå¥½è¨­å®š---//
 $modversion['config'][0]['name']        = 'module_title';
 $modversion['config'][0]['title']       = '_MI_TADFAQ_MODULE_TITLE';
 $modversion['config'][0]['description'] = '_MI_TADFAQ_MODULE_TITLE_DESC';

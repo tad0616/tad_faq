@@ -84,9 +84,9 @@ function mk_dir($dir = "")
 function full_copy($source = "", $target = "")
 {
     if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
+        mkdir($target);
+        $dir = dir($source);
+        while (false !== ($entry = $dir->read())) {
             if ($entry == '.' || $entry == '..') {
                 continue;
             }
@@ -98,7 +98,7 @@ function full_copy($source = "", $target = "")
             }
             copy($Entry, $target . '/' . $entry);
         }
-        $d->close();
+        $dir->close();
     } else {
         copy($source, $target);
     }
@@ -120,7 +120,7 @@ function rename_win($oldfile, $newfile)
 function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
 {
 
-    ini_set('memory_limit', '50M');
+    //ini_set('memory_limit', '50M');
     // Get new sizes
     list($old_width, $old_height) = getimagesize($filename);
 
@@ -149,7 +149,6 @@ function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $widt
     imagepng($thumb, $thumb_name);
 
     return;
-    exit;
 }
 
 function delete_directory($dirname)

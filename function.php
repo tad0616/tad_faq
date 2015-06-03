@@ -1,125 +1,138 @@
 <?php
-//¤Þ¤JTadToolsªº¨ç¦¡®w
-if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php")){
- redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
+//å¼•å…¥TadToolsçš„å‡½å¼åº«
+if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
+    redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
+include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 include_once "function_block.php";
 
-//¥H¬y¤ô¸¹¨ú±o¬Yµ§tad_faq_cate¸ê®Æ
-function get_tad_faq_cate($fcsn=""){
-  global $xoopsDB;
-  if(empty($fcsn))return;
-  $sql = "select * from ".$xoopsDB->prefix("tad_faq_cate")." where fcsn='$fcsn'";
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  $data=$xoopsDB->fetchArray($result);
-  return $data;
-}
-
-//¥H¬y¤ô¸¹¨ú±o¬Yµ§tad_faq_content¸ê®Æ
-function get_tad_faq_content($fqsn=""){
-  global $xoopsDB;
-  if(empty($fqsn))return;
-  $sql = "select * from ".$xoopsDB->prefix("tad_faq_content")." where fqsn='$fqsn'";
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  $data=$xoopsDB->fetchArray($result);
-  return $data;
-}
-
-
-//·s¼W¸ê®Æ¨ìtad_faq_cate¤¤
-function insert_tad_faq_cate($new_title=""){
-  global $xoopsDB;
-
-  $myts = MyTextSanitizer::getInstance();
-  $title=$new_title?$myts->addSlashes($new_title):$myts->addSlashes($_POST['title']);
-  $_POST['description']=$myts->addSlashes($_POST['description']);
-
-  $sql = "insert into ".$xoopsDB->prefix("tad_faq_cate")." (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$_POST['of_fcsn']}','{$title}','{$_POST['description']}','{$_POST['sort']}','{$_POST['cate_pic']}')";
-  $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-  //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
-  $fcsn=$xoopsDB->getInsertId();
-
-  $faq_read=empty($_POST['faq_read'])?array(1,2,3):$_POST['faq_read'];
-  $faq_edit=empty($_POST['faq_edit'])?array(1):$_POST['faq_edit'];
-
-  //¼g¤JÅv­­
-  saveItem_Permissions($faq_read, $fcsn, 'faq_read');
-  saveItem_Permissions($faq_edit, $fcsn, 'faq_edit');
-  return $fcsn;
-}
-
-
-//Àx¦sÅv­­
-function saveItem_Permissions($groups, $itemid, $perm_name) {
-  global $xoopsModule;
-  $module_id = $xoopsModule->getVar('mid');
-  $gperm_handler =& xoops_gethandler('groupperm');
-
-  // First, if the permissions are already there, delete them
-  $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
-
-  // Save the new permissions
-  if (count($groups) > 0) {
-    foreach ($groups as $group_id) {
-      $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+//ä»¥æµæ°´è™Ÿå–å¾—æŸç­†tad_faq_cateè³‡æ–™
+function get_tad_faq_cate($fcsn = "")
+{
+    global $xoopsDB;
+    if (empty($fcsn)) {
+        return;
     }
-  }
+
+    $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " where fcsn='$fcsn'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $data   = $xoopsDB->fetchArray($result);
+    return $data;
 }
 
+//ä»¥æµæ°´è™Ÿå–å¾—æŸç­†tad_faq_contentè³‡æ–™
+function get_tad_faq_content($fqsn = "")
+{
+    global $xoopsDB;
+    if (empty($fqsn)) {
+        return;
+    }
 
-//ÀË¬d¦³µLÅv­­
-function check_power($kind="faq_read",$fcsn=""){
-    global $xoopsUser,$xoopsModule,$isAdmin;
+    $sql    = "select * from " . $xoopsDB->prefix("tad_faq_content") . " where fqsn='$fqsn'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $data   = $xoopsDB->fetchArray($result);
+    return $data;
+}
 
-    //¨ú±o¥Ø«e¨Ï¥ÎªÌªº¸s²Õ½s¸¹
-    if($xoopsUser) {
-      $uid=$xoopsUser->getVar('uid');
-      $groups=$xoopsUser->getGroups();
-    }else{
-      $uid=0;
-      $groups = XOOPS_GROUP_ANONYMOUS;
+//æ–°å¢žè³‡æ–™åˆ°tad_faq_cateä¸­
+function insert_tad_faq_cate($new_title = "")
+{
+    global $xoopsDB;
+
+    $myts                 = MyTextSanitizer::getInstance();
+    $title                = $new_title ? $myts->addSlashes($new_title) : $myts->addSlashes($_POST['title']);
+    $_POST['description'] = $myts->addSlashes($_POST['description']);
+
+    $sql = "insert into " . $xoopsDB->prefix("tad_faq_cate") . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$_POST['of_fcsn']}','{$title}','{$_POST['description']}','{$_POST['sort']}','{$_POST['cate_pic']}')";
+    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    //å–å¾—æœ€å¾Œæ–°å¢žè³‡æ–™çš„æµæ°´ç·¨è™Ÿ
+    $fcsn = $xoopsDB->getInsertId();
+
+    $faq_read = empty($_POST['faq_read']) ? array(1, 2, 3) : $_POST['faq_read'];
+    $faq_edit = empty($_POST['faq_edit']) ? array(1) : $_POST['faq_edit'];
+
+    //å¯«å…¥æ¬Šé™
+    saveItem_Permissions($faq_read, $fcsn, 'faq_read');
+    saveItem_Permissions($faq_edit, $fcsn, 'faq_edit');
+    return $fcsn;
+}
+
+//å„²å­˜æ¬Šé™
+function saveItem_Permissions($groups, $itemid, $perm_name)
+{
+    global $xoopsModule;
+    $module_id     = $xoopsModule->getVar('mid');
+    $gperm_handler = &xoops_gethandler('groupperm');
+
+    // First, if the permissions are already there, delete them
+    $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
+
+    // Save the new permissions
+    if (count($groups) > 0) {
+        foreach ($groups as $group_id) {
+            $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+        }
+    }
+}
+
+//æª¢æŸ¥æœ‰ç„¡æ¬Šé™
+function check_power($kind = "faq_read", $fcsn = "")
+{
+    global $xoopsUser, $xoopsModule, $isAdmin;
+
+    //å–å¾—ç›®å‰ä½¿ç”¨è€…çš„ç¾¤çµ„ç·¨è™Ÿ
+    if ($xoopsUser) {
+        $uid    = $xoopsUser->getVar('uid');
+        $groups = $xoopsUser->getGroups();
+    } else {
+        $uid    = 0;
+        $groups = XOOPS_GROUP_ANONYMOUS;
     }
 
     //if(!$isAdmin ) return false;
 
-    //¨ú±o¼Ò²Õ½s¸¹
+    //å–å¾—æ¨¡çµ„ç·¨è™Ÿ
     $module_id = $xoopsModule->getVar('mid');
 
-    //¨ú±o¸s²ÕÅv­­¥\¯à
-    $gperm_handler =& xoops_gethandler('groupperm');
+    //å–å¾—ç¾¤çµ„æ¬Šé™åŠŸèƒ½
+    $gperm_handler = &xoops_gethandler('groupperm');
 
-    //Åv­­¶µ¥Ø½s¸¹
+    //æ¬Šé™é …ç›®ç·¨è™Ÿ
     $perm_itemid = intval($fcsn);
-    //¨Ì¾Ú¸Ó¸s²Õ¬O§_¹ï¸ÓÅv­­¶µ¥Ø¦³¨Ï¥ÎÅv¤§§PÂ_ ¡A°µ¤£¦P¤§³B²z
+    //ä¾æ“šè©²ç¾¤çµ„æ˜¯å¦å°è©²æ¬Šé™é …ç›®æœ‰ä½¿ç”¨æ¬Šä¹‹åˆ¤æ–· ï¼Œåšä¸åŒä¹‹è™•ç†
 
-    if(empty($fcsn)){
-      if($kind=="faq_read"){
-        return true;
-      }else{
-        if($isAdmin) return true;
-      }
-    }else{
-      if($gperm_handler->checkRight($kind, $fcsn, $groups, $module_id) or $isAdmin) return true;
+    if (empty($fcsn)) {
+        if ($kind == "faq_read") {
+            return true;
+        } else {
+            if ($isAdmin) {
+                return true;
+            }
+
+        }
+    } else {
+        if ($gperm_handler->checkRight($kind, $fcsn, $groups, $module_id) or $isAdmin) {
+            return true;
+        }
+
     }
 
     return false;
 }
 
+//åˆ¤æ–·æŸé¡žåˆ¥ä¸­æœ‰å“ªäº›è§€çœ‹æˆ–ç™¼è¡¨çš„ç¾¤çµ„ $mode=name or id
+function get_cate_enable_group($kind = "", $fcsn = "", $mode = "id")
+{
+    global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
+    $module_id = $xoopsModule->getVar('mid');
 
-//§PÂ_¬YÃþ§O¤¤¦³­þ¨ÇÆ[¬Ý©Îµoªíªº¸s²Õ $mode=name or id
-function get_cate_enable_group($kind="",$fcsn="",$mode="id"){
-  global $xoopsDB,$xoopsUser,$xoopsModule,$isAdmin;
-  $module_id = $xoopsModule->getVar('mid');
+    $sql = "select a.gperm_groupid,b.name from " . $xoopsDB->prefix("group_permission") . " as a left join " . $xoopsDB->prefix("groups") . " as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
 
-  $sql = "select a.gperm_groupid,b.name from ".$xoopsDB->prefix("group_permission")." as a left join ".$xoopsDB->prefix("groups")." as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
 
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+    while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
+        $ok_group[] = $mode == 'name' ? $name : $gperm_groupid;
+    }
 
-  while(list($gperm_groupid,$name)=$xoopsDB->fetchRow($result)){
-    $ok_group[]=$mode=='name'?$name:$gperm_groupid;
-  }
-
-  return $ok_group;
+    return $ok_group;
 }
-?>

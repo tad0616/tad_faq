@@ -2,15 +2,14 @@
 include_once "../../mainfile.php";
 include_once "function.php";
 
-//§PÂ_¬O§_¹ï¸Ó¼Ò²Õ¦³ºÞ²zÅv­­
-$isAdmin=false;
+//åˆ¤æ–·æ˜¯å¦å°è©²æ¨¡çµ„æœ‰ç®¡ç†æ¬Šé™
+$isAdmin = false;
 if ($xoopsUser) {
     $module_id = $xoopsModule->getVar('mid');
-    $isAdmin=$xoopsUser->isAdmin($module_id);
+    $isAdmin   = $xoopsUser->isAdmin($module_id);
 }
 
-$interface_menu[_TAD_TO_MOD]="index.php";
-if($isAdmin){
-  $interface_menu[_TAD_TO_ADMIN]="admin/main.php";
+$interface_menu[_TAD_TO_MOD] = "index.php";
+if ($isAdmin) {
+    $interface_menu[_TAD_TO_ADMIN] = "admin/main.php";
 }
-?>
