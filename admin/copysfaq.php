@@ -26,7 +26,7 @@ function list_faq()
 
     //轉移權限(原權限)
     $sql    = "SELECT gperm_groupid,gperm_itemid,gperm_name FROM `" . $xoopsDB->prefix("group_permission") . "` WHERE `gperm_modid` ='{$mod_id}' ";
-    $result = $xoopsDB->queryF($sql) or die($sql);
+    $result = $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
@@ -35,13 +35,13 @@ function list_faq()
     $mid = $xoopsModule->getVar('mid');
     $sql = "SELECT gperm_groupid,gperm_itemid,gperm_name FROM `" . $xoopsDB->prefix("group_permission") . "` WHERE `gperm_modid` ='{$mid}' ";
 
-    $result = $xoopsDB->queryF($sql) or die($sql);
+    $result = $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
     $sql    = "select * from `" . $xoopsDB->prefix("smartfaq_categories") . "`";
-    $result = $xoopsDB->query($sql) or die($sql);
+    $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
 
     $all_content = "";
     $i           = 0;
@@ -70,12 +70,12 @@ function list_faq()
     $xoopsTpl->assign('bar', $bar);
 }
 
-function get_faq_number($categoryid)
+function get_faq_number($categoryid = "")
 {
-    global $xoopsDB, $xoopsUser;
+    global $xoopsDB;
 
     $sql      = "select count(*) from `" . $xoopsDB->prefix("tad_faq_content") . "` where fcsn ='$categoryid'";
-    $result   = $xoopsDB->query($sql) or die($sql);
+    $result   = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     list($sn) = $xoopsDB->fetchRow($result);
     return $sn;
 }
@@ -85,7 +85,7 @@ function chkcopy($forum_id)
     global $xoopsDB, $xoopsUser;
 
     $sql      = "select categoryid from `" . $xoopsDB->prefix("tad_faq_board") . "` where categoryid ='$forum_id'";
-    $result   = $xoopsDB->query($sql) or die($sql);
+    $result   = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     list($sn) = $xoopsDB->fetchRow($result);
     return $sn;
 }
@@ -97,7 +97,7 @@ function copyfaq($categoryid = "")
 
     $where_categoryid = empty($categoryid) ? "" : "where categoryid ='$categoryid'";
     $sql              = "select * from `" . $xoopsDB->prefix("smartfaq_categories") . "` $where_categoryid";
-    $result           = $xoopsDB->query($sql) or die($sql);
+    $result           = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     $myts             = MyTextSanitizer::getInstance();
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
@@ -111,7 +111,7 @@ function copyfaq($categoryid = "")
         $sql = "replace into `" . $xoopsDB->prefix("tad_faq_cate") . "`
     (`fcsn`, `of_fcsn` ,`title` , `description` , `sort`)
     values('{$categoryid}' , '{$parentid}' ,  '{$name}' , '{$description}' , '{$weight}')";
-        $xoopsDB->queryF($sql) or die($sql);
+        $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     }
     return $categoryid;
 }
@@ -122,11 +122,11 @@ function tad_faq_cate_exist($categoryid)
     global $xoopsDB;
 
     $sql         = "select title from `" . $xoopsDB->prefix("tad_faq_cate") . "` where `fcsn`='$categoryid'";
-    $result      = $xoopsDB->query($sql) or die($sql);
+    $result      = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     list($title) = $xoopsDB->fetchRow($result);
     if (!empty($title)) {
         $sql         = "select count(*) from `" . $xoopsDB->prefix("smartfaq_faq") . "` where `categoryid`='$categoryid'";
-        $result      = $xoopsDB->query($sql) or die($sql);
+        $result      = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
         list($count) = $xoopsDB->fetchRow($result);
         return $count;
     }
@@ -140,7 +140,7 @@ function listfaq($categoryid = '')
 
     $where_categoryid = empty($categoryid) ? "" : "where a.categoryid ='$categoryid'";
     $sql              = "select a.* , b.answer from `" . $xoopsDB->prefix("smartfaq_faq") . "` as a left join `" . $xoopsDB->prefix("smartfaq_answers") . "` as b on a.faqid=b.faqid $where_categoryid";
-    $result           = $xoopsDB->query($sql) or die($sql);
+    $result           = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     $myts             = MyTextSanitizer::getInstance();
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
@@ -167,7 +167,7 @@ function import_faq($categoryid = '')
 
     $where_categoryid = empty($categoryid) ? "" : "where a.categoryid ='$categoryid'";
     $sql              = "select a.* , b.answer from `" . $xoopsDB->prefix("smartfaq_faq") . "` as a left join `" . $xoopsDB->prefix("smartfaq_answers") . "` as b on a.faqid=b.faqid $where_categoryid";
-    $result           = $xoopsDB->query($sql) or die($sql);
+    $result           = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
     $myts             = MyTextSanitizer::getInstance();
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
@@ -183,7 +183,7 @@ function import_faq($categoryid = '')
         $sql = "replace into `" . $xoopsDB->prefix("tad_faq_content") . "`
     (`fqsn`, `fcsn`, `title`, `sort`, `uid`, `post_date`, `content`, `enable`, `counter`)
     values('{$faqid}' , '{$categoryid}' ,  '{$question}' , '{$weight}' , '{$uid}' , '{$datesub}' , '{$answer}' , '1' , '{$counter}')";
-        $xoopsDB->queryF($sql) or die($sql);
+        $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     }
 
 }
