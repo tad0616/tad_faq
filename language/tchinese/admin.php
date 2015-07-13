@@ -11,3 +11,4 @@ define('_MA_TADFAQ_SET_ACCESS_POWER', '請設定各個群組可讀取的分類');
 define('_MA_TADFAQ_SET_EDIT_POWER', '請設定各個群組可寫入的分類');
 define('_MA_TADFAQ_ACCESS_POWER', '可讀取此分類的群組');
 define('_MA_TADFAQ_EDIT_POWER', '可寫入此分類的群組');
+define('_MA_TADFAQ_NO_SFAQ', '沒有安裝 SmartFAQ 模組，無須轉移。');

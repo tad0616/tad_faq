@@ -1,3 +1,9 @@
+Tad FAQ Version 2.4（released 2015-07-13）
+=====================================================
+1. Thanks Michael Beck in English language
+2. Modify the PHP code to conform to specifications PSR2
+3. Modify the display layout
+
 Tad FAQ Version 2.3 (released 2014-09-25)
 ================================================== ===
 1. Adjust button style, so that it can accommodate longer text title

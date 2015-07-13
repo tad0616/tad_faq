@@ -189,9 +189,10 @@ function import_faq($categoryid = '')
 }
 
 /*-----------執行動作判斷區----------*/
-$op         = empty($_REQUEST['op']) ? "" : $_REQUEST['op'];
-$categoryid = empty($_REQUEST['categoryid']) ? "" : intval($_REQUEST['categoryid']);
-$fcsn       = empty($_REQUEST['fcsn']) ? "" : intval($_REQUEST['fcsn']);
+include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+$op         = system_CleanVars($_REQUEST, 'op', '', 'string');
+$categoryid = system_CleanVars($_REQUEST, 'categoryid', 0, 'int');
+$fcsn       = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/
@@ -200,6 +201,7 @@ switch ($op) {
     case "copyfaq":
         copyfaq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //
@@ -210,6 +212,7 @@ switch ($op) {
     case "import_faq":
         import_faq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //預設動作

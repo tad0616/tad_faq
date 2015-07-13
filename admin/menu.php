@@ -21,6 +21,12 @@ $adminmenu[$i]['desc']  = _MI_TADFAQ_ADMENU2;
 $adminmenu[$i]['icon']  = "images/admin/translations.png";
 
 $i++;
+$adminmenu[$i]['title'] = _MI_TADFAQ_ADMENU3;
+$adminmenu[$i]['link']  = "admin/copysfaq.php";
+$adminmenu[$i]['desc']  = _MI_TADFAQ_ADMENU3;
+$adminmenu[$i]['icon']  = "images/admin/copy.png";
+
+$i++;
 $adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
 $adminmenu[$i]['desc']  = _MI_TAD_ADMIN_ABOUT_DESC;

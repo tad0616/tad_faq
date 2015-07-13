@@ -53,12 +53,12 @@ function tad_faq_cate_form($fcsn = "")
 
     //可見群組
     $SelectGroup_name = new XoopsFormSelectGroup("", "faq_read", true, $read_group, 6, true);
-    $SelectGroup_name->setExtra("class='span12'");
+    $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_read_group = $SelectGroup_name->render();
 
     //可上傳群組
     $SelectGroup_name = new XoopsFormSelectGroup("", "faq_edit", true, $post_group, 6, true);
-    $SelectGroup_name->setExtra("class='span12'");
+    $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_edit_group = $SelectGroup_name->render();
 
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/ck.php")) {
@@ -153,6 +153,7 @@ switch ($op) {
     case "insert_tad_faq_cate":
         insert_tad_faq_cate();
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //輸入表格
@@ -164,12 +165,14 @@ switch ($op) {
     case "delete_tad_faq_cate";
         delete_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //更新資料
     case "update_tad_faq_cate";
         update_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
+        exit;
         break;
 
     //預設動作

@@ -7,6 +7,7 @@ define('_MI_TADFAQ_CREDITS', 'Michael Beck');
 define('_MI_TADFAQ_DESC', '問與答（常見問題）模組');
 define('_MI_TADFAQ_ADMENU1', '類別管理');
 define('_MI_TADFAQ_ADMENU2', '細部權限設定');
+define('_MI_TADFAQ_ADMENU3', '轉移SmartFAQ資料');
 define('_MI_TADFAQ_BNAME1', '本站常見問題');
 define('_MI_TADFAQ_BDESC1', '會列出所有常見問題的分類');
 

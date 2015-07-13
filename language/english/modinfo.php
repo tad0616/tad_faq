@@ -7,6 +7,7 @@ define('_MI_TADFAQ_CREDITS', 'Michael Beck');
 define('_MI_TADFAQ_DESC', 'FAQ Module');
 define('_MI_TADFAQ_ADMENU1', 'Categories');
 define('_MI_TADFAQ_ADMENU2', 'Permission');
+define('_MI_TADFAQ_ADMENU3', 'Copy from SmartFAQ');
 define('_MI_TADFAQ_BNAME1', 'FAQ');
 define('_MI_TADFAQ_BDESC1', 'List all FAQ categories');
 

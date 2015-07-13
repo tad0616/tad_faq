@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = "tad_faq_index.html";
+$xoopsOption['template_main'] = set_bootstrap("tad_faq_index.html");
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
@@ -34,8 +34,9 @@ function list_all()
         } else {
             $img = '001_60.gif';
         }
-        $num                 = (empty($counter[$fcsn])) ? 0 : $counter[$fcsn];
-        $data[$i]['num']     = sprintf(_MD_TADFAQ_FAQ_NUM, $num);
+        $num = (empty($counter[$fcsn])) ? 0 : $counter[$fcsn];
+        //$data[$i]['num']     = sprintf(_MD_TADFAQ_FAQ_NUM, $num);
+        $data[$i]['num']     = $num;
         $data[$i]['fcsn']    = $fcsn;
         $data[$i]['img']     = $img;
         $data[$i]['title']   = $title;
@@ -238,24 +239,28 @@ switch ($op) {
     case "update_status":
         update_status($fqsn, $_GET['enable']);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
+        exit;
         break;
 
     //刪除資料
     case "delete_tad_faq_content":
         delete_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
+        exit;
         break;
 
     //新增資料
     case "insert_tad_faq_content":
         $fcsn = insert_tad_faq_content();
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
+        exit;
         break;
 
     //更新資料
     case "update_tad_faq_content":
         $fcsn = update_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
+        exit;
         break;
 
     case "tad_faq_content_form":
@@ -272,7 +277,6 @@ switch ($op) {
 }
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("bootstrap", get_bootstrap());
 $xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 include_once XOOPS_ROOT_PATH . '/footer.php';
