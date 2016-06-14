@@ -18,7 +18,7 @@ function list_all()
     $counter = get_cate_count();
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
     $i    = 3;
@@ -67,7 +67,7 @@ function list_faq($fcsn = "")
     $now_uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_content") . " where fcsn='$fcsn' order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $i      = 1;
     while (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result)) {
 
@@ -101,7 +101,7 @@ function delete_tad_faq_content($fqsn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_faq_content") . " where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 //啟動或關閉
@@ -109,7 +109,7 @@ function update_status($fqsn = "", $enable = "")
 {
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_faq_content") . " set enable='{$enable}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 //分類選單
@@ -119,7 +119,7 @@ function get_faq_cate_opt($the_fcsn = "")
     $opt       = "";
     $edit_fcsn = chk_faq_cate_power("faq_edit");
     $sql       = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result    = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result    = $xoopsDB->query($sql) or web_error($sql);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? "selected" : "";
         if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
@@ -193,7 +193,7 @@ function insert_tad_faq_content()
     $sort = get_max_faq_sort($_POST['fcsn']);
     $now  = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql  = "insert into " . $xoopsDB->prefix("tad_faq_content") . " (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) values('{$fcsn}','{$_POST['title']}','{$sort}','{$uid}','{$now}','{$_POST['content']}','{$_POST['enable']}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
 
     return $fcsn;
 }
@@ -215,7 +215,7 @@ function update_tad_faq_content($fqsn = "")
 
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "update " . $xoopsDB->prefix("tad_faq_content") . " set  `fcsn` = '{$fcsn}', `title` = '{$_POST['title']}', `post_date` = '{$now}', `content` = '{$_POST['content']}', `enable` = '{$_POST['enable']}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return $fcsn;
 }
 
@@ -224,7 +224,7 @@ function get_max_faq_sort($fcsn = "")
 {
     global $xoopsDB, $xoopsModule;
     $sql        = "select max(sort) from " . $xoopsDB->prefix("tad_faq_content") . " where fcsn='{$fcsn}'";
-    $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result     = $xoopsDB->query($sql) or web_error($sql);
     list($sort) = $xoopsDB->fetchRow($result);
     return ++$sort;
 }

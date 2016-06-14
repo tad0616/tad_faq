@@ -10,7 +10,7 @@ function tad_faq_show($options)
     $counter = get_cate_count();
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $content = "";
     $i       = 0;
@@ -28,10 +28,7 @@ function tad_faq_show($options)
 
     }
 
-    $block['content']           = $content;
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+    $block['content'] = $content;
 
     return $block;
 }

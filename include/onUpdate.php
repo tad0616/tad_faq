@@ -76,7 +76,7 @@ function go_update1()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_faq_content") . " ADD `counter` smallint(5) NOT NULL";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     return true;
 }
@@ -101,7 +101,7 @@ function go_update_uid()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_faq_content") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }
 

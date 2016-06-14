@@ -83,7 +83,7 @@ function list_tad_faq_cate()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
     $i    = 0;
@@ -111,7 +111,7 @@ function update_tad_faq_cate($fcsn = "")
 {
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_faq_cate") . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$_POST['title']}', `description` = '{$_POST['description']}', `cate_pic` = '{$_POST['cate_pic']}' where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $faq_read = empty($_POST['faq_read']) ? array(1, 2, 3) : $_POST['faq_read'];
     $faq_edit = empty($_POST['faq_edit']) ? array(1) : $_POST['faq_edit'];
@@ -128,7 +128,7 @@ function delete_tad_faq_cate($fcsn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_faq_cate") . " where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 }
 
 //自動取得新排序
@@ -136,7 +136,7 @@ function get_max_sort()
 {
     global $xoopsDB, $xoopsModule;
     $sql        = "select max(sort) from " . $xoopsDB->prefix("tad_faq_cate") . " where of_fcsn=''";
-    $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result     = $xoopsDB->query($sql) or web_error($sql);
     list($sort) = $xoopsDB->fetchRow($result);
     return ++$sort;
 }

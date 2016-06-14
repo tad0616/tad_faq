@@ -1,29 +1,36 @@
-Tad FAQ Version 2.4（released 2015-07-13）
+Tad FAQ 2.5 (2016-05-22 released)
+=====================================================
+ 1.Fixed the problem with editor can't worked in admin interface
+ 2.Support PHP7
+ 3.Remove BootStrap2
+
+
+Tad FAQ 2.4 (2015-07-13 released)
 =====================================================
 1. Thanks Michael Beck in English language
 2. Modify the PHP code to conform to specifications PSR2
 3. Modify the display layout
 
-Tad FAQ Version 2.3 (released 2014-09-25)
+Tad FAQ 2.3 (2014-09-25 released)
 ================================================== ===
 1. Adjust button style, so that it can accommodate longer text title
 2. New Easy Transfer smartyfaq content back-office functions (copysfaq.php)
 3. Fix uid field is mediumint (8)
 
 
-Tad FAQ Version 2.2 (released 2014-01-21)
+Tad FAQ 2.2 (2014-01-21 released)
 ================================================== ===
 1. Fixed utf8 languages ​​reception languages ​​disappear bug
 
 
-Tad FAQ Version 2.1 (released 2014-01-21)
+Tad FAQ 2.1 (2014-01-21 released)
 ================================================== ===
 1. Add support within XOOPS station search function
 2. minimizes Languages
 3. Fixed utf8 languages ​​reception languages ​​disappear bug
 
 
-Tad FAQ Version 2.0 (released 2013-11-20)
+Tad FAQ 2.0 (2013-11-20 released)
 ================================================== ===
 1. Update the XOOPS 2.5 module architecture
 2. Import BootStrap framework
@@ -35,11 +42,11 @@ Tad FAQ Version 2.0 (released 2013-11-20)
 8. Taiwan has joined pull sorting function (only administrator)
 
 
-Tad FAQ Version 1.1 (released 2010-03-19)
+Tad FAQ 1.1 (2010-03-19 released)
 ================================================== ===
 1. Update the XOOPS 2.5 module architecture
 
 
-Tad FAQ Version 1.0 (released 2008-07-03)
+Tad FAQ 1.0 (2008-07-03 released)
 ================================================== ===
 1. Module release

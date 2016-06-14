@@ -1,7 +1,7 @@
 <?php
 //引入TadTools的函式庫
 if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
-    redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+    redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
 }
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 include_once "function_block.php";
@@ -15,7 +15,7 @@ function get_tad_faq_cate($fcsn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " where fcsn='$fcsn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -29,7 +29,7 @@ function get_tad_faq_content($fqsn = "")
     }
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_content") . " where fqsn='$fqsn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -44,7 +44,7 @@ function insert_tad_faq_cate($new_title = "")
     $_POST['description'] = $myts->addSlashes($_POST['description']);
 
     $sql = "insert into " . $xoopsDB->prefix("tad_faq_cate") . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$_POST['of_fcsn']}','{$title}','{$_POST['description']}','{$_POST['sort']}','{$_POST['cate_pic']}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql);
     //取得最後新增資料的流水編號
     $fcsn = $xoopsDB->getInsertId();
 
@@ -128,7 +128,7 @@ function get_cate_enable_group($kind = "", $fcsn = "", $mode = "id")
 
     $sql = "select a.gperm_groupid,b.name from " . $xoopsDB->prefix("group_permission") . " as a left join " . $xoopsDB->prefix("groups") . " as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
         $ok_group[] = $mode == 'name' ? $name : $gperm_groupid;
