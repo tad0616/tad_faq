@@ -3,7 +3,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADFAQ_NAME;
-$modversion['version']     = 2.5;
+$modversion['version']     = 2.51;
 $modversion['description'] = _MI_TADFAQ_DESC;
 $modversion['author']      = _MI_TADFAQ_AUTHOR;
 $modversion['credits']     = _MI_TADFAQ_CREDITS;
@@ -14,7 +14,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/05/22';
+$modversion['release_date']        = '2017-01-08';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -60,27 +60,27 @@ $modversion['hasMain'] = 1;
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_faq_adm_main_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_faq_adm_main_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_faq_adm_main.tpl';
+$modversion['templates'][$i]['description'] = 'tad_faq_adm_main.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_faq_adm_power_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_faq_adm_power_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_faq_adm_power.tpl';
+$modversion['templates'][$i]['description'] = 'tad_faq_adm_power.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_faq_index_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_faq_index_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_faq_index.tpl';
+$modversion['templates'][$i]['description'] = 'tad_faq_index.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_faq_adm_sfaq_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_faq_adm_sfaq_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_faq_adm_sfaq.tpl';
+$modversion['templates'][$i]['description'] = 'tad_faq_adm_sfaq.tpl';
 
 //---區塊設定---//
 $modversion['blocks'][1]['file']        = "tad_faq_block.php";
 $modversion['blocks'][1]['name']        = _MI_TADFAQ_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADFAQ_BDESC1;
 $modversion['blocks'][1]['show_func']   = "tad_faq_show";
-$modversion['blocks'][1]['template']    = "tad_faq_block.html";
+$modversion['blocks'][1]['template']    = "tad_faq_block.tpl";
 
 //---偏好設定---//
 $modversion['config'][0]['name']        = 'module_title';

@@ -4,10 +4,10 @@
 <{if $now_op=="list_all"}>
 
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-sm-6">
       <h2><{$module_title}></h2>
     </div>
-    <div class="col-md-6 text-right">
+    <div class="col-sm-6 text-right">
       <{if $isAdmin or $edit_power}>
         <a href="index.php?op=tad_faq_content_form" class="btn btn-primary"><{$smarty.const._TAD_ADD}></a>
       <{/if}>
@@ -75,7 +75,7 @@
       <{if $faq.enable=="1" or $isAdmin or $edit_power}>
         <div class="faq_title well" id="tr_<{$faq.fqsn}>">
           <div class="row">
-            <div class="col-md-11">
+            <div class="col-sm-11">
               <a name="#<{$faq.fqsn}>" id="<{$faq.fqsn}>" class="<{if $faq.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
                 <{if $faq.enable=="1"}>
                 <{$n}>.
@@ -87,7 +87,7 @@
               </a>
             </div>
 
-            <div class="col-md-1 counter">
+            <div class="col-sm-1 counter">
               <{if $isAdmin or $edit_power}>
                 <{if $faq.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
               <{/if}>
@@ -118,24 +118,24 @@
 
     <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
       <div class="form-group">
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 control-label">
           <{$smarty.const._MD_TADFAQ_CATE_MENU}>
         </label>
         <{if $faq_cate_opt}>
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <select name="fcsn" size=1 class="form-control">
               <{$faq_cate_opt}>
             </select>
           </div>
 
           <{if $isAdmin}>
-            <div class="col-md-8">
+            <div class="col-sm-8">
               <input type="text" name="new_cate" class="form-control" placeholder="<{$smarty.const._MD_TADFAQ_NEW_CATE}>">
             </div>
           <{/if}>
         <{else}>
           <{if $isAdmin}>
-            <div class="col-md-11">
+            <div class="col-sm-11">
               <input type="text" name="new_cate" class="form-control" placeholder="<{$smarty.const._MD_TADFAQ_NEW_CATE}>">
             </div>
           <{/if}>
@@ -143,13 +143,13 @@
       </div>
 
       <div class="form-group">
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 control-label">
           <{$smarty.const._MD_TADFAQ_FAQ_TITLE}>
         </label>
-        <div class="col-md-7">
+        <div class="col-sm-7">
           <input type="text" name="title" value="<{$title}>" class="form-control">
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <label class="radio-inline">
             <input type="radio" name="enable" id="enable1" value="1" <{if $enable=="1"}>checked<{/if}>><{$smarty.const._MD_TADFAQ_FAQ_ENABLE}>
           </label>
@@ -160,10 +160,10 @@
       </div>
 
       <div class="form-group">
-        <label class="col-md-1 control-label">
+        <label class="col-sm-1 control-label">
           <{$smarty.const._MD_TADFAQ_CONTENT}>
         </label>
-        <div class="col-md-11">
+        <div class="col-sm-11">
           <{$editor}>
         </div>
       </div>

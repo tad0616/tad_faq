@@ -1,7 +1,7 @@
 <?php
 //newbb 3.07
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_faq_adm_sfaq.html";
+$xoopsOption['template_main'] = "tad_faq_adm_sfaq.tpl";
 include_once "header.php";
 include_once "../function.php";
 
@@ -220,7 +220,7 @@ switch ($op) {
         list_faq();
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/
