@@ -53,10 +53,11 @@ function list_all()
 function list_faq($fcsn = "")
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsTpl;
+    get_jquery(true);
     //權限檢查
-    $faq_read_power = check_power("faq_read", $fcsn);
-    $faq_edit_power = check_power("faq_edit", $fcsn);
-
+    $faq_read_power = power_chk("faq_read", $fcsn);
+    $faq_edit_power = power_chk("faq_edit", $fcsn);
+    // die(var_dump($faq_read_power));
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     if (!$faq_read_power) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADFAQ_NO_ACCESS_POWER);
@@ -241,28 +242,24 @@ switch ($op) {
         update_status($fqsn, $_GET['enable']);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //刪除資料
     case "delete_tad_faq_content":
         delete_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //新增資料
     case "insert_tad_faq_content":
         $fcsn = insert_tad_faq_content();
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //更新資料
     case "update_tad_faq_content":
         $fcsn = update_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     case "tad_faq_content_form":
         tad_faq_content_form($fcsn, $fqsn);
@@ -278,6 +275,5 @@ switch ($op) {
 }
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
 include_once XOOPS_ROOT_PATH . '/footer.php';

@@ -4,10 +4,10 @@
 if (!function_exists('chk_faq_cate_power')) {
     function chk_faq_cate_power($kind = "")
     {
-        global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
+        global $xoopsDB, $xoopsUser, $isAdmin;
 
-        $modhandler  = &xoops_gethandler('module');
-        $xoopsModule = &$modhandler->getByDirname("tad_faq");
+        $modhandler  = xoops_gethandler('module');
+        $xoopsModule = $modhandler->getByDirname("tad_faq");
 
         $module_id = $xoopsModule->getVar('mid');
         if (!empty($xoopsUser)) {

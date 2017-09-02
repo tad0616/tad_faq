@@ -1,3 +1,10 @@
+Tad FAQ 2.5.2 (2017-06-16 released)
+=====================================================
+1. Fix the problem of incorrect authority mechanism
+2. Fix the problem that the content does not display correctly
+3. Completion of accessibility 2.0 A level detection
+
+
 Tad FAQ 2.5.1 (2017-01-08 released)
 =====================================================
  1.Change the col-md of boootstrap to col-sm

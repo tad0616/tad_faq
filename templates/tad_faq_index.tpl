@@ -46,20 +46,21 @@
 
       $(".faq_content").hide();
 
-      $(".faq_title").toggle(function(){
+
+      $(".faq_title").click(function () {
         var fqsn=$(this).attr("id");
         var content_id="#"+fqsn+"_ans";
-        //alert(content_id);
-        $.post("ajax.php", { sn: fqsn}, function(data) {
-          $("#counter"+fqsn).html(data);
-        });
+
         $(".faq_content").css("background-color: ","white");
-        $(content_id).slideDown().css("background-color","#F4F9EA");
-      },function(){
-        var fqsn=$(this).attr("id");
-        var content_id="#"+fqsn+"_ans";
-        $(content_id).slideUp();
+
+        $(content_id).slideToggle(function(){
+          $.post("ajax.php", { sn: fqsn}, function(data) {
+            $("#counter_"+fqsn).html(data);
+          });
+        }).css("background-color","#F4F9EA");
+
       });
+
     });
   </script>
 
@@ -91,7 +92,7 @@
               <{if $isAdmin or $edit_power}>
                 <{if $faq.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
               <{/if}>
-              <span id="counter<{$faq.fqsn}>"><{$faq.counter}></span>
+              <span id="counter_tr_<{$faq.fqsn}>"><{$faq.counter}></span>
             </div>
           </div>
         </div>
