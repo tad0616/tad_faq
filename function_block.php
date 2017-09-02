@@ -39,7 +39,7 @@ if (!function_exists('get_cate_count')) {
     function get_cate_count()
     {
         global $xoopsDB;
-        $sql    = "select fcsn,count(*) from " . $xoopsDB->prefix("tad_faq_content") . " group by fcsn";
+        $sql = "SELECT fcsn,count(*) FROM " . $xoopsDB->prefix("tad_faq_content") . " GROUP BY fcsn";
         $result = $xoopsDB->query($sql) or web_error($sql);
         while (list($fcsn, $count) = $xoopsDB->fetchRow($result)) {
             $counter[$fcsn] = $count;

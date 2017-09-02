@@ -15,7 +15,7 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 
 //抓取所有資料夾
 
-$sql    = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate");
+$sql = "SELECT fcsn,title FROM " . $xoopsDB->prefix("tad_faq_cate");
 $result = $xoopsDB->query($sql) or web_error($sql);
 while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
     $item_list[$fcsn] = $title;
