@@ -39,7 +39,7 @@ function tad_faq_cate_form($fcsn = "")
     $xoopsTpl->assign('cate_pic', $cate_pic);
 
     $mod_id             = $xoopsModule->getVar('mid');
-    $moduleperm_handler = &xoops_gethandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     $read_group         = $moduleperm_handler->getGroupIds("faq_read", $fcsn, $mod_id);
     $post_group         = $moduleperm_handler->getGroupIds("faq_edit", $fcsn, $mod_id);
 

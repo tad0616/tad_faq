@@ -6,8 +6,8 @@ if (!function_exists('chk_faq_cate_power')) {
     {
         global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
 
-        $modhandler  = &xoops_gethandler('module');
-        $xoopsModule = &$modhandler->getByDirname("tad_faq");
+        $modhandler  = xoops_getHandler('module');
+        $xoopsModule = $modhandler->getByDirname("tad_faq");
 
         $module_id = $xoopsModule->getVar('mid');
         if (!empty($xoopsUser)) {
