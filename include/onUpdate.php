@@ -63,7 +63,7 @@ function chk_tad_faq_block()
 function chk_chk1()
 {
     global $xoopsDB;
-    $sql    = "select count(`counter`) from " . $xoopsDB->prefix("tad_faq_content");
+    $sql    = "SELECT count(`counter`) FROM " . $xoopsDB->prefix("tad_faq_content");
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -75,7 +75,7 @@ function chk_chk1()
 function go_update1()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_faq_content") . " ADD `counter` smallint(5) NOT NULL";
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_faq_content") . " ADD `counter` SMALLINT(5) NOT NULL";
     $xoopsDB->queryF($sql) or web_error($sql);
 
     return true;
@@ -100,7 +100,7 @@ function chk_uid()
 function go_update_uid()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_faq_content") . "` CHANGE `uid` `uid` mediumint(8) unsigned NOT NULL default 0";
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix("tad_faq_content") . "` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0";
     $xoopsDB->queryF($sql) or web_error($sql);
     return true;
 }

@@ -17,7 +17,7 @@ function list_all()
 
     $counter = get_cate_count();
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
@@ -118,7 +118,7 @@ function get_faq_cate_opt($the_fcsn = "")
     global $xoopsDB, $isAdmin;
     $opt       = "";
     $edit_fcsn = chk_faq_cate_power("faq_edit");
-    $sql       = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
+    $sql       = "SELECT fcsn,title FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result    = $xoopsDB->query($sql) or web_error($sql);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? "selected" : "";
