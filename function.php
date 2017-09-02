@@ -98,7 +98,7 @@ function check_power($kind = "faq_read", $fcsn = "")
     $gperm_handler = xoops_getHandler('groupperm');
 
     //權限項目編號
-    $perm_itemid = intval($fcsn);
+    $perm_itemid = (int)$fcsn;
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
 
     if (empty($fcsn)) {
