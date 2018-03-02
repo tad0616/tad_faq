@@ -13,8 +13,8 @@ function list_faq()
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
     //取得某模組編號
-    $modhandler     = &xoops_gethandler('module');
-    $ThexoopsModule = &$modhandler->getByDirname("smartfaq");
+    $modhandler     = xoops_getHandler('module');
+    $ThexoopsModule = $modhandler->getByDirname("smartfaq");
     if ($ThexoopsModule) {
         $mod_id = $ThexoopsModule->getVar('mid');
         $xoopsTpl->assign('show_error', '0');
