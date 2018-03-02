@@ -13,8 +13,10 @@ function list_faq()
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
     //取得某模組編號
-    $modhandler     = xoops_gethandler('module');
-    $ThexoopsModule = &$modhandler->getByDirname("smartfaq");
+
+    $modhandler     = xoops_getHandler('module');
+    $ThexoopsModule = $modhandler->getByDirname("smartfaq");
+
     if ($ThexoopsModule) {
         $mod_id = $ThexoopsModule->getVar('mid');
         $xoopsTpl->assign('show_error', '0');
@@ -40,7 +42,7 @@ function list_faq()
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
-    $sql    = "select * from `" . $xoopsDB->prefix("smartfaq_categories") . "`";
+    $sql    = "SELECT * FROM `" . $xoopsDB->prefix("smartfaq_categories") . "`";
     $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
 
     $all_content = "";
@@ -62,7 +64,6 @@ function list_faq()
         $all_content[$i]['faq_number']  = get_faq_number($categoryid);
         $all_content[$i]['i']           = $i;
         $i++;
-
     }
 
     $xoopsTpl->assign('all_content', $all_content);
@@ -157,7 +158,6 @@ function listfaq($categoryid = '')
     $xoopsTpl->assign('categoryid', $categoryid);
     $xoopsTpl->assign('all_content', $all_content);
     $xoopsTpl->assign('op', 'listfaq');
-
 }
 
 //匯入常見問答
@@ -185,7 +185,6 @@ function import_faq($categoryid = '')
     values('{$faqid}' , '{$categoryid}' ,  '{$question}' , '{$weight}' , '{$uid}' , '{$datesub}' , '{$answer}' , '1' , '{$counter}')";
         $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     }
-
 }
 
 /*-----------執行動作判斷區----------*/

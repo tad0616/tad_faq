@@ -38,10 +38,12 @@ function tad_faq_cate_form($fcsn = "")
     $cate_pic = (!isset($DBV['cate_pic'])) ? "" : $DBV['cate_pic'];
     $xoopsTpl->assign('cate_pic', $cate_pic);
 
-    $mod_id             = $xoopsModule->getVar('mid');
-    $moduleperm_handler = xoops_gethandler('groupperm');
-    $read_group         = $moduleperm_handler->getGroupIds("faq_read", $fcsn, $mod_id);
-    $post_group         = $moduleperm_handler->getGroupIds("faq_edit", $fcsn, $mod_id);
+    $mod_id = $xoopsModule->getVar('mid');
+
+    $moduleperm_handler = xoops_getHandler('groupperm');
+
+    $read_group = $moduleperm_handler->getGroupIds("faq_read", $fcsn, $mod_id);
+    $post_group = $moduleperm_handler->getGroupIds("faq_edit", $fcsn, $mod_id);
 
     if (empty($read_group)) {
         $read_group = array(1, 2, 3);
@@ -82,7 +84,7 @@ function tad_faq_cate_form($fcsn = "")
 function list_tad_faq_cate()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
     $data = "";
@@ -135,7 +137,7 @@ function delete_tad_faq_cate($fcsn = "")
 function get_max_sort()
 {
     global $xoopsDB, $xoopsModule;
-    $sql        = "select max(sort) from " . $xoopsDB->prefix("tad_faq_cate") . " where of_fcsn=''";
+    $sql        = "SELECT max(sort) FROM " . $xoopsDB->prefix("tad_faq_cate") . " WHERE of_fcsn=''";
     $result     = $xoopsDB->query($sql) or web_error($sql);
     list($sort) = $xoopsDB->fetchRow($result);
     return ++$sort;
@@ -157,19 +159,19 @@ switch ($op) {
         break;
 
     //輸入表格
-    case "tad_faq_cate_form";
+    case "tad_faq_cate_form":
         tad_faq_cate_form($fcsn);
         break;
 
     //刪除資料
-    case "delete_tad_faq_cate";
+    case "delete_tad_faq_cate":
         delete_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
         break;
 
     //更新資料
-    case "update_tad_faq_cate";
+    case "update_tad_faq_cate":
         update_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
