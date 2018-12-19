@@ -77,54 +77,6 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
     }
 }
 
-<<<<<<< HEAD
-=======
-//檢查有無權限
-function check_power($kind = "faq_read", $fcsn = "")
-{
-    global $xoopsUser, $xoopsModule, $isAdmin;
-
-    //取得目前使用者的群組編號
-    if ($xoopsUser) {
-        $uid    = $xoopsUser->getVar('uid');
-        $groups = $xoopsUser->getGroups();
-    } else {
-        $uid    = 0;
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
-
-    //if(!$isAdmin ) return false;
-
-    //取得模組編號
-    $module_id = $xoopsModule->getVar('mid');
-
-    //取得群組權限功能
-    $gperm_handler = xoops_getHandler('groupperm');
-
-    //權限項目編號
-    $perm_itemid = (int)$fcsn;
-    //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-
-    if (empty($fcsn)) {
-        if ($kind == "faq_read") {
-            return true;
-        } else {
-            if ($isAdmin) {
-                return true;
-            }
-
-        }
-    } else {
-        if ($gperm_handler->checkRight($kind, $fcsn, $groups, $module_id) or $isAdmin) {
-            return true;
-        }
-
-    }
-
-    return false;
-}
-
->>>>>>> origin/master
 //判斷某類別中有哪些觀看或發表的群組 $mode=name or id
 function get_cate_enable_group($kind = "", $fcsn = "", $mode = "id")
 {

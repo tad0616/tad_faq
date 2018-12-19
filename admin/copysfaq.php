@@ -45,7 +45,7 @@ function list_faq()
     $sql    = "SELECT * FROM `" . $xoopsDB->prefix("smartfaq_categories") . "`";
     $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
 
-    $all_content = "";
+    $all_content = array();
     $i           = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
@@ -201,7 +201,6 @@ switch ($op) {
         copyfaq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     //
     case "listfaq":
@@ -212,7 +211,6 @@ switch ($op) {
         import_faq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     //預設動作
     default:

@@ -20,7 +20,7 @@ function list_all()
     $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $data = "";
+    $data = array();
     $i    = 3;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         if (!in_array($fcsn, $read_power)) {

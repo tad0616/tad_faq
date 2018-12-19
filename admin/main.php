@@ -87,7 +87,7 @@ function list_tad_faq_cate()
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $data = "";
+    $data = array();
     $i    = 0;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         $faq_read = get_cate_enable_group("faq_read", $fcsn, "name");

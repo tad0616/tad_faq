@@ -1,3 +1,10 @@
+Tad FAQ 2.5.3 (2019-01-01 released)
+=========================================================== ===
+1. Support BootStrap4
+2. Remove Big5 Chinese language
+3. Support PHP 7.1
+
+
 Tad FAQ 2.5.2 (2017-06-16 released)
 =====================================================
 1. Fix the problem of incorrect authority mechanism
