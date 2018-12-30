@@ -9,7 +9,7 @@ function tad_faq_show($options)
 
     $counter = get_cate_count();
 
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $content = array();

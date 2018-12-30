@@ -39,11 +39,15 @@ function insert_tad_faq_cate($new_title = "")
 {
     global $xoopsDB;
 
-    $myts                 = MyTextSanitizer::getInstance();
-    $title                = $new_title ? $myts->addSlashes($new_title) : $myts->addSlashes($_POST['title']);
-    $_POST['description'] = $myts->addSlashes($_POST['description']);
+    $myts    = MyTextSanitizer::getInstance();
+    $of_fcsn = (int) $_POST['of_fcsn'];
+    $sort    = (int) $_POST['sort'];
 
-    $sql = "insert into " . $xoopsDB->prefix("tad_faq_cate") . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$_POST['of_fcsn']}','{$title}','{$_POST['description']}','{$_POST['sort']}','{$_POST['cate_pic']}')";
+    $title       = $new_title ? $myts->addSlashes($new_title) : $myts->addSlashes($_POST['title']);
+    $description = $myts->addSlashes($_POST['description']);
+    $cate_pic    = $myts->addSlashes($_POST['cate_pic']);
+
+    $sql = "insert into " . $xoopsDB->prefix("tad_faq_cate") . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$of_fcsn}','{$title}','{$description}','{$sort}','{$cate_pic}')";
     $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $fcsn = $xoopsDB->getInsertId();
@@ -61,10 +65,9 @@ function insert_tad_faq_cate($new_title = "")
 function saveItem_Permissions($groups, $itemid, $perm_name)
 {
     global $xoopsModule;
-    $module_id     = $xoopsModule->getVar('mid');
+    $module_id = $xoopsModule->getVar('mid');
 
     $gperm_handler = xoops_getHandler('groupperm');
-
 
     // First, if the permissions are already there, delete them
     $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);

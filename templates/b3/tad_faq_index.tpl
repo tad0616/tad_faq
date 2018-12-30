@@ -1,6 +1,4 @@
 <{$toolbar}>
-<link rel="stylesheet" type="text/css" media="all" href="module.css" />
-
 <{if $now_op=="list_all"}>
 
   <div class="row">

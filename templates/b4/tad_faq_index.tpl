@@ -1,6 +1,4 @@
 <{$toolbar}>
-<link rel="stylesheet" type="text/css" media="all" href="module.css" />
-
 <{if $now_op=="list_all"}>
 
   <div class="row">
@@ -98,7 +96,7 @@
         </div>
 
 
-        <div id="tr_<{$faq.fqsn}>_ans" class="card card-body bg-light m-1 faq_content" style="line-height: 1.8;">
+        <div id="tr_<{$faq.fqsn}>_ans" class="card card-body m-1 faq_content" style="line-height: 1.8;">
           <{if $isAdmin or $edit_power}>
             <div style="text-align:right;">
               <a href="index.php?op=update_status&fcsn=<{$fcsn}>&fqsn=<{$faq.fqsn}>&enable=<{$faq.update_enable}>" class="btn btn-sm btn-info"><{$faq.enable_txt}></a>

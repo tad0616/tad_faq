@@ -17,7 +17,7 @@ function list_all()
 
     $counter = get_cate_count();
 
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     $data = array();
@@ -276,4 +276,6 @@ switch ($op) {
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign("isAdmin", $isAdmin);
+$xoTheme->addStylesheet('modules/tad_faq/module.css');
+
 include_once XOOPS_ROOT_PATH . '/footer.php';
