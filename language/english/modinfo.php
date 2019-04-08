@@ -17,7 +17,7 @@ define('_MI_TADFAQ_MODULE_TITLE_DESC', 'will appear in the text at the top of th
 define('_MI_TADFAQ_MODULE_TITLE_VAL', 'Frequently Asked Questions');
 
 define('_MI_TADFAQ_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADFAQ_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADFAQ_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADFAQ_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
