@@ -1,7 +1,7 @@
 <link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12">
       <h2><{$smarty.const._MA_TADFAQ_CATE_INPUT_FORM}></h2>
       <{if $all_content}>
       <{$jquery}>
@@ -42,8 +42,8 @@
             <td><{$faq.faq_read}></td>
             <td><{$faq.faq_edit}></td>
             <td>
-              <a href="javascript:delete_tad_faq_cate_func(<{$faq.fcsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-              <a href="main.php?op=tad_faq_cate_form&fcsn=<{$faq.fcsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+              <a href="javascript:delete_tad_faq_cate_func(<{$faq.fcsn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+              <a href="main.php?op=tad_faq_cate_form&fcsn=<{$faq.fcsn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
             </td>
           </tr>
         <{/foreach}>
@@ -53,29 +53,29 @@
       <{/if}>
 
 
-      <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
+      <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" role="form">
         <div class="row">
-          <div class="col-md-9">
-            <div class="form-group">
-              <label class="col-md-2 control-label">
+          <div class="col-sm-9">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label text-sm-right">
                 <{$smarty.const._MA_TADFAQ_TITLE}>
               </label>
-              <div class="col-md-10">
+              <div class="col-sm-10">
                 <input type="text" name="title" value="<{$title}>" class="form-control">
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-md-2 control-label">
+            <div class="form-group row">
+              <label class="col-sm-2 col-form-label text-sm-right">
                 <{$smarty.const._MA_TADFAQ_CONTENT}>
               </label>
-              <div class="col-md-10">
+              <div class="col-sm-10">
                 <{$editor}>
               </div>
             </div>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-sm-3">
             <div class="row">
               <label><{$smarty.const._MA_TADFAQ_SET_ACCESS_POWER}></label>
               <{$faq_read_group}>

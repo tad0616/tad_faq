@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_faq_index.html");
+$xoopsOption['template_main'] = "tad_faq_index.tpl";
 include_once XOOPS_ROOT_PATH . "/header.php";
 
 /*-----------function區--------------*/
@@ -17,10 +17,10 @@ function list_all()
 
     $counter = get_cate_count();
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $data = "";
+    $data = array();
     $i    = 3;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         if (!in_array($fcsn, $read_power)) {
@@ -53,10 +53,11 @@ function list_all()
 function list_faq($fcsn = "")
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsTpl;
+    get_jquery(true);
     //權限檢查
-    $faq_read_power = check_power("faq_read", $fcsn);
-    $faq_edit_power = check_power("faq_edit", $fcsn);
-
+    $faq_read_power = power_chk("faq_read", $fcsn);
+    $faq_edit_power = power_chk("faq_edit", $fcsn);
+    // die(var_dump($faq_read_power));
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     if (!$faq_read_power) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADFAQ_NO_ACCESS_POWER);
@@ -67,7 +68,7 @@ function list_faq($fcsn = "")
     $now_uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_faq_content") . " where fcsn='$fcsn' order by sort";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i      = 1;
     while (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result)) {
 
@@ -101,7 +102,7 @@ function delete_tad_faq_content($fqsn = "")
 {
     global $xoopsDB;
     $sql = "delete from " . $xoopsDB->prefix("tad_faq_content") . " where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 
 //啟動或關閉
@@ -109,7 +110,7 @@ function update_status($fqsn = "", $enable = "")
 {
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_faq_content") . " set enable='{$enable}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 }
 
 //分類選單
@@ -118,8 +119,8 @@ function get_faq_cate_opt($the_fcsn = "")
     global $xoopsDB, $isAdmin;
     $opt       = "";
     $edit_fcsn = chk_faq_cate_power("faq_edit");
-    $sql       = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate") . " order by sort";
-    $result    = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $sql       = "SELECT fcsn,title FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
+    $result    = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? "selected" : "";
         if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
@@ -193,7 +194,7 @@ function insert_tad_faq_content()
     $sort = get_max_faq_sort($_POST['fcsn']);
     $now  = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql  = "insert into " . $xoopsDB->prefix("tad_faq_content") . " (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) values('{$fcsn}','{$_POST['title']}','{$sort}','{$uid}','{$now}','{$_POST['content']}','{$_POST['enable']}')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
 }
@@ -215,7 +216,7 @@ function update_tad_faq_content($fqsn = "")
 
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "update " . $xoopsDB->prefix("tad_faq_content") . " set  `fcsn` = '{$fcsn}', `title` = '{$_POST['title']}', `post_date` = '{$now}', `content` = '{$_POST['content']}', `enable` = '{$_POST['enable']}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     return $fcsn;
 }
 
@@ -224,7 +225,7 @@ function get_max_faq_sort($fcsn = "")
 {
     global $xoopsDB, $xoopsModule;
     $sql        = "select max(sort) from " . $xoopsDB->prefix("tad_faq_content") . " where fcsn='{$fcsn}'";
-    $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
     return ++$sort;
 }
@@ -241,28 +242,24 @@ switch ($op) {
         update_status($fqsn, $_GET['enable']);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //刪除資料
     case "delete_tad_faq_content":
         delete_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //新增資料
     case "insert_tad_faq_content":
         $fcsn = insert_tad_faq_content();
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     //更新資料
     case "update_tad_faq_content":
         $fcsn = update_tad_faq_content($fqsn);
         header("location: {$_SERVER['PHP_SELF']}?fcsn=$fcsn");
         exit;
-        break;
 
     case "tad_faq_content_form":
         tad_faq_content_form($fcsn, $fqsn);
@@ -278,6 +275,7 @@ switch ($op) {
 }
 
 $xoopsTpl->assign("toolbar", toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign("jquery", get_jquery(true));
 $xoopsTpl->assign("isAdmin", $isAdmin);
+$xoTheme->addStylesheet('modules/tad_faq/module.css');
+
 include_once XOOPS_ROOT_PATH . '/footer.php';

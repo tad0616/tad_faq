@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_faq_adm_power.html";
+$xoopsOption['template_main'] = "tad_faq_adm_power.tpl";
 include_once "header.php";
 include_once "../function.php";
 include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";
@@ -15,8 +15,8 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 
 //抓取所有資料夾
 
-$sql    = "select fcsn,title from " . $xoopsDB->prefix("tad_faq_cate");
-$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+$sql = "SELECT fcsn,title FROM " . $xoopsDB->prefix("tad_faq_cate");
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
     $item_list[$fcsn] = $title;
 }

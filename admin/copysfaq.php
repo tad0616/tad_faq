@@ -1,7 +1,7 @@
 <?php
 //newbb 3.07
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_faq_adm_sfaq.html";
+$xoopsOption['template_main'] = "tad_faq_adm_sfaq.tpl";
 include_once "header.php";
 include_once "../function.php";
 
@@ -13,8 +13,10 @@ function list_faq()
     global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
 
     //取得某模組編號
-    $modhandler     = &xoops_gethandler('module');
-    $ThexoopsModule = &$modhandler->getByDirname("smartfaq");
+
+    $modhandler     = xoops_getHandler('module');
+    $ThexoopsModule = $modhandler->getByDirname("smartfaq");
+
     if ($ThexoopsModule) {
         $mod_id = $ThexoopsModule->getVar('mid');
         $xoopsTpl->assign('show_error', '0');
@@ -40,10 +42,10 @@ function list_faq()
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
-    $sql    = "select * from `" . $xoopsDB->prefix("smartfaq_categories") . "`";
+    $sql    = "SELECT * FROM `" . $xoopsDB->prefix("smartfaq_categories") . "`";
     $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
 
-    $all_content = "";
+    $all_content = array();
     $i           = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
@@ -62,7 +64,6 @@ function list_faq()
         $all_content[$i]['faq_number']  = get_faq_number($categoryid);
         $all_content[$i]['i']           = $i;
         $i++;
-
     }
 
     $xoopsTpl->assign('all_content', $all_content);
@@ -157,7 +158,6 @@ function listfaq($categoryid = '')
     $xoopsTpl->assign('categoryid', $categoryid);
     $xoopsTpl->assign('all_content', $all_content);
     $xoopsTpl->assign('op', 'listfaq');
-
 }
 
 //匯入常見問答
@@ -185,7 +185,6 @@ function import_faq($categoryid = '')
     values('{$faqid}' , '{$categoryid}' ,  '{$question}' , '{$weight}' , '{$uid}' , '{$datesub}' , '{$answer}' , '1' , '{$counter}')";
         $xoopsDB->queryF($sql) or redirect_header("index.php", 3, $sql);
     }
-
 }
 
 /*-----------執行動作判斷區----------*/
@@ -202,7 +201,6 @@ switch ($op) {
         copyfaq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     //
     case "listfaq":
@@ -213,14 +211,13 @@ switch ($op) {
         import_faq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
 
     //預設動作
     default:
         list_faq();
         break;
 
-    /*---判斷動作請貼在上方---*/
+        /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/

@@ -1,6 +1,6 @@
 <?php
 /**
- * Tad FAQ module
+ * Tad Evaluation module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -9,9 +9,9 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package      Tad FAQ
+ * @package      Tad Evaluation
  * @since        2.5.0
  * @author       Tad
  * @version      $Id $
@@ -22,7 +22,7 @@ include '../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
-$module_info = &$module_handler->get($xoopsModule->getVar("mid"));
+$module_info = $module_handler->get($xoopsModule->getVar("mid"));
 
 $module_info = '<div id="about">
 				<label>' . _AM_XDIR_ABOUT_DESCRIPTION . '</label><text>' . $module_info->getInfo("description") . '</text><br />
