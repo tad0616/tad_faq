@@ -9,7 +9,7 @@ function xoops_module_uninstall_tad_faq(&$module)
     return true;
 }
 
-function delete_directory($dirname)
+function tad_faq_delete_directory($dirname)
 {
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
@@ -24,7 +24,7 @@ function delete_directory($dirname)
             if (!is_dir($dirname . "/" . $file)) {
                 unlink($dirname . "/" . $file);
             } else {
-                delete_directory($dirname . '/' . $file);
+                tad_faq_delete_directory($dirname . '/' . $file);
             }
 
         }

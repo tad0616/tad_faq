@@ -2,16 +2,16 @@
 function xoops_module_install_tad_faq(&$module)
 {
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/file");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/image");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/image/.thumbs");
+    tad_faq_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq");
+    tad_faq_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/file");
+    tad_faq_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/image");
+    tad_faq_mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_faq/image/.thumbs");
 
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function tad_faq_mk_dir($dir = "")
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
