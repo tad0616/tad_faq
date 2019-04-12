@@ -18,7 +18,7 @@ if (!function_exists('chk_faq_cate_power')) {
             $user_array = $xoopsUser->getGroups();
             $gsn_arr    = implode(",", $user_array);
         } else {
-            $user_array = array(3);
+            $user_array = [3];
             $isAdmin    = 0;
             $gsn_arr    = 3;
         }

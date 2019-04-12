@@ -15,7 +15,7 @@ function tad_faq_cate_form($fcsn = "")
     if (!empty($fcsn)) {
         $DBV = get_tad_faq_cate($fcsn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -46,11 +46,11 @@ function tad_faq_cate_form($fcsn = "")
     $post_group = $moduleperm_handler->getGroupIds("faq_edit", $fcsn, $mod_id);
 
     if (empty($read_group)) {
-        $read_group = array(1, 2, 3);
+        $read_group = [1, 2, 3];
     }
 
     if (empty($post_group)) {
-        $post_group = array(1);
+        $post_group = [1];
     }
 
     //可見群組
@@ -87,7 +87,7 @@ function list_tad_faq_cate()
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $data = array();
+    $data = [];
     $i    = 0;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         $faq_read = get_cate_enable_group("faq_read", $fcsn, "name");
@@ -115,8 +115,8 @@ function update_tad_faq_cate($fcsn = "")
     $sql = "update " . $xoopsDB->prefix("tad_faq_cate") . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$_POST['title']}', `description` = '{$_POST['description']}', `cate_pic` = '{$_POST['cate_pic']}' where fcsn='$fcsn'";
     $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $faq_read = empty($_POST['faq_read']) ? array(1, 2, 3) : $_POST['faq_read'];
-    $faq_edit = empty($_POST['faq_edit']) ? array(1) : $_POST['faq_edit'];
+    $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
+    $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
 
     //寫入權限
     saveItem_Permissions($faq_read, $fcsn, 'faq_read');

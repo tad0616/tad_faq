@@ -52,8 +52,8 @@ function insert_tad_faq_cate($new_title = "")
     //取得最後新增資料的流水編號
     $fcsn = $xoopsDB->getInsertId();
 
-    $faq_read = empty($_POST['faq_read']) ? array(1, 2, 3) : $_POST['faq_read'];
-    $faq_edit = empty($_POST['faq_edit']) ? array(1) : $_POST['faq_edit'];
+    $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
+    $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
 
     //寫入權限
     saveItem_Permissions($faq_read, $fcsn, 'faq_read');

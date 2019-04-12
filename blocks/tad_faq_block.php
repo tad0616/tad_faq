@@ -12,7 +12,7 @@ function tad_faq_show($options)
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $content = array();
+    $content = [];
     $i       = 0;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         if (!in_array($fcsn, $read_power)) {

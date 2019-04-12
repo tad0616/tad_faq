@@ -20,7 +20,7 @@ function list_all()
     $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_faq_cate") . " ORDER BY sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $data = array();
+    $data = [];
     $i    = 3;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         if (!in_array($fcsn, $read_power)) {
@@ -139,7 +139,7 @@ function tad_faq_content_form($fcsn = "", $fqsn = "")
     if (!empty($fqsn)) {
         $DBV = get_tad_faq_content($fqsn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定

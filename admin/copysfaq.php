@@ -45,7 +45,7 @@ function list_faq()
     $sql    = "SELECT * FROM `" . $xoopsDB->prefix("smartfaq_categories") . "`";
     $result = $xoopsDB->query($sql) or redirect_header("index.php", 3, $sql);
 
-    $all_content = array();
+    $all_content = [];
     $i           = 0;
     while ($all = $xoopsDB->fetchArray($result)) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
