@@ -2,7 +2,7 @@
 session_start();
 include_once "../../mainfile.php";
 
-$sn = intval(substr($_POST['sn'], 3));
+$sn = (int)substr($_POST['sn'], 3);
 
 $sql           = "select counter from " . $xoopsDB->prefix("tad_faq_content") . " where fqsn='{$sn}'";
 $result        = $xoopsDB->query($sql);
