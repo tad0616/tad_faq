@@ -94,7 +94,7 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
-        $ok_group[] = 'name' == $mode ? $name : $gperm_groupid;
+        $ok_group[] = 'name' === $mode ? $name : $gperm_groupid;
     }
 
     return $ok_group;
