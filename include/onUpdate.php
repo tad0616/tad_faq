@@ -10,7 +10,7 @@ function xoops_module_update_tad_faq(&$module, $old_version)
         Utility::go_update1();
     }
 
-    $old_fckeditor = XOOPS_ROOT_PATH . "/modules/tad_faq/fckeditor";
+    $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tad_faq/fckeditor';
     if (is_dir($old_fckeditor)) {
         Utility::delete_directory($old_fckeditor);
     }
@@ -22,4 +22,3 @@ function xoops_module_update_tad_faq(&$module, $old_version)
 
     return true;
 }
-
