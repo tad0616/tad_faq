@@ -1,8 +1,8 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_faq_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
 
@@ -22,7 +22,7 @@ function list_all()
 
     $data = [];
     $i = 3;
-    while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
         if (!in_array($fcsn, $read_power, true)) {
             continue;
         }
@@ -70,7 +70,7 @@ function list_faq($fcsn = '')
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fcsn='$fcsn' order by sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result))) {
         $enable_txt = ('1' == $enable) ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
         $update_enable = ('1' == $enable) ? '0' : '1';
 
@@ -120,7 +120,7 @@ function get_faq_cate_opt($the_fcsn = '')
     $edit_fcsn = chk_faq_cate_power('faq_edit');
     $sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($fcsn, $title) = $xoopsDB->fetchRow($result))) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
         if ($isAdmin or in_array($fcsn, $edit_fcsn, true)) {
             $opt .= "<option value='$fcsn' $selected>$title</option>";
@@ -159,7 +159,7 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
         redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
     }
 
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $ck = new CKEditor('tad_faq', 'content', $content);
     $ck->setHeight(400);
     $editor = $ck->render();
@@ -233,7 +233,7 @@ function get_max_faq_sort($fcsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
 $fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
@@ -278,4 +278,4 @@ $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 $xoTheme->addStylesheet('modules/tad_faq/module.css');
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,9 +1,9 @@
 <?php
 //newbb 3.07
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_faq_adm_sfaq.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_sfaq.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -14,8 +14,8 @@ function list_faq()
 
     //取得某模組編號
 
-    $modhandler = xoops_getHandler('module');
-    $ThexoopsModule = $modhandler->getByDirname('smartfaq');
+    $moduleHandler = xoops_getHandler('module');
+    $ThexoopsModule = $moduleHandler->getByDirname('smartfaq');
 
     if ($ThexoopsModule) {
         $mod_id = $ThexoopsModule->getVar('mid');
@@ -30,7 +30,7 @@ function list_faq()
     //轉移權限(原權限)
     $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` ='{$mod_id}' ";
     $result = $xoopsDB->queryF($sql) or redirect_header('index.php', 3, $sql);
-    while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result))) {
         $power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
@@ -39,7 +39,7 @@ function list_faq()
     $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` ='{$mid}' ";
 
     $result = $xoopsDB->queryF($sql) or redirect_header('index.php', 3, $sql);
-    while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result))) {
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
@@ -48,7 +48,7 @@ function list_faq()
 
     $all_content = [];
     $i = 0;
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -103,7 +103,7 @@ function copyfaq($categoryid = '')
     $sql = 'select * from `' . $xoopsDB->prefix('smartfaq_categories') . "` $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
     $myts = MyTextSanitizer::getInstance();
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -149,7 +149,7 @@ function listfaq($categoryid = '')
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
     $myts = MyTextSanitizer::getInstance();
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -175,7 +175,7 @@ function import_faq($categoryid = '')
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
     $myts = MyTextSanitizer::getInstance();
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
         foreach ($all as $k => $v) {
             $$k = $v;
@@ -194,7 +194,7 @@ function import_faq($categoryid = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $categoryid = system_CleanVars($_REQUEST, 'categoryid', 0, 'int');
 $fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
@@ -223,4 +223,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once '../../mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $sn = (int)mb_substr($_POST['sn'], 3);
 

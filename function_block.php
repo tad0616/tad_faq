@@ -6,9 +6,9 @@ if (!function_exists('chk_faq_cate_power')) {
     {
         global $xoopsDB, $xoopsUser, $isAdmin;
 
-        $modhandler = xoops_getHandler('module');
+        $moduleHandler = xoops_getHandler('module');
 
-        $xoopsModule = $modhandler->getByDirname('tad_faq');
+        $xoopsModule = $moduleHandler->getByDirname('tad_faq');
 
         $module_id = $xoopsModule->getVar('mid');
         if (!empty($xoopsUser)) {
@@ -27,7 +27,7 @@ if (!function_exists('chk_faq_cate_power')) {
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-        while (list($gperm_itemid) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($gperm_itemid) = $xoopsDB->fetchRow($result))) {
             $ok_cat[] = $gperm_itemid;
         }
 
@@ -42,7 +42,7 @@ if (!function_exists('get_cate_count')) {
         global $xoopsDB;
         $sql = 'SELECT fcsn,count(*) FROM ' . $xoopsDB->prefix('tad_faq_content') . ' GROUP BY fcsn';
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while (list($fcsn, $count) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($fcsn, $count) = $xoopsDB->fetchRow($result))) {
             $counter[$fcsn] = $count;
         }
 

@@ -3,7 +3,7 @@
 function tad_faq_show($options)
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/tad_faq/function_block.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_faq/function_block.php';
 
     $read_power = chk_faq_cate_power('faq_read');
 
@@ -14,7 +14,7 @@ function tad_faq_show($options)
 
     $content = [];
     $i = 0;
-    while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
         if (!in_array($fcsn, $read_power, true)) {
             continue;
         }

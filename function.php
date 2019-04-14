@@ -3,8 +3,8 @@
 if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
 }
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
-include_once 'function_block.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+require_once __DIR__ . '/function_block.php';
 
 //以流水號取得某筆tad_faq_cate資料
 function get_tad_faq_cate($fcsn = '')
@@ -70,15 +70,15 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
     global $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     // First, if the permissions are already there, delete them
-    $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
+    $gpermHandler->deleteByModule($module_id, $perm_name, $itemid);
 
     // Save the new permissions
     if (count($groups) > 0) {
         foreach ($groups as $group_id) {
-            $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+            $gpermHandler->addRight($perm_name, $itemid, $group_id, $module_id);
         }
     }
 }
@@ -93,7 +93,7 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result))) {
         $ok_group[] = 'name' === $mode ? $name : $gperm_groupid;
     }
 

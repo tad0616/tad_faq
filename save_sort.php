@@ -1,5 +1,5 @@
 <?php
-include_once '../../mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 $updateRecordsArray = $_POST['tr'];
 
 $sort = 1;
