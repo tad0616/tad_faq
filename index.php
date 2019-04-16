@@ -23,7 +23,7 @@ function list_all()
     $data = [];
     $i = 3;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
-        if (!in_array($fcsn, $read_power, true)) {
+        if (!in_array($fcsn, $read_power)) {
             continue;
         }
 
@@ -122,7 +122,7 @@ function get_faq_cate_opt($the_fcsn = '')
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
-        if ($isAdmin or in_array($fcsn, $edit_fcsn, true)) {
+        if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
             $opt .= "<option value='$fcsn' $selected>$title</option>";
         }
     }
