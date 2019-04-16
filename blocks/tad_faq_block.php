@@ -14,8 +14,8 @@ function tad_faq_show($options)
 
     $content = [];
     $i = 0;
-    while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
-        if (!in_array($fcsn, $read_power, true)) {
+    while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
+        if (!in_array($fcsn, $read_power)) {
             continue;
         }
 

@@ -23,7 +23,7 @@ function list_all()
     $data = [];
     $i = 3;
     while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
-        if (!in_array($fcsn, $read_power, true)) {
+        if (!in_array($fcsn, $read_power)) {
             continue;
         }
 
@@ -70,7 +70,7 @@ function list_faq($fcsn = '')
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fcsn='$fcsn' order by sort";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $i = 1;
-    while (false !== (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result))) {
+    while (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result)) {
         $enable_txt = ('1' == $enable) ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
         $update_enable = ('1' == $enable) ? '0' : '1';
 
@@ -120,9 +120,9 @@ function get_faq_cate_opt($the_fcsn = '')
     $edit_fcsn = chk_faq_cate_power('faq_edit');
     $sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($fcsn, $title) = $xoopsDB->fetchRow($result))) {
+    while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
-        if ($isAdmin or in_array($fcsn, $edit_fcsn, true)) {
+        if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
             $opt .= "<option value='$fcsn' $selected>$title</option>";
         }
     }
