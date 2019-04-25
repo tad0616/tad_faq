@@ -1,24 +1,25 @@
 <?php
 
-use XoopsModules\Tad_faq\Utility;
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_faq\Update;
 
 function xoops_module_update_tad_faq(&$module, $old_version)
 {
     global $xoopsDB;
 
-    if (!Utility::chk_chk1()) {
-        Utility::go_update1();
+    if (!Update::chk_chk1()) {
+        Update::go_update1();
     }
 
     $old_fckeditor = XOOPS_ROOT_PATH . '/modules/tad_faq/fckeditor';
     if (is_dir($old_fckeditor)) {
         Utility::delete_directory($old_fckeditor);
     }
-    if (Utility::chk_uid()) {
-        Utility::go_update_uid();
+    if (Update::chk_uid()) {
+        Update::go_update_uid();
     }
 
-    Utility::chk_tad_faq_block();
+    Update::chk_tad_faq_block();
 
     return true;
 }

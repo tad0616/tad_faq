@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_faq_adm_main.tpl';
 include_once 'header.php';
@@ -84,7 +86,7 @@ function list_tad_faq_cate()
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
     $i = 0;
@@ -103,7 +105,7 @@ function list_tad_faq_cate()
 
         $i++;
     }
-    $xoopsTpl->assign('jquery', get_jquery(true));
+    $xoopsTpl->assign('jquery', Utility::get_jquery(true));
     $xoopsTpl->assign('all_content', $data);
 }
 
@@ -112,7 +114,7 @@ function update_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$_POST['title']}', `description` = '{$_POST['description']}', `cate_pic` = '{$_POST['cate_pic']}' where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
     $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
@@ -129,7 +131,7 @@ function delete_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //自動取得新排序
@@ -137,7 +139,7 @@ function get_max_sort()
 {
     global $xoopsDB, $xoopsModule;
     $sql = 'SELECT max(sort) FROM ' . $xoopsDB->prefix('tad_faq_cate') . " WHERE of_fcsn=''";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
 
     return ++$sort;

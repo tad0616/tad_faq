@@ -1,9 +1,8 @@
 <?php
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-}
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+use XoopsModules\Tadtools\Utility;
+
+xoops_loadLanguage('main', 'tadtools');
+
 include_once 'function_block.php';
 
 //以流水號取得某筆tad_faq_cate資料
@@ -15,7 +14,7 @@ function get_tad_faq_cate($fcsn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -30,7 +29,7 @@ function get_tad_faq_content($fqsn = '')
     }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn='$fqsn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -50,7 +49,7 @@ function insert_tad_faq_cate($new_title = '')
     $cate_pic = $myts->addSlashes($_POST['cate_pic']);
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$of_fcsn}','{$title}','{$description}','{$sort}','{$cate_pic}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $fcsn = $xoopsDB->getInsertId();
 
@@ -91,7 +90,7 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
 
     $sql = 'select a.gperm_groupid,b.name from ' . $xoopsDB->prefix('group_permission') . ' as a left join ' . $xoopsDB->prefix('groups') . " as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
         $ok_group[] = 'name' === $mode ? $name : $gperm_groupid;
