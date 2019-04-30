@@ -1,6 +1,6 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
-
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_faq_adm_main.tpl';
 include_once 'header.php';
@@ -65,13 +65,9 @@ function tad_faq_cate_form($fcsn = '')
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_edit_group = $SelectGroup_name->render();
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $fck = new CKEditor('tad_faq', 'description', $description);
-    $fck->setHeight(100);
-    $editor = $fck->render();
+    $CkEditor = new CkEditor('tad_faq', 'description', $description);
+    $CkEditor->setHeight(100);
+    $editor = $CkEditor->render();
 
     $op = (empty($fcsn)) ? 'insert_tad_faq_cate' : 'update_tad_faq_cate';
 

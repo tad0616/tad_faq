@@ -157,14 +157,9 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
 
     $faq_cate_opt = get_faq_cate_opt($fcsn);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fck.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $ck = new CKEditor('tad_faq', 'content', $content);
-    $ck->setHeight(400);
-    $editor = $ck->render();
+    $CkEditor = new CkEditor('tad_faq', 'content', $content);
+    $CkEditor->setHeight(400);
+    $editor = $CkEditor->render();
 
     $op = (empty($fqsn)) ? 'insert_tad_faq_content' : 'update_tad_faq_content';
     //$op="replace_tad_faq_content";
@@ -182,7 +177,7 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
 function insert_tad_faq_content()
 {
     global $xoopsDB, $xoopsUser;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);
@@ -205,7 +200,7 @@ function insert_tad_faq_content()
 function update_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);

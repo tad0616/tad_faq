@@ -40,7 +40,7 @@ function insert_tad_faq_cate($new_title = '')
 {
     global $xoopsDB;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $of_fcsn = (int) $_POST['of_fcsn'];
     $sort = (int) $_POST['sort'];
 
