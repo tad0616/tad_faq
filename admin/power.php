@@ -24,7 +24,7 @@ while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
 }
 
 $perm_desc = '';
-$formi = new XoopsGroupPermForm('', $module_id, 'faq_read', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'faq_read', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
@@ -32,7 +32,7 @@ foreach ($item_list as $item_id => $item_name) {
 $main1 = $formi->render();
 $xoopsTpl->assign('main1', $main1);
 
-$formi = new XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }

@@ -56,12 +56,12 @@ function tad_faq_cate_form($fcsn = '')
     }
 
     //可見群組
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'faq_read', true, $read_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'faq_read', true, $read_group, 6, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_read_group = $SelectGroup_name->render();
 
     //可上傳群組
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'faq_edit', true, $post_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'faq_edit', true, $post_group, 6, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_edit_group = $SelectGroup_name->render();
 
