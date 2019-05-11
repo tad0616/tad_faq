@@ -102,7 +102,7 @@ function copyfaq($categoryid = '')
     $where_categoryid = empty($categoryid) ? '' : "where categoryid ='$categoryid'";
     $sql = 'select * from `' . $xoopsDB->prefix('smartfaq_categories') . "` $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `categoryid`, `parentid`, `name`, `description`, `total`, `weight`, `created`
         foreach ($all as $k => $v) {
@@ -148,7 +148,7 @@ function listfaq($categoryid = '')
     $where_categoryid = empty($categoryid) ? '' : "where a.categoryid ='$categoryid'";
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
         foreach ($all as $k => $v) {
@@ -174,7 +174,7 @@ function import_faq($categoryid = '')
     $where_categoryid = empty($categoryid) ? '' : "where a.categoryid ='$categoryid'";
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
     $result = $xoopsDB->query($sql) or redirect_header('index.php', 3, $sql);
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         //以下會產生這些變數： `faqid`, `categoryid`, `question`, `howdoi`, `diduno`, `uid`, `datesub`, `status`, `counter`, `weight`, `html`, `smiley`, `xcodes`, `image`, `linebreak`, `cancomment`, `comments`, `notifypub`, `modulelink`, `contextpage`, `exacturl`, `partialview`
         foreach ($all as $k => $v) {

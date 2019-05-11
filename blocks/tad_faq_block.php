@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 //區塊主函式 (會列出所有常見問題的分類)
 function tad_faq_show($options)
 {
@@ -10,7 +12,7 @@ function tad_faq_show($options)
     $counter = get_cate_count();
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $content = [];
     $i = 0;

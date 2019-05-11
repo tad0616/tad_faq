@@ -1,7 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_index.tpl';
+$xoopsOption['template_main'] = 'tad_faq_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------function區--------------*/
@@ -18,7 +20,7 @@ function list_all()
     $counter = get_cate_count();
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
     $i = 3;
@@ -53,10 +55,10 @@ function list_all()
 function list_faq($fcsn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsTpl;
-    get_jquery(true);
+    Utility::get_jquery(true);
     //權限檢查
-    $faq_read_power = power_chk('faq_read', $fcsn);
-    $faq_edit_power = power_chk('faq_edit', $fcsn);
+    $faq_read_power = Utility::power_chk('faq_read', $fcsn);
+    $faq_edit_power = Utility::power_chk('faq_edit', $fcsn);
     // die(var_dump($faq_read_power));
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     if (!$faq_read_power) {
@@ -68,7 +70,7 @@ function list_faq($fcsn = '')
     $now_uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fcsn='$fcsn' order by sort";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $i = 1;
     while (list($fqsn, $fcsn, $title, $sort, $uid, $post_date, $content, $enable, $counter) = $xoopsDB->fetchRow($result)) {
         $enable_txt = ('1' == $enable) ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
@@ -101,7 +103,7 @@ function delete_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
     $sql = 'delete from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //啟動或關閉
@@ -109,7 +111,7 @@ function update_status($fqsn = '', $enable = '')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set enable='{$enable}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //分類選單
@@ -119,7 +121,7 @@ function get_faq_cate_opt($the_fcsn = '')
     $opt = '';
     $edit_fcsn = chk_faq_cate_power('faq_edit');
     $sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
         if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
@@ -155,14 +157,9 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
 
     $faq_cate_opt = get_faq_cate_opt($fcsn);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/fck.php')) {
-        redirect_header('index.php', 3, _MD_NEED_TADTOOLS);
-    }
-
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
-    $ck = new CKEditor('tad_faq', 'content', $content);
-    $ck->setHeight(400);
-    $editor = $ck->render();
+    $CkEditor = new CkEditor('tad_faq', 'content', $content);
+    $CkEditor->setHeight(400);
+    $editor = $CkEditor->render();
 
     $op = (empty($fqsn)) ? 'insert_tad_faq_content' : 'update_tad_faq_content';
     //$op="replace_tad_faq_content";
@@ -180,7 +177,7 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
 function insert_tad_faq_content()
 {
     global $xoopsDB, $xoopsUser;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);
@@ -194,7 +191,7 @@ function insert_tad_faq_content()
     $sort = get_max_faq_sort($_POST['fcsn']);
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_content') . " (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) values('{$fcsn}','{$_POST['title']}','{$sort}','{$uid}','{$now}','{$_POST['content']}','{$_POST['enable']}')";
-    $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
 }
@@ -203,7 +200,7 @@ function insert_tad_faq_content()
 function update_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);
@@ -216,7 +213,7 @@ function update_tad_faq_content($fqsn = '')
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
     $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set  `fcsn` = '{$fcsn}', `title` = '{$_POST['title']}', `post_date` = '{$now}', `content` = '{$_POST['content']}', `enable` = '{$_POST['enable']}' where fqsn='$fqsn'";
-    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
 }
@@ -226,7 +223,7 @@ function get_max_faq_sort($fcsn = '')
 {
     global $xoopsDB, $xoopsModule;
     $sql = 'select max(sort) from ' . $xoopsDB->prefix('tad_faq_content') . " where fcsn='{$fcsn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
 
     return ++$sort;
@@ -274,7 +271,7 @@ switch ($op) {
         break;
 }
 
-$xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 $xoopsTpl->assign('isAdmin', $isAdmin);
 $xoTheme->addStylesheet('modules/tad_faq/module.css');
 
