@@ -54,17 +54,17 @@ function tad_faq_cate_form($fcsn = '')
     }
 
     //可見群組
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'faq_read', true, $read_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'faq_read', true, $read_group, 6, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_read_group = $SelectGroup_name->render();
 
     //可上傳群組
-    $SelectGroup_name = new XoopsFormSelectGroup('', 'faq_edit', true, $post_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('', 'faq_edit', true, $post_group, 6, true);
     $SelectGroup_name->setExtra("class='span12 form-control'");
     $faq_edit_group = $SelectGroup_name->render();
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ck.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/ck.php';
     $fck = new CKEditor('tad_faq', 'description', $description);
@@ -88,7 +88,7 @@ function list_tad_faq_cate()
 
     $data = [];
     $i = 0;
-    while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
+    while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         $faq_read = get_cate_enable_group('faq_read', $fcsn, 'name');
         $faq_edit = get_cate_enable_group('faq_edit', $fcsn, 'name');
 

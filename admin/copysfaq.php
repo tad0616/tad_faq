@@ -30,7 +30,7 @@ function list_faq()
     //轉移權限(原權限)
     $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` ='{$mod_id}' ";
     $result = $xoopsDB->queryF($sql) or redirect_header('index.php', 3, $sql);
-    while (false !== (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result))) {
+    while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
@@ -39,7 +39,7 @@ function list_faq()
     $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` ='{$mid}' ";
 
     $result = $xoopsDB->queryF($sql) or redirect_header('index.php', 3, $sql);
-    while (false !== (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result))) {
+    while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 

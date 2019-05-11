@@ -27,7 +27,7 @@ if (!function_exists('chk_faq_cate_power')) {
 
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-        while (false !== (list($gperm_itemid) = $xoopsDB->fetchRow($result))) {
+        while (list($gperm_itemid) = $xoopsDB->fetchRow($result)) {
             $ok_cat[] = $gperm_itemid;
         }
 
@@ -40,9 +40,10 @@ if (!function_exists('get_cate_count')) {
     function get_cate_count()
     {
         global $xoopsDB;
+        $counter = [];
         $sql = 'SELECT fcsn,count(*) FROM ' . $xoopsDB->prefix('tad_faq_content') . ' GROUP BY fcsn';
         $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($fcsn, $count) = $xoopsDB->fetchRow($result))) {
+        while (list($fcsn, $count) = $xoopsDB->fetchRow($result)) {
             $counter[$fcsn] = $count;
         }
 

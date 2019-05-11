@@ -22,7 +22,7 @@ function list_all()
 
     $data = [];
     $i = 3;
-    while (false !== (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result))) {
+    while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         if (!in_array($fcsn, $read_power)) {
             continue;
         }

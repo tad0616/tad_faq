@@ -17,12 +17,12 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 
 $sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate');
 $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-while (false !== (list($fcsn, $title) = $xoopsDB->fetchRow($result))) {
+while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
     $item_list[$fcsn] = $title;
 }
 
 $perm_desc = '';
-$formi = new XoopsGroupPermForm('', $module_id, 'faq_read', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'faq_read', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
@@ -30,7 +30,7 @@ foreach ($item_list as $item_id => $item_name) {
 $main1 = $formi->render();
 $xoopsTpl->assign('main1', $main1);
 
-$formi = new XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
