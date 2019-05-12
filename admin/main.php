@@ -2,16 +2,16 @@
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = 'tad_faq_adm_main.tpl';
-include_once 'header.php';
-include_once '../function.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_main.tpl';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 //tad_faq_cate編輯表單
 function tad_faq_cate_form($fcsn = '')
 {
     global $xoopsDB, $xoopsTpl, $xoopsModule;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
     if (!empty($fcsn)) {
@@ -42,10 +42,10 @@ function tad_faq_cate_form($fcsn = '')
 
     $mod_id = $xoopsModule->getVar('mid');
 
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modulepermHandler = xoops_getHandler('groupperm');
 
-    $read_group = $moduleperm_handler->getGroupIds('faq_read', $fcsn, $mod_id);
-    $post_group = $moduleperm_handler->getGroupIds('faq_edit', $fcsn, $mod_id);
+    $read_group = $modulepermHandler->getGroupIds('faq_read', $fcsn, $mod_id);
+    $post_group = $modulepermHandler->getGroupIds('faq_edit', $fcsn, $mod_id);
 
     if (empty($read_group)) {
         $read_group = [1, 2, 3];
@@ -142,7 +142,7 @@ function get_max_sort()
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
 $fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
@@ -177,4 +177,4 @@ switch ($op) {
         break;
 }
 
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

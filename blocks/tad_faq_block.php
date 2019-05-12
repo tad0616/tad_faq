@@ -5,7 +5,7 @@ use XoopsModules\Tadtools\Utility;
 function tad_faq_show($options)
 {
     global $xoopsDB;
-    include_once XOOPS_ROOT_PATH . '/modules/tad_faq/function_block.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tad_faq/function_block.php';
 
     $read_power = chk_faq_cate_power('faq_read');
 

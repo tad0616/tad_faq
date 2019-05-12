@@ -26,7 +26,7 @@ function tad_faq_search($queryarray, $andor, $limit, $offset, $userid)
     $result = $xoopsDB->query($sql, $limit, $offset);
     $ret = [];
     $i = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[$i]['image'] = 'images/comment_edit.png';
         $ret[$i]['link'] = 'index.php?fcsn=' . $myrow['fcsn'];
         $ret[$i]['title'] = $myrow['title'];

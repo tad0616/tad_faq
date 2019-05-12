@@ -150,11 +150,11 @@
         </div>
         <div class="col-sm-4">
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="enable" id="enable_1" value="1" <{if $enable == "1"}>checked="checked"<{/if}>>
+              <input class="form-check-input" type="radio" name="enable" id="enable_1" value="1" <{if $enable == "1"}>checked<{/if}>>
               <label class="form-check-label" for="enable_1"><{$smarty.const._MD_TADFAQ_FAQ_ENABLE}></label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="enable" id="enable_0" value="0" <{if $enable != "1"}>checked="checked"<{/if}>>
+              <input class="form-check-input" type="radio" name="enable" id="enable_0" value="0" <{if $enable != "1"}>checked<{/if}>>
               <label class="form-check-label" for="enable_0"><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}></label>
             </div>
         </div>

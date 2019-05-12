@@ -1,6 +1,6 @@
 <?php
-include '../../../include/cp_header.php';
-include '../function.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(__DIR__) . '/function.php';
 $sort = 1;
 foreach ($_POST['tr'] as $recordIDValue) {
     $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set `sort`='{$sort}' where `fcsn`='{$recordIDValue}'";

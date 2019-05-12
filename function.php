@@ -3,7 +3,7 @@ use XoopsModules\Tadtools\Utility;
 
 xoops_loadLanguage('main', 'tadtools');
 
-include_once 'function_block.php';
+require_once __DIR__ . '/function_block.php';
 
 //以流水號取得某筆tad_faq_cate資料
 function get_tad_faq_cate($fcsn = '')
@@ -69,15 +69,15 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
     global $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     // First, if the permissions are already there, delete them
-    $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
+    $gpermHandler->deleteByModule($module_id, $perm_name, $itemid);
 
     // Save the new permissions
     if (count($groups) > 0) {
         foreach ($groups as $group_id) {
-            $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+            $gpermHandler->addRight($perm_name, $itemid, $group_id, $module_id);
         }
     }
 }
