@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
