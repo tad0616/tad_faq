@@ -1,3 +1,7 @@
+Tad FAQ 2.5.5 (released from 2019-07-16)
+========================================================
+1. Fixed an issue where the FAQ could not be added.
+
 Tad FAQ 2.5.4 (released from 2019-05-10)
 ========================================================
 1. Support XOOPS 2.5.10
