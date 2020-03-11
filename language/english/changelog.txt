@@ -1,4 +1,4 @@
-Tad FAQ 2.5.5 (released from 2019-07-16)
+Tad FAQ 2.5.5 (released from 2019-07-17)
 ========================================================
 1. Fixed an issue where the FAQ could not be added.
 
