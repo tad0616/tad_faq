@@ -1,8 +1,12 @@
-Tad FAQ 2.5.5 (released from 2019-07-17)
+Tad FAQ 2.5.6 (2020-03-14 released)
+===============================================
+1. Correction for accessibility 2.0 AA standard
+
+Tad FAQ 2.5.5 (2019-07-17 released)
 ========================================================
 1. Fixed an issue where the FAQ could not be added.
 
-Tad FAQ 2.5.4 (released from 2019-05-10)
+Tad FAQ 2.5.4 (2019-05-10 released)
 ========================================================
 1. Support XOOPS 2.5.10
 2. No longer supports PHP 5.3
