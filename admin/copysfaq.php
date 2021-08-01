@@ -1,5 +1,5 @@
 <?php
-//newbb 3.07
+use Xmf\Request;
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_sfaq.tpl';
 require_once __DIR__ . '/header.php';
@@ -10,7 +10,7 @@ require_once dirname(__DIR__) . '/function.php';
 //列出所有tad_faq_board資料
 function list_faq()
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     //取得某模組編號
 
@@ -143,7 +143,7 @@ function tad_faq_cate_exist($categoryid)
 //列出常見問答
 function listfaq($categoryid = '')
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     $where_categoryid = empty($categoryid) ? '' : "where a.categoryid ='$categoryid'";
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
@@ -169,7 +169,7 @@ function listfaq($categoryid = '')
 //匯入常見問答
 function import_faq($categoryid = '')
 {
-    global $xoopsDB, $xoopsModule, $isAdmin, $xoopsTpl;
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
 
     $where_categoryid = empty($categoryid) ? '' : "where a.categoryid ='$categoryid'";
     $sql = 'select a.* , b.answer from `' . $xoopsDB->prefix('smartfaq_faq') . '` as a left join `' . $xoopsDB->prefix('smartfaq_answers') . "` as b on a.faqid=b.faqid $where_categoryid";
@@ -194,10 +194,9 @@ function import_faq($categoryid = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$categoryid = system_CleanVars($_REQUEST, 'categoryid', 0, 'int');
-$fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
+$op = Request::getString('op');
+$fcsn = Request::getInt('fcsn');
+$categoryid = Request::getInt('categoryid');
 
 switch ($op) {
     /*---判斷動作請貼在下方---*/

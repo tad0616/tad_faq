@@ -6,7 +6,7 @@ use XoopsModules\Tadtools\Utility;
 if (!function_exists('chk_faq_cate_power')) {
     function chk_faq_cate_power($kind = '')
     {
-        global $xoopsDB, $xoopsUser, $isAdmin;
+        global $xoopsDB, $xoopsUser;
 
         $moduleHandler = xoops_getHandler('module');
 
@@ -14,14 +14,14 @@ if (!function_exists('chk_faq_cate_power')) {
 
         $module_id = $xoopsModule->getVar('mid');
         if (!empty($xoopsUser)) {
-            if ($isAdmin) {
+            if ($_SESSION['tad_faq_adm']) {
                 $ok_cat[] = '0';
             }
             $user_array = $xoopsUser->getGroups();
             $gsn_arr = implode(',', $user_array);
         } else {
             $user_array = [3];
-            $isAdmin = 0;
+            unset($_SESSION['tad_faq_adm']);
             $gsn_arr = 3;
         }
 

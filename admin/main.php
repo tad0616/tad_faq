@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
@@ -142,10 +143,9 @@ function get_max_sort()
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
-$fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
+$op = Request::getString('op');
+$fcsn = Request::getInt('fcsn');
+$fqsn = Request::getInt('fqsn');
 
 switch ($op) {
     //新增資料
@@ -153,23 +153,24 @@ switch ($op) {
         insert_tad_faq_cate();
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //輸入表格
     case 'tad_faq_cate_form':
         tad_faq_cate_form($fcsn);
         break;
+
     //刪除資料
     case 'delete_tad_faq_cate':
         delete_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //更新資料
     case 'update_tad_faq_cate':
         update_tad_faq_cate($fcsn);
         header("location: {$_SERVER['PHP_SELF']}");
         exit;
-        break;
+
     //預設動作
     default:
         list_tad_faq_cate();

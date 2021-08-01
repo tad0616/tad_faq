@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
 
@@ -118,14 +119,14 @@ function update_status($fqsn = '', $enable = '')
 //分類選單
 function get_faq_cate_opt($the_fcsn = '')
 {
-    global $xoopsDB, $isAdmin;
+    global $xoopsDB;
     $opt = '';
     $edit_fcsn = chk_faq_cate_power('faq_edit');
     $sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
-        if ($isAdmin or in_array($fcsn, $edit_fcsn)) {
+        if ($_SESSION['tad_faq_adm'] or in_array($fcsn, $edit_fcsn)) {
             $opt .= "<option value='$fcsn' $selected>$title</option>";
         }
     }
@@ -231,10 +232,9 @@ function get_max_faq_sort($fcsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$fcsn = system_CleanVars($_REQUEST, 'fcsn', 0, 'int');
-$fqsn = system_CleanVars($_REQUEST, 'fqsn', 0, 'int');
+$op = Request::getString('op');
+$fcsn = Request::getInt('fcsn');
+$fqsn = Request::getInt('fqsn');
 
 switch ($op) {
     case 'update_status':
@@ -273,7 +273,6 @@ switch ($op) {
 }
 
 $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoopsTpl->assign('isAdmin', $isAdmin);
-$xoTheme->addStylesheet('modules/tad_faq/module.css');
+$xoTheme->addStylesheet('modules/tad_faq/css/module.css');
 
 require_once XOOPS_ROOT_PATH . '/footer.php';

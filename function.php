@@ -85,7 +85,7 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
 //判斷某類別中有哪些觀看或發表的群組 $mode=name or id
 function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
     $sql = 'select a.gperm_groupid,b.name from ' . $xoopsDB->prefix('group_permission') . ' as a left join ' . $xoopsDB->prefix('groups') . " as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
