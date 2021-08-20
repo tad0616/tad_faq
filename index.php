@@ -2,6 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Wcag;
 
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
@@ -183,6 +184,7 @@ function insert_tad_faq_content()
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);
+    $_POST['content'] = Wcag::amend($_POST['content']);
 
     if (!empty($_POST['new_cate'])) {
         $fcsn = insert_tad_faq_cate($_POST['new_cate']);
@@ -206,6 +208,7 @@ function update_tad_faq_content($fqsn = '')
     $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
     $_POST['title'] = $myts->addSlashes($_POST['title']);
     $_POST['content'] = $myts->addSlashes($_POST['content']);
+    $_POST['content'] = Wcag::amend($_POST['content']);
 
     if (!empty($_POST['new_cate'])) {
         $fcsn = insert_tad_faq_cate($_POST['new_cate']);

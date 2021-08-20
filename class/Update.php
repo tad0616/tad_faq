@@ -4,7 +4,6 @@ namespace XoopsModules\Tad_faq;
 
 use XoopsModules\Tadtools\Utility;
 
-
 /*
 Update Class Definition
 
@@ -101,13 +100,13 @@ class Update
 
                 //連同樣板以及樣板實體檔案也要刪掉
                 $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
-            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
-            where a.tpl_refid='$bid' and a.tpl_module='tad_faq' and a.tpl_type='block'";
+                    left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
+                    where a.tpl_refid='$bid' and a.tpl_module='tad_faq' and a.tpl_type='block'";
                 $xoopsDB->queryF($sql);
             } else {
                 $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
-            set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
-            where tpl_refid='{$bid}'";
+                    set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
+                    where tpl_refid='{$bid}'";
                 $xoopsDB->queryF($sql);
             }
         }

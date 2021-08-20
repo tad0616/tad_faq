@@ -2,6 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Wcag;
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_main.tpl';
 require_once __DIR__ . '/header.php';
@@ -110,7 +111,13 @@ function list_tad_faq_cate()
 function update_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
-    $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$_POST['title']}', `description` = '{$_POST['description']}', `cate_pic` = '{$_POST['cate_pic']}' where fcsn='$fcsn'";
+
+    $title = $myts->addSlashes($_POST['title']);
+    $description = $myts->addSlashes($_POST['description']);
+    $description = Wcag::amend($description);
+    $cate_pic = $myts->addSlashes($_POST['cate_pic']);
+
+    $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$title}', `description` = '{$description}', `cate_pic` = '{$cate_pic}' where fcsn='$fcsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
