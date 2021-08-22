@@ -1,3 +1,8 @@
+Tad FAQ 2.7 (2021-08-22 釋出)
+====================================
+1.加入無障礙 2.1 AA 自動修正功能
+
+
 Tad FAQ 2.6 (2021-08-01 released)
 ====================================
 1.Compliant with the new Accessibility AA Standard 2021/07
