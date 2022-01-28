@@ -56,7 +56,7 @@
       <form action="main.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
         <div class="row">
           <div class="col-sm-9">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
               <label class="col-sm-2 col-form-label text-sm-right control-label">
                 <{$smarty.const._MA_TADFAQ_TITLE}>
               </label>
@@ -65,7 +65,7 @@
               </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-3">
               <label class="col-sm-2 col-form-label text-sm-right control-label">
                 <{$smarty.const._MA_TADFAQ_CONTENT}>
               </label>

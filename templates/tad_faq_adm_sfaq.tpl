@@ -7,7 +7,7 @@
       <h1><{$smarty.const._MA_TADFAQ_NO_SFAQ}></h1>
     </div>
   <{elseif $op=='listfaq'}>
-    <div class="pull-right">
+    <div class="pull-right float-right pull-end">
      <a href="copysfaq.php?op=import_faq&categoryid=<{$categoryid}>" class="btn btn-lg btn-info">Import All</a>
     </div>
     <div class="clearfix"></div>
@@ -45,7 +45,7 @@
     <div class="clearfix"></div>
 
   <{else}>
-    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right">copy all</a>
+    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right float-right pull-end">copy all</a>
     <table class="table table-striped table-bordered table-hover">
     <tr>
       <th>#</th>

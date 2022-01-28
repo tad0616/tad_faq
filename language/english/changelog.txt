@@ -1,7 +1,14 @@
-Tad FAQ 2.7 (2021-08-22 釋出)
+Tad FAQ 2.9 (2022-01-28 released)
 ====================================
-1.加入無障礙 2.1 AA 自動修正功能
+1.Support BootStrap5
 
+Tad FAQ 2.8 (2021-08-24 released)
+====================================
+1.Search function security correction
+
+Tad FAQ 2.7 (2021-08-22 released)
+====================================
+1.Added Accessibility 2.1 AA auto-correct function
 
 Tad FAQ 2.6 (2021-08-01 released)
 ====================================

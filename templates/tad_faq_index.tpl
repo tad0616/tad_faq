@@ -5,7 +5,7 @@
     <div class="col-sm-6">
       <h2><{$module_title}></h2>
     </div>
-    <div class="col-sm-6 text-right">
+    <div class="col-sm-6 text-right text-end">
       <{if $smarty.session.tad_faq_adm or $edit_power}>
         <a href="index.php?op=tad_faq_content_form" class="btn btn-primary"><{$smarty.const._TAD_ADD}></a>
       <{/if}>
@@ -15,7 +15,7 @@
   <{foreach from=$faq item=faq}>
     <{if $faq.counter}>
       <div class="well card card-body bg-light m-1">
-        <a href="index.php?fcsn=<{$faq.fcsn}>" class="text-left">
+        <a href="index.php?fcsn=<{$faq.fcsn}>" class="text-left text-start">
           <{$faq.title}>
           <span class="badge"><{$faq.num}></span>
         </a>
@@ -116,7 +116,7 @@
   <h2><{$smarty.const._MD_TADFAQ_ADD_CONTENT}></h2>
 
     <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-      <div class="form-group row">
+      <div class="form-group row mb-3">
         <label class="col-sm-1 col-form-label text-sm-right control-label">
           <{$smarty.const._MD_TADFAQ_CATE_MENU}>
         </label>
@@ -141,7 +141,7 @@
         <{/if}>
       </div>
 
-      <div class="form-group row">
+      <div class="form-group row mb-3">
         <label class="col-sm-1 col-form-label text-sm-right control-label">
           <{$smarty.const._MD_TADFAQ_FAQ_TITLE}>
         </label>
@@ -164,7 +164,7 @@
         </div>
       </div>
 
-      <div class="form-group row">
+      <div class="form-group row mb-3">
         <label class="col-sm-1 col-form-label text-sm-right control-label">
           <{$smarty.const._MD_TADFAQ_CONTENT}>
         </label>
