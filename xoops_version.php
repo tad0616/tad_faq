@@ -6,7 +6,7 @@ $modversion = [];
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADFAQ_NAME;
-$modversion['version'] = 2.9;
+$modversion['version'] = 3.0;
 $modversion['description'] = _MI_TADFAQ_DESC;
 $modversion['author'] = _MI_TADFAQ_AUTHOR;
 $modversion['credits'] = _MI_TADFAQ_CREDITS;
@@ -17,7 +17,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2022-01-28';
+$modversion['release_date'] = '2022-10-24';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';

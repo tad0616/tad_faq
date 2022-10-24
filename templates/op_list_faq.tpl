@@ -42,9 +42,9 @@ $(document).ready(function(){
     <div class="alert alert-info">
         <div class="input-group">
             <div class="input-group-prepend input-group-addon">
-                <span class="input-group-text">切換分類</span>
+                <span class="input-group-text"><{$smarty.const._MD_TADFAQ_CHANGE_CATE}></span>
             </div>
-            <select id="fcsn_select" class="form-control" placeholder="請選擇分類" onchange="location.href='index.php?fcsn='+this.value">
+            <select id="fcsn_select" class="form-control" placeholder="<{$smarty.const._MD_TADFAQ_SELECT_CATE}>" onchange="location.href='index.php?fcsn='+this.value">
             <{foreach from=$cates key=of_fcsn item=of_fcsn_cate}>
                 <{foreach from=$of_fcsn_cate key=fcsn item=cate}>
                     <option value="<{$fcsn}>" <{if $smarty.get.fcsn == $fcsn}>selected<{/if}>><{$cate.title}></option>

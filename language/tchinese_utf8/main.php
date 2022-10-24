@@ -16,3 +16,5 @@ define('_MD_TADFAQ_FAQ_ENABLE', '立即啟用');
 define('_MD_TADFAQ_FAQ_UNABLE', '暫時關閉');
 define('_MD_TADFAQ_NO_ACCESS_POWER', '您沒有讀取此分類的權限。');
 define('_MD_TADFAQ_ALL_FAQ', '常見問題列表');
+define('_MD_TADFAQ_CHANGE_CATE', '切換分類');
+define('_MD_TADFAQ_SELECT_CATE', '請選擇分類');
