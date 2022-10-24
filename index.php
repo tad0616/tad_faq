@@ -57,8 +57,9 @@ function list_all()
 //列出 FAQ 列表
 function list_faq($fcsn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule, $xoopsTpl;
+    global $xoopsDB, $xoopsUser, $xoopsTpl;
     Utility::get_jquery(true);
+
     //權限檢查
     $faq_read_power = Utility::power_chk('faq_read', $fcsn);
     $faq_edit_power = Utility::power_chk('faq_edit', $fcsn);
@@ -69,7 +70,10 @@ function list_faq($fcsn = '')
     }
 
     $xoopsTpl->assign('fcsn', $fcsn);
+    $cates = get_tad_faq_cate();
+    test($cates, 1);
     $cate = get_tad_faq_cate($fcsn);
+
     $now_uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fcsn='$fcsn' order by sort";
@@ -94,7 +98,7 @@ function list_faq($fcsn = '')
 
         $i++;
     }
-
+    $xoopsTpl->assign('cates', $cates);
     $xoopsTpl->assign('cate_title', $cate['title']);
     $xoopsTpl->assign('now_op', 'list_faq');
     $xoopsTpl->assign('faq', $data);
@@ -181,20 +185,21 @@ function insert_tad_faq_content()
 {
     global $xoopsDB, $xoopsUser;
     $myts = \MyTextSanitizer::getInstance();
-    $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
-    $_POST['title'] = $myts->addSlashes($_POST['title']);
-    $_POST['content'] = $myts->addSlashes($_POST['content']);
-    $_POST['content'] = Wcag::amend($_POST['content']);
+    $new_cate = $myts->addSlashes($_POST['new_cate']);
+    $title = $myts->addSlashes($_POST['title']);
+    $content = $myts->addSlashes($_POST['content']);
+    $content = Wcag::amend($content);
+    $enable = (int) $_POST['enable'];
 
-    if (!empty($_POST['new_cate'])) {
-        $fcsn = insert_tad_faq_cate($_POST['new_cate']);
+    if (!empty($new_cate)) {
+        $fcsn = insert_tad_faq_cate($new_cate);
     } else {
         $fcsn = $_POST['fcsn'];
     }
     $uid = ($xoopsUser) ? $xoopsUser->getVar('uid') : '';
     $sort = get_max_faq_sort($_POST['fcsn']);
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_content') . " (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) values('{$fcsn}','{$_POST['title']}','{$sort}','{$uid}','{$now}','{$_POST['content']}','{$_POST['enable']}')";
+    $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_content') . " (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) values('{$fcsn}','{$title}','{$sort}','{$uid}','{$now}','{$content}','{$enable}')";
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
@@ -205,19 +210,20 @@ function update_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
     $myts = \MyTextSanitizer::getInstance();
-    $_POST['new_cate'] = $myts->addSlashes($_POST['new_cate']);
-    $_POST['title'] = $myts->addSlashes($_POST['title']);
-    $_POST['content'] = $myts->addSlashes($_POST['content']);
-    $_POST['content'] = Wcag::amend($_POST['content']);
+    $new_cate = $myts->addSlashes($_POST['new_cate']);
+    $title = $myts->addSlashes($_POST['title']);
+    $content = $myts->addSlashes($_POST['content']);
+    $content = Wcag::amend($content);
+    $enable = (int) $_POST['enable'];
 
-    if (!empty($_POST['new_cate'])) {
-        $fcsn = insert_tad_faq_cate($_POST['new_cate']);
+    if (!empty($new_cate)) {
+        $fcsn = insert_tad_faq_cate($new_cate);
     } else {
         $fcsn = $_POST['fcsn'];
     }
 
     $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set  `fcsn` = '{$fcsn}', `title` = '{$_POST['title']}', `post_date` = '{$now}', `content` = '{$_POST['content']}', `enable` = '{$_POST['enable']}' where fqsn='$fqsn'";
+    $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set  `fcsn` = '{$fcsn}', `title` = '{$title}', `post_date` = '{$now}', `content` = '{$content}', `enable` = '{$enable}' where fqsn='$fqsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;

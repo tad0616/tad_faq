@@ -11,12 +11,20 @@ function get_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
     if (empty($fcsn)) {
-        return;
-    }
+        $data = [];
+        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " order by sort";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        while ($cate = $xoopsDB->fetchArray($result)) {
+            $data[$cate['of_fcsn']][$cate['fcsn']] = $cate;
+        }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    $data = $xoopsDB->fetchArray($result);
+    } else {
+
+        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $data = $xoopsDB->fetchArray($result);
+
+    }
 
     return $data;
 }
@@ -99,4 +107,15 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
     }
 
     return $ok_group;
+}
+
+function test($var, $v = 1, $mode = 'dd')
+{
+    if ($_GET['test'] == $v) {
+        if ($mode == 'die') {
+            die($var);
+        } else {
+            Utility::dd($var);
+        }
+    }
 }
