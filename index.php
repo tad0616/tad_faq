@@ -184,10 +184,10 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
 function insert_tad_faq_content()
 {
     global $xoopsDB, $xoopsUser;
-    $myts = \MyTextSanitizer::getInstance();
-    $new_cate = $myts->addSlashes($_POST['new_cate']);
-    $title = $myts->addSlashes($_POST['title']);
-    $content = $myts->addSlashes($_POST['content']);
+
+    $new_cate = $xoopsDB->escape($_POST['new_cate']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $content = $xoopsDB->escape($_POST['content']);
     $content = Wcag::amend($content);
     $enable = (int) $_POST['enable'];
 
@@ -209,10 +209,9 @@ function insert_tad_faq_content()
 function update_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
-    $myts = \MyTextSanitizer::getInstance();
-    $new_cate = $myts->addSlashes($_POST['new_cate']);
-    $title = $myts->addSlashes($_POST['title']);
-    $content = $myts->addSlashes($_POST['content']);
+    $new_cate = $xoopsDB->escape($_POST['new_cate']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $content = $xoopsDB->escape($_POST['content']);
     $content = Wcag::amend($content);
     $enable = (int) $_POST['enable'];
 

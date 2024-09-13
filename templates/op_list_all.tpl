@@ -9,12 +9,12 @@
     </div>
 </div>
 
-<{foreach from=$faq item=faq}>
-    <{if $faq.counter}>
+<{foreach from=$faq item=data}>
+    <{if $data.counter}>
     <div class="well card card-body bg-light m-1">
-        <a href="index.php?fcsn=<{$faq.fcsn}>" class="text-left text-start">
-        <{$faq.title}>
-        <span class="badge"><{$faq.num}></span>
+        <a href="index.php?fcsn=<{$data.fcsn}>" class="text-left text-start">
+        <{$data.title}>
+        <span class="badge badge-info bg-info"><{$data.num}></span>
         </a>
     </div>
     <{/if}>

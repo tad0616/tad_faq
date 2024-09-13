@@ -112,11 +112,10 @@ function update_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $title = $myts->addSlashes($_POST['title']);
-    $description = $myts->addSlashes($_POST['description']);
+    $title = $xoopsDB->escape($_POST['title']);
+    $description = $xoopsDB->escape($_POST['description']);
     $description = Wcag::amend($description);
-    $cate_pic = $myts->addSlashes($_POST['cate_pic']);
+    $cate_pic = $xoopsDB->escape($_POST['cate_pic']);
 
     $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$title}', `description` = '{$description}', `cate_pic` = '{$cate_pic}' where fcsn='$fcsn'";
     $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);

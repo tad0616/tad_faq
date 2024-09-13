@@ -49,14 +49,13 @@ function insert_tad_faq_cate($new_title = '')
 {
     global $xoopsDB;
 
-    $myts = \MyTextSanitizer::getInstance();
     $of_fcsn = (int) $_POST['of_fcsn'];
     $sort = (int) $_POST['sort'];
 
-    $title = $new_title ? $myts->addSlashes($new_title) : $myts->addSlashes($_POST['title']);
-    $description = $myts->addSlashes($_POST['description']);
+    $title = $new_title ? $xoopsDB->escape($new_title) : $xoopsDB->escape($_POST['title']);
+    $description = $xoopsDB->escape($_POST['description']);
     $description = Wcag::amend($description);
-    $cate_pic = $myts->addSlashes($_POST['cate_pic']);
+    $cate_pic = $xoopsDB->escape($_POST['cate_pic']);
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$of_fcsn}','{$title}','{$description}','{$sort}','{$cate_pic}')";
     $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);

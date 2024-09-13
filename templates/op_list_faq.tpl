@@ -38,7 +38,7 @@ $(document).ready(function(){
 });
 </script>
 
-<{if $cates|@count > 0}>
+<{if $cates|is_array && $cates|@count > 0}>
     <div class="alert alert-info">
         <div class="input-group">
             <div class="input-group-prepend input-group-addon">
@@ -64,19 +64,19 @@ $(document).ready(function(){
 
 <{assign var="n" value=1}>
 <div id="sort">
-<{foreach from=$faq item=faq}>
+<{foreach from=$faq item=data}>
     <{if $faq.enable=="1" or $smarty.session.tad_faq_adm or $edit_power}>
-        <div class="faq_title well card card-body bg-light m-1" id="tr_<{$faq.fqsn}>">
+        <div class="faq_title well card card-body bg-light m-1" id="tr_<{$data.fqsn}>">
         <div class="row">
                 <div class="col-sm-11">
-                    <a name="#<{$faq.fqsn}>" id="<{$faq.fqsn}>" class="<{if $faq.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
+                    <a name="#<{$data.fqsn}>" id="<{$data.fqsn}>" class="<{if $faq.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
                         <{if $faq.enable=="1"}>
                         <{$n}>.
                         <{assign var="n" value=$n+1}>
                         <{else}>
                         ?.
                         <{/if}>
-                        <{$faq.title}>
+                        <{$data.title}>
                     </a>
                 </div>
 
@@ -84,23 +84,23 @@ $(document).ready(function(){
                     <{if $smarty.session.tad_faq_adm or $edit_power}>
                         <{if $faq.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
                     <{/if}>
-                    <span id="counter_tr_<{$faq.fqsn}>"><{$faq.counter}></span>
+                    <span id="counter_tr_<{$data.fqsn}>"><{$data.counter}></span>
                 </div>
             </div>
         </div>
 
 
-        <div id="tr_<{$faq.fqsn}>_ans" class="well card card-body m-1 faq_content" style="line-height: 1.8;">
+        <div id="tr_<{$data.fqsn}>_ans" class="well card card-body m-1 faq_content" style="line-height: 1.8;">
             <{if $smarty.session.tad_faq_adm or $edit_power}>
                 <div style="text-align:right;">
-                    <a href="index.php?op=update_status&fcsn=<{$fcsn}>&fqsn=<{$faq.fqsn}>&enable=<{$faq.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$faq.enable_txt}></a>
+                    <a href="index.php?op=update_status&fcsn=<{$fcsn}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$data.enable_txt}></a>
 
-                    <a href="javascript:delete_tad_faq_content_func(<{$faq.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                    <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
 
-                    <a href="index.php?op=tad_faq_content_form&fqsn=<{$faq.fqsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                    <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </div>
             <{/if}>
-            <{$faq.content}>
+            <{$data.content}>
         </div>
     <{/if}>
 <{/foreach}>
