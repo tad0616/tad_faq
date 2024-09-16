@@ -1,4 +1,4 @@
-<{if $block.content}>
+<{if $block.content|default:false}>
     <ol class="vertical_menu">
     <{foreach from=$block.content item=faq}>
         <li>

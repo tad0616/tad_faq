@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h2><{$smarty.const._MA_TADFAQ_CATE_INPUT_FORM}></h2>
-      <{if $all_content}>
+      <{if $all_content|default:false}>
       <{$jquery}>
       <script type='text/javascript'>
         function delete_tad_faq_cate_func(fcsn){

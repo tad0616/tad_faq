@@ -10,7 +10,7 @@
 </div>
 
 <{foreach from=$faq item=data}>
-    <{if $data.counter}>
+    <{if $data.counter|default:false}>
     <div class="well card card-body bg-light m-1">
         <a href="index.php?fcsn=<{$data.fcsn}>" class="text-left text-start">
         <{$data.title}>

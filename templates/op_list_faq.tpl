@@ -6,7 +6,7 @@ function delete_tad_faq_content_func(fqsn){
 }
 
 $(document).ready(function(){
-    <{if $smarty.session.tad_faq_adm}>
+    <{if $smarty.session.tad_faq_adm|default:false}>
         $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {
             var order = $(this).sortable("serialize");
             $.post("save_sort.php", order, function(theResponse){

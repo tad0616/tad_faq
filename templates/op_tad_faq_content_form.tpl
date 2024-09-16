@@ -5,20 +5,20 @@
     <label class="col-sm-1 col-form-label text-sm-right control-label">
       <{$smarty.const._MD_TADFAQ_CATE_MENU}>
     </label>
-    <{if $faq_cate_opt}>
+    <{if $faq_cate_opt|default:false}>
       <div class="col-sm-3">
         <select name="fcsn" size=1 class="form-control">
           <{$faq_cate_opt}>
         </select>
       </div>
 
-      <{if $smarty.session.tad_faq_adm}>
+      <{if $smarty.session.tad_faq_adm|default:false}>
         <div class="col-sm-8">
           <input type="text" name="new_cate" class="form-control" placeholder="<{$smarty.const._MD_TADFAQ_NEW_CATE}>">
         </div>
       <{/if}>
     <{else}>
-      <{if $smarty.session.tad_faq_adm}>
+      <{if $smarty.session.tad_faq_adm|default:false}>
         <div class="col-sm-11">
           <input type="text" name="new_cate" class="form-control" placeholder="<{$smarty.const._MD_TADFAQ_NEW_CATE}>">
         </div>
