@@ -4,7 +4,7 @@
     <div class="col-sm-12">
       <h2><{$smarty.const._MA_TADFAQ_CATE_INPUT_FORM}></h2>
       <{if $all_content|default:false}>
-      <{$jquery}>
+      <{$jquery|default:''}>
       <script type='text/javascript'>
         function delete_tad_faq_cate_func(fcsn){
           var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
@@ -61,7 +61,7 @@
                 <{$smarty.const._MA_TADFAQ_TITLE}>
               </label>
               <div class="col-sm-10">
-                <input type="text" name="title" value="<{$title}>" class="form-control">
+                <input type="text" name="title" value="<{$title|default:''}>" class="form-control">
               </div>
             </div>
 
@@ -70,7 +70,7 @@
                 <{$smarty.const._MA_TADFAQ_CONTENT}>
               </label>
               <div class="col-sm-10">
-                <{$editor}>
+                <{$editor|default:''}>
               </div>
             </div>
           </div>
@@ -78,15 +78,15 @@
           <div class="col-sm-3">
             <div class="row">
               <label><{$smarty.const._MA_TADFAQ_SET_ACCESS_POWER}></label>
-              <{$faq_read_group}>
+              <{$faq_read_group|default:''}>
             </div>
             <div class="row">
               <label><{$smarty.const._MA_TADFAQ_SET_EDIT_POWER}></label>
-              <{$faq_edit_group}>
+              <{$faq_edit_group|default:''}>
             </div>
             <div class="row text-center">
-              <input type="hidden" name="fcsn" value="<{$fcsn}>">
-              <input type="hidden" name="op" value="<{$op}>">
+              <input type="hidden" name="fcsn" value="<{$fcsn|default:''}>">
+              <input type="hidden" name="op" value="<{$op|default:''}>">
               <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
             </div>
           </div>

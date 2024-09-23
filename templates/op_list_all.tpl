@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-6">
-        <h2><{$module_title}></h2>
+        <h2><{$module_title|default:''}></h2>
     </div>
     <div class="col-sm-6 text-right text-end">
         <{if $smarty.session.tad_faq_adm or $edit_power}>

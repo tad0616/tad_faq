@@ -2,13 +2,13 @@
 <div class="container-fluid">
 
   <{if $show_error=='1'}>
-  <{$error}>
+  <{$error|default:''}>
     <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <h1><{$smarty.const._MA_TADFAQ_NO_SFAQ}></h1>
     </div>
   <{elseif $op=='listfaq'}>
     <div class="pull-right float-right pull-end">
-     <a href="copysfaq.php?op=import_faq&categoryid=<{$categoryid}>" class="btn btn-lg btn-info">Import All</a>
+     <a href="copysfaq.php?op=import_faq&categoryid=<{$categoryid|default:''}>" class="btn btn-lg btn-info">Import All</a>
     </div>
     <div class="clearfix"></div>
 
@@ -94,8 +94,8 @@
 
     <tr>
       <td colspan=6 class='bar'>
-      <{$add_button}>
-      <{$bar}>
+      <{$add_button|default:''}>
+      <{$bar|default:''}>
       </td>
     </tr>
     </table>

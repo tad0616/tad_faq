@@ -8,7 +8,7 @@
     <{if $faq_cate_opt|default:false}>
       <div class="col-sm-3">
         <select name="fcsn" size=1 class="form-control">
-          <{$faq_cate_opt}>
+          <{$faq_cate_opt|default:''}>
         </select>
       </div>
 
@@ -31,7 +31,7 @@
       <{$smarty.const._MD_TADFAQ_FAQ_TITLE}>
     </label>
     <div class="col-sm-7">
-      <input type="text" name="title" value="<{$title}>" class="form-control">
+      <input type="text" name="title" value="<{$title|default:''}>" class="form-control">
     </div>
     <div class="col-sm-4">
         <div class="form-check-inline radio-inline">
@@ -54,13 +54,13 @@
       <{$smarty.const._MD_TADFAQ_CONTENT}>
     </label>
     <div class="col-sm-11">
-      <{$editor}>
+      <{$editor|default:''}>
     </div>
   </div>
 
   <div class="text-center">
-    <input type="hidden" name="fqsn" value="<{$fqsn}>">
-    <input type="hidden" name="op" value="<{$op}>">
+    <input type="hidden" name="fqsn" value="<{$fqsn|default:''}>">
+    <input type="hidden" name="op" value="<{$op|default:''}>">
     <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SAVE}></button>
   </div>
 

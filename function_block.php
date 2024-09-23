@@ -9,12 +9,12 @@ if (!function_exists('chk_faq_cate_power')) {
         global $xoopsDB, $xoopsUser;
 
         $moduleHandler = xoops_getHandler('module');
-
         $xoopsModule = $moduleHandler->getByDirname('tad_faq');
-
         $module_id = $xoopsModule->getVar('mid');
+
+        $ok_cat = [];
         if (!empty($xoopsUser)) {
-            if ($_SESSION['tad_faq_adm']) {
+            if (isset($_SESSION['tad_faq_adm']) && $_SESSION['tad_faq_adm']) {
                 $ok_cat[] = '0';
             }
             $user_array = $xoopsUser->getGroups();

@@ -13,10 +13,10 @@
       <li><a href="#tabs-2"><{$smarty.const._MA_TADFAQ_SET_EDIT_POWER}></a></li>
     </ul>
     <div id="tabs-1">
-      <{$main1}>
+      <{$main1|default:''}>
     </div>
     <div id="tabs-2">
-      <{$main2}>
+      <{$main2|default:''}>
     </div>
   </div>
 </div>
