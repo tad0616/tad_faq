@@ -131,8 +131,8 @@ function list_faq($fcsn = '')
     while ($data = $xoopsDB->fetchArray($result)) {
 
         $data['i'] = $i;
-        $data['update_enable'] = $data['enable'];
-        $data['enable_txt'] = $data['enable'] ? _MD_TADFAQ_ENABLE : _MD_TADFAQ_UNABLE;
+        $data['update_enable'] = $data['enable'] ? '0' : '1';
+        $data['enable_txt'] = $data['enable'] ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
         $data['edit_power'] = ($faq_edit_power and $now_uid == $data['uid']) ? true : false;
 
         $faq[$i] = $data;

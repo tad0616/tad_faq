@@ -12,18 +12,15 @@ function get_tad_faq_cate($fcsn = '')
     global $xoopsDB;
     if (empty($fcsn)) {
         $data = [];
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " order by sort";
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
         $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($cate = $xoopsDB->fetchArray($result)) {
             $data[$cate['of_fcsn']][$cate['fcsn']] = $cate;
         }
-
     } else {
-
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn=?";
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `fcsn`=?';
         $result = Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
         $data = $xoopsDB->fetchArray($result);
-
     }
 
     return $data;
@@ -53,7 +50,6 @@ function insert_tad_faq_cate($new_title = '')
         Utility::query($sql, 'is', [$_POST['fcsn'], $new_title]) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
         $description = Wcag::amend($_POST['description']);
-        $of_fcsn = isset($_POST['of_fcsn']) ? $_POST['of_fcsn'] : '';
 
         $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values(?,?,?,?,?)";
         Utility::query($sql, 'issis', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['sort'], $_POST['cate_pic']]) or Utility::web_error($sql, __FILE__, __LINE__);

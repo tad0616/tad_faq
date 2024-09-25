@@ -66,7 +66,7 @@ $(document).ready(function(){
     <{if $data.enable|default:false || $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
         <div class="faq_title well card card-body bg-light m-1" id="tr_<{$data.fqsn}>" data-sn="<{$data.fqsn}>">
         <div class="row">
-                <div class="col-sm-11">
+                <div class="col-sm-10">
                     <a name="#<{$data.fqsn}>" id="<{$data.fqsn}>" class="<{if $data.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
                         <{if $data.enable=="1"}>
                         <{$n|default:''}>.
@@ -78,9 +78,13 @@ $(document).ready(function(){
                     </a>
                 </div>
 
-                <div class="col-sm-1 counter">
+                <div class="col-sm-2 text-right text-end">
                     <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
-                        <{if $data.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
+                        <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$data.enable_txt}></a>
+                        <{if $data.enable!="1"}>
+                        <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                        <{/if}>
+                        <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                     <{/if}>
                     <span class="badge badge-info bg-info" id="counter_<{$data.fqsn}>"><{$data.counter}></span>
                 </div>
@@ -89,15 +93,6 @@ $(document).ready(function(){
 
 
         <div id="tr_<{$data.fqsn}>_ans" class="well card card-body m-1 faq_content" style="line-height: 1.8;">
-            <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
-                <div style="text-align:right;">
-                    <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$data.enable_txt}></a>
-
-                    <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-
-                    <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
-                </div>
-            <{/if}>
             <{$data.content}>
         </div>
     <{/if}>
