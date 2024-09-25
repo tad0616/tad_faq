@@ -1,18 +1,21 @@
 <?php
-session_start();
+use XoopsModules\Tadtools\Utility;
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$sn = (int) mb_substr($_POST['sn'], 3);
+error_reporting(0);
+$xoopsLogger->activated = false;
 
-$sql = 'select counter from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn='{$sn}'";
-$result = $xoopsDB->query($sql);
+$sn = (int) $_POST['sn'];
+
+$sql = 'select counter from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn=?";
+$result = Utility::query($sql, 'i', [$sn]);
 list($counter) = $xoopsDB->fetchRow($result);
 
-if (!in_array($sn, $_SESSION['ok_sn'])) {
+if (!isset($_SESSION['ok_sn']) || !in_array($sn, $_SESSION['ok_sn'])) {
     $counter++;
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set counter=$counter where fqsn='{$sn}'";
-    $xoopsDB->queryF($sql);
+    $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set counter=? where fqsn=?";
+    Utility::query($sql, 'ii', [$counter, $sn]);
     $_SESSION['ok_sn'][$sn] = $sn;
 }
 echo $counter;

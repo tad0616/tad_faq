@@ -22,9 +22,8 @@ $(document).ready(function(){
 
 
     $(".faq_title").click(function () {
-        var fqsn=$(this).attr("id");
-        var content_id="#"+fqsn+"_ans";
-
+        let fqsn=$(this).data("sn");
+        let content_id="#tr_"+fqsn+"_ans";
         $(".faq_content").css("background-color: ","white");
 
         $(content_id).slideToggle(function(){
@@ -34,7 +33,6 @@ $(document).ready(function(){
         }).css("background-color","#F4F9EA");
 
     });
-
 });
 </script>
 
@@ -58,19 +56,19 @@ $(document).ready(function(){
 
 <h2><{$cate_title|default:''}></h2>
 
-<{if $smarty.session.tad_faq_adm or $faq_edit_power}>
+<{if $smarty.session.tad_faq_adm|default:false || $faq_edit_power|default:false}>
     <a href="index.php?op=tad_faq_content_form&fcsn=<{$fcsn|default:''}>" class="btn btn-primary"><{$smarty.const._TAD_ADD}></a>
 <{/if}>
 
 <{assign var="n" value=1}>
 <div id="sort">
 <{foreach from=$faq item=data}>
-    <{if $faq.enable=="1" or $smarty.session.tad_faq_adm or $edit_power}>
-        <div class="faq_title well card card-body bg-light m-1" id="tr_<{$data.fqsn}>">
+    <{if $data.enable|default:false || $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
+        <div class="faq_title well card card-body bg-light m-1" id="tr_<{$data.fqsn}>" data-sn="<{$data.fqsn}>">
         <div class="row">
                 <div class="col-sm-11">
-                    <a name="#<{$data.fqsn}>" id="<{$data.fqsn}>" class="<{if $faq.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
-                        <{if $faq.enable=="1"}>
+                    <a name="#<{$data.fqsn}>" id="<{$data.fqsn}>" class="<{if $data.enable!="1"}>disabled<{/if}>" style="text-align:left;padding:4px 10px;">
+                        <{if $data.enable=="1"}>
                         <{$n|default:''}>.
                         <{assign var="n" value=$n+1}>
                         <{else}>
@@ -81,17 +79,17 @@ $(document).ready(function(){
                 </div>
 
                 <div class="col-sm-1 counter">
-                    <{if $smarty.session.tad_faq_adm or $edit_power}>
-                        <{if $faq.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
+                    <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
+                        <{if $data.enable!="1"}><{$smarty.const._MD_TADFAQ_FAQ_UNABLE}><{/if}>
                     <{/if}>
-                    <span id="counter_tr_<{$data.fqsn}>"><{$data.counter}></span>
+                    <span class="badge badge-info bg-info" id="counter_<{$data.fqsn}>"><{$data.counter}></span>
                 </div>
             </div>
         </div>
 
 
         <div id="tr_<{$data.fqsn}>_ans" class="well card card-body m-1 faq_content" style="line-height: 1.8;">
-            <{if $smarty.session.tad_faq_adm or $edit_power}>
+            <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
                 <div style="text-align:right;">
                     <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$data.enable_txt}></a>
 

@@ -13,15 +13,15 @@ function get_tad_faq_cate($fcsn = '')
     if (empty($fcsn)) {
         $data = [];
         $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " order by sort";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($cate = $xoopsDB->fetchArray($result)) {
             $data[$cate['of_fcsn']][$cate['fcsn']] = $cate;
         }
 
     } else {
 
-        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn=?";
+        $result = Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
         $data = $xoopsDB->fetchArray($result);
 
     }
@@ -37,8 +37,8 @@ function get_tad_faq_content($fqsn = '')
         return;
     }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn='$fqsn'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn=?";
+    $result = Utility::query($sql, 'i', [$fqsn]) or Utility::web_error($sql, __FILE__, __LINE__);
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -48,17 +48,17 @@ function get_tad_faq_content($fqsn = '')
 function insert_tad_faq_cate($new_title = '')
 {
     global $xoopsDB;
+    if (!empty($new_title)) {
+        $sql = 'INSERT INTO ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`) VALUES(?,?)";
+        Utility::query($sql, 'is', [$_POST['fcsn'], $new_title]) or Utility::web_error($sql, __FILE__, __LINE__);
+    } else {
+        $description = Wcag::amend($_POST['description']);
+        $of_fcsn = isset($_POST['of_fcsn']) ? $_POST['of_fcsn'] : '';
 
-    $of_fcsn = (int) $_POST['of_fcsn'];
-    $sort = (int) $_POST['sort'];
+        $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values(?,?,?,?,?)";
+        Utility::query($sql, 'issis', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['sort'], $_POST['cate_pic']]) or Utility::web_error($sql, __FILE__, __LINE__);
+    }
 
-    $title = $new_title ? $xoopsDB->escape($new_title) : $xoopsDB->escape($_POST['title']);
-    $description = $xoopsDB->escape($_POST['description']);
-    $description = Wcag::amend($description);
-    $cate_pic = $xoopsDB->escape($_POST['cate_pic']);
-
-    $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values('{$of_fcsn}','{$title}','{$description}','{$sort}','{$cate_pic}')";
-    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     //取得最後新增資料的流水編號
     $fcsn = $xoopsDB->getInsertId();
 
@@ -97,24 +97,13 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
     global $xoopsDB, $xoopsUser, $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
-    $sql = 'select a.gperm_groupid,b.name from ' . $xoopsDB->prefix('group_permission') . ' as a left join ' . $xoopsDB->prefix('groups') . " as b on a.gperm_groupid=b.groupid where a.gperm_modid='$module_id' and a.gperm_name='$kind' and a.gperm_itemid='{$fcsn}'";
+    $sql = 'select a.gperm_groupid,b.name from ' . $xoopsDB->prefix('group_permission') . ' as a left join ' . $xoopsDB->prefix('groups') . " as b on a.gperm_groupid=b.groupid where a.gperm_modid=? and a.gperm_name=? and a.gperm_itemid=?";
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, 'isi', [$module_id, $kind, $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
         $ok_group[] = 'name' === $mode ? $name : $gperm_groupid;
     }
 
     return $ok_group;
-}
-
-function test($var, $v = 1, $mode = 'dd')
-{
-    if ($_GET['test'] == $v) {
-        if ($mode == 'die') {
-            die($var);
-        } else {
-            Utility::dd($var);
-        }
-    }
 }

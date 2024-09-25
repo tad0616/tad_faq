@@ -32,7 +32,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'SELECT count(`counter`) FROM ' . $xoopsDB->prefix('tad_faq_content');
-        $result = $xoopsDB->query($sql);
+        $result = Utility::query($sql);
         if (empty($result)) {
             return false;
         }
@@ -44,7 +44,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_faq_content') . ' ADD `counter` SMALLINT(5) NOT NULL';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -55,7 +55,7 @@ class Update
         global $xoopsDB;
         $sql = "SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS
         WHERE table_name = '" . $xoopsDB->prefix('tad_faq_content') . "' AND COLUMN_NAME = 'uid'";
-        $result = $xoopsDB->query($sql);
+        $result = Utility::query($sql);
         list($type) = $xoopsDB->fetchRow($result);
         if ('smallint' === $type) {
             return true;
@@ -69,7 +69,7 @@ class Update
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE `' . $xoopsDB->prefix('tad_faq_content') . '` CHANGE `uid` `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0';
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -89,25 +89,25 @@ class Update
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
+        $sql = 'SELECT bid,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
         WHERE `dirname` = 'tad_faq' ORDER BY `func_num`";
-        $result = $xoopsDB->query($sql);
-        while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
+        $result = Utility::query($sql);
+        while (list($bid, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
             if ($template != $tpl_file_arr[$show_func]) {
-                $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
-                $xoopsDB->queryF($sql);
+                $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE bid='{$bid}'";
+                Utility::query($sql, 'i', [$bid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
                 //連同樣板以及樣板實體檔案也要刪掉
-                $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
-                    left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
-                    where a.tpl_refid='$bid' and a.tpl_module='tad_faq' and a.tpl_type='block'";
-                $xoopsDB->queryF($sql);
+                $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . ' AS a
+                    LEFT JOIN ' . $xoopsDB->prefix('tplsource') . "  AS b ON a.tpl_id=b.tpl_id
+                    WHERE a.tpl_refid=? AND a.tpl_module='tad_faq' AND a.tpl_type='block'";
+                Utility::query($sql, 'i', [$bid]) or Utility::web_error($sql, __FILE__, __LINE__);
             } else {
-                $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
-                    set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
-                    where tpl_refid='{$bid}'";
-                $xoopsDB->queryF($sql);
+                $sql = 'UPDATE ' . $xoopsDB->prefix('tplfile') . "
+                SET `tpl_file`=? , `tpl_desc`=?
+                WHERE `tpl_refid`=?";
+                Utility::query($sql, 'ssi', [$template, $tpl_desc_arr[$show_func], $bid]) or Utility::web_error($sql, __FILE__, __LINE__);
             }
         }
     }

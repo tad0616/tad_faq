@@ -8,11 +8,50 @@ $GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$fcsn = Request::getInt('fcsn');
+$fqsn = Request::getInt('fqsn');
+
+switch ($op) {
+    //新增資料
+    case 'insert_tad_faq_cate':
+        insert_tad_faq_cate();
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //輸入表格
+    case 'tad_faq_cate_form':
+        tad_faq_cate_form($fcsn);
+        break;
+
+    //刪除資料
+    case 'delete_tad_faq_cate':
+        delete_tad_faq_cate($fcsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //更新資料
+    case 'update_tad_faq_cate':
+        update_tad_faq_cate($fcsn);
+        header("location: {$_SERVER['PHP_SELF']}");
+        exit;
+
+    //預設動作
+    default:
+        list_tad_faq_cate();
+        tad_faq_cate_form($fcsn);
+        break;
+}
+
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
+require_once __DIR__ . '/footer.php';
+
 /*-----------function區--------------*/
 //tad_faq_cate編輯表單
 function tad_faq_cate_form($fcsn = '')
 {
-    global $xoopsDB, $xoopsTpl, $xoopsModule;
+    global $xoopsTpl, $xoopsModule;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -82,9 +121,9 @@ function tad_faq_cate_form($fcsn = '')
 //列出所有tad_faq_cate資料
 function list_tad_faq_cate()
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl;
+    global $xoopsDB, $xoopsTpl;
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_faq_cate') . ' ORDER BY sort';
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
     $i = 0;
@@ -112,13 +151,9 @@ function update_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
 
-    $title = $xoopsDB->escape($_POST['title']);
-    $description = $xoopsDB->escape($_POST['description']);
-    $description = Wcag::amend($description);
-    $cate_pic = $xoopsDB->escape($_POST['cate_pic']);
-
-    $sql = 'update ' . $xoopsDB->prefix('tad_faq_cate') . " set  `of_fcsn` = '{$_POST['of_fcsn']}', `title` = '{$title}', `description` = '{$description}', `cate_pic` = '{$cate_pic}' where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $description = Wcag::amend($_POST['description']);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_faq_cate') . '` SET `of_fcsn` = ?, `title` = ?, `description` = ?, `cate_pic` = ? WHERE `fcsn` = ?';
+    Utility::query($sql, 'isssi', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['cate_pic'], $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
     $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
     $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
@@ -134,58 +169,16 @@ function update_tad_faq_cate($fcsn = '')
 function delete_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
-    $sql = 'delete from ' . $xoopsDB->prefix('tad_faq_cate') . " where fcsn='$fcsn'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE fcsn=?';
+    Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 }
 
 //自動取得新排序
 function get_max_sort()
 {
-    global $xoopsDB, $xoopsModule;
+    global $xoopsDB;
     $sql = 'SELECT max(sort) FROM ' . $xoopsDB->prefix('tad_faq_cate') . " WHERE of_fcsn=''";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     list($sort) = $xoopsDB->fetchRow($result);
-
     return ++$sort;
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$fcsn = Request::getInt('fcsn');
-$fqsn = Request::getInt('fqsn');
-
-switch ($op) {
-    //新增資料
-    case 'insert_tad_faq_cate':
-        insert_tad_faq_cate();
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //輸入表格
-    case 'tad_faq_cate_form':
-        tad_faq_cate_form($fcsn);
-        break;
-
-    //刪除資料
-    case 'delete_tad_faq_cate':
-        delete_tad_faq_cate($fcsn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //更新資料
-    case 'update_tad_faq_cate':
-        update_tad_faq_cate($fcsn);
-        header("location: {$_SERVER['PHP_SELF']}");
-        exit;
-
-    //預設動作
-    default:
-        list_tad_faq_cate();
-        tad_faq_cate_form($fcsn);
-        break;
-}
-
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
-require_once __DIR__ . '/footer.php';
