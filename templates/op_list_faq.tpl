@@ -57,7 +57,7 @@ $(document).ready(function(){
 <h2><{$cate_title|default:''}></h2>
 
 <{if $smarty.session.tad_faq_adm|default:false || $faq_edit_power|default:false}>
-    <a href="index.php?op=tad_faq_content_form&fcsn=<{$fcsn|default:''}>" class="btn btn-primary"><{$smarty.const._TAD_ADD}></a>
+    <a href="index.php?op=tad_faq_content_form&fcsn=<{$fcsn|default:''}>" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._TAD_ADD}></a>
 <{/if}>
 
 <{assign var="n" value=1}>
@@ -80,11 +80,11 @@ $(document).ready(function(){
 
                 <div class="col-sm-2 text-right text-end">
                     <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
-                        <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><{$data.enable_txt}></a>
+                        <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><i class="fa fa-power-off " aria-hidden="true"></i> <{$data.enable_txt}></a>
                         <{if $data.enable!="1"}>
-                        <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                        <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                         <{/if}>
-                        <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                        <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                     <{/if}>
                     <span class="badge badge-info bg-info" id="counter_<{$data.fqsn}>"><{$data.counter}></span>
                 </div>

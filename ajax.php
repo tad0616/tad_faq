@@ -7,8 +7,9 @@ $xoopsLogger->activated = false;
 
 $sn = (int) $_POST['sn'];
 
-$sql = 'select counter from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn=?";
-$result = Utility::query($sql, 'i', [$sn]);
+$sql = 'SELECT `counter` FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fqsn`=?';
+$result = Utility::query($sql, 'i', [$sn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 list($counter) = $xoopsDB->fetchRow($result);
 
 if (!isset($_SESSION['ok_sn']) || !in_array($sn, $_SESSION['ok_sn'])) {

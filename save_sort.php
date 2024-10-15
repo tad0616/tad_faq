@@ -9,8 +9,9 @@ $updateRecordsArray = $_POST['tr'];
 
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
-    $sql = 'update ' . $xoopsDB->prefix('tad_faq_content') . " set `sort`=? where `fqsn`=?";
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_faq_content') . '` SET `sort`=? WHERE `fqsn`=?';
     Utility::query($sql, 'ii', [$sort, $recordIDValue]) or die('Save Sort Fail! (' . date('Y-m-d H:i:s') . ')');
+
     $sort++;
 }
 

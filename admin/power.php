@@ -2,7 +2,7 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_power.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.php';
@@ -17,8 +17,9 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 
 //抓取所有資料夾
 
-$sql = 'SELECT fcsn,title FROM ' . $xoopsDB->prefix('tad_faq_cate');
+$sql = 'SELECT `fcsn`, `title` FROM `' . $xoopsDB->prefix('tad_faq_cate') . '`';
 $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
 while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
     $item_list[$fcsn] = $title;
 }
@@ -41,4 +42,8 @@ $main2 = $formi->render();
 $xoopsTpl->assign('main2', $main2);
 
 /*-----------秀出結果區--------------*/
+$op = 'grouppermform';
+
+$xoTheme->addScript('modules/tadtools/jqueryCookie/jquery.cookie.js');
+$xoopsTpl->assign('now_op', $op);
 require_once __DIR__ . '/footer.php';

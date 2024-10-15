@@ -2,7 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_adm_sfaq.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_faq_admin.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -22,6 +22,7 @@ switch ($op) {
     case 'listfaq':
         listfaq($categoryid);
         break;
+
     case 'import_faq':
         import_faq($categoryid);
         header("location: {$_SERVER['PHP_SELF']}");
@@ -30,12 +31,14 @@ switch ($op) {
     //預設動作
     default:
         list_smartfaq();
+        $op = 'list_smartfaq';
         break;
         /*---判斷動作請貼在上方---*/
 }
 
 /*-----------秀出結果區--------------*/
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
+$xoopsTpl->assign('now_op', $op);
+$xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
 require_once __DIR__ . '/footer.php';
 
 /*-----------function區--------------*/
@@ -59,17 +62,18 @@ function list_smartfaq()
     }
 
     //轉移權限(原權限)
-    $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` =?";
+    $sql = 'SELECT `gperm_groupid`,`gperm_itemid`,`gperm_name` FROM `' . $xoopsDB->prefix('group_permission') . '` WHERE `gperm_modid` =?';
     $result = Utility::query($sql, 'i', [$mod_id]) or redirect_header('index.php', 3, $sql);
+
     while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
 
     //轉移權限（新權限）
     $mid = $xoopsModule->getVar('mid');
-    $sql = 'SELECT gperm_groupid,gperm_itemid,gperm_name FROM `' . $xoopsDB->prefix('group_permission') . "` WHERE `gperm_modid` =?";
-
+    $sql = 'SELECT `gperm_groupid`, `gperm_itemid`, `gperm_name` FROM `' . $xoopsDB->prefix('group_permission') . '` WHERE `gperm_modid` =?';
     $result = Utility::query($sql, 'i', [$mid]) or redirect_header('index.php', 3, $sql);
+
     while (list($gperm_groupid, $gperm_itemid, $gperm_name) = $xoopsDB->fetchRow($result)) {
         $now_power[$gperm_itemid][$gperm_name][$gperm_groupid] = $gperm_groupid;
     }
@@ -107,8 +111,9 @@ function get_faq_number($categoryid = '')
 {
     global $xoopsDB;
 
-    $sql = 'select count(*) from `' . $xoopsDB->prefix('tad_faq_content') . "` where fcsn =?";
+    $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fcsn` =?';
     $result = Utility::query($sql, 'i', [$categoryid]) or redirect_header('index.php', 3, $sql);
+
     list($sn) = $xoopsDB->fetchRow($result);
 
     return $sn;
@@ -117,8 +122,9 @@ function get_faq_number($categoryid = '')
 function chkcopy($forum_id)
 {
     global $xoopsDB;
-    $sql = 'select categoryid from `' . $xoopsDB->prefix('tad_faq_board') . "` where categoryid =?";
+    $sql = 'SELECT `categoryid` FROM `' . $xoopsDB->prefix('tad_faq_board') . '` WHERE `categoryid` = ?';
     $result = Utility::query($sql, 'i', [$forum_id]) or redirect_header('index.php', 3, $sql);
+
     list($sn) = $xoopsDB->fetchRow($result);
 
     return $sn;
@@ -129,11 +135,13 @@ function copyfaq($categoryid = '')
 {
     global $xoopsDB;
     if (empty($categoryid)) {
-        $sql = 'select * from `' . $xoopsDB->prefix('smartfaq_categories') . "` ";
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('smartfaq_categories') . '`';
         $result = Utility::query($sql) or redirect_header('index.php', 3, $sql);
+
     } else {
-        $sql = 'select * from `' . $xoopsDB->prefix('smartfaq_categories') . "` where categoryid =?";
+        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('smartfaq_categories') . '` WHERE `categoryid` =?';
         $result = Utility::query($sql, 'i', [$categoryid]) or redirect_header('index.php', 3, $sql);
+
     }
 
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
@@ -142,10 +150,11 @@ function copyfaq($categoryid = '')
             $$k = $v;
         }
 
-        $sql = 'replace into `' . $xoopsDB->prefix('tad_faq_cate') . "`
-        (`fcsn`, `of_fcsn` ,`title` , `description` , `sort`)
-        values(? , ? , ? , ? , ?)";
+        $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_faq_cate') . '`
+        (`fcsn`, `of_fcsn`, `title`, `description`, `sort`)
+        VALUES(?, ?, ?, ?, ?)';
         Utility::query($sql, 'iisss', [$categoryid, $parentid, $name, $description, $weight]) or redirect_header('index.php', 3, $sql);
+
     }
 
     return $categoryid;
@@ -156,12 +165,14 @@ function tad_faq_cate_exist($categoryid)
 {
     global $xoopsDB;
 
-    $sql = 'select title from `' . $xoopsDB->prefix('tad_faq_cate') . "` where `fcsn`=?";
+    $sql = 'SELECT `title` FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `fcsn`=?';
     $result = Utility::query($sql, 'i', [$categoryid]) or redirect_header('index.php', 3, $sql);
+
     list($title) = $xoopsDB->fetchRow($result);
     if (!empty($title)) {
-        $sql = 'select count(*) from `' . $xoopsDB->prefix('smartfaq_faq') . "` where `categoryid`=?";
+        $sql = 'SELECT COUNT(*) FROM `' . $xoopsDB->prefix('smartfaq_faq') . '` WHERE `categoryid`=?';
         $result = Utility::query($sql, 'i', [$categoryid]) or redirect_header('index.php', 3, $sql);
+
         list($count) = $xoopsDB->fetchRow($result);
 
         return $count;
@@ -240,9 +251,10 @@ function import_faq($categoryid = '')
         $question = nl2br($question);
         $answer = nl2br($answer);
 
-        $sql = 'replace into `' . $xoopsDB->prefix('tad_faq_content') . "`
+        $sql = 'REPLACE INTO `' . $xoopsDB->prefix('tad_faq_content') . '`
         (`fqsn`, `fcsn`, `title`, `sort`, `uid`, `post_date`, `content`, `enable`, `counter`)
-        values(? , ? ,  ? , ? , ? , ? , ? , '1' , ?)";
+        VALUES(? , ? , ? , ? , ? , ? , ? , 1 , ?)';
         Utility::query($sql, 'iisiissi', [$faqid, $categoryid, $question, $weight, $uid, $datesub, $answer, $counter]) or redirect_header('index.php', 3, $sql);
+
     }
 }

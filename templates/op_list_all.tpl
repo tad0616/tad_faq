@@ -4,7 +4,7 @@
     </div>
     <div class="col-sm-6 text-right text-end">
         <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
-            <a href="index.php?op=tad_faq_content_form" class="btn btn-primary"><{$smarty.const._TAD_ADD}></a>
+            <a href="index.php?op=tad_faq_content_form" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> <{$smarty.const._TAD_ADD}></a>
         <{/if}>
     </div>
 </div>

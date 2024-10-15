@@ -1,51 +1,12 @@
-<link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
 <div class="container-fluid">
 
   <{if $show_error=='1'}>
-  <{$error|default:''}>
+    <{$error|default:''}>
     <div class="jumbotron bg-light p-5 rounded-lg m-3">
       <h1><{$smarty.const._MA_TADFAQ_NO_SFAQ}></h1>
     </div>
-  <{elseif $op=='listfaq'}>
-    <div class="pull-right float-right pull-end">
-     <a href="copysfaq.php?op=import_faq&categoryid=<{$categoryid|default:''}>" class="btn btn-lg btn-info">Import All</a>
-    </div>
-    <div class="clearfix"></div>
-
-    <table class="table table-striped table-bordered table-hover">
-    <tr>
-      <th>fqsn</th>
-      <th>fcsn</th>
-      <th>title</th>
-      <th>sort</th>
-      <th>uid</th>
-      <th>post_date</th>
-      <th>content</th>
-      <th>enable</th>
-      <th>counter</th>
-
-    </tr>
-
-    <tbody>
-    <{foreach item=faq from=$all_content}>
-      <tr>
-        <td><{$faq.faqid}></td>
-        <td><{$faq.categoryid}></td>
-        <td><{$faq.question}></td>
-        <td><{$faq.weight}></td>
-        <td><{$faq.uid}></td>
-        <td><{$faq.datesub}></td>
-        <td><{$faq.answer}></td>
-        <td>1</td>
-        <td><{$faq.counter}></td>
-      </tr>
-    <{/foreach}>
-    </tbody>
-    </table>
-    <div class="clearfix"></div>
-
   <{else}>
-    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right float-right pull-end">copy all</a>
+    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right float-right pull-end"><i class="fa fa-files-o" aria-hidden="true"></i> copy all</a>
     <table class="table table-striped table-bordered table-hover">
     <tr>
       <th>#</th>
@@ -67,7 +28,7 @@
 
     <tr>
       <td><{$faq.i}></td>
-      <td><a href="copysfaq.php?op=delsfaq&categoryid=<{$faq.categoryid}>" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a></td>
+      <td><a href="copysfaq.php?op=delsfaq&categoryid=<{$faq.categoryid}>" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a></td>
       <td><{$faq.categoryid}></td>
       <td><{$faq.parentid}></td>
       <td><{$faq.name}></td>

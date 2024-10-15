@@ -8,6 +8,4 @@ if (!isset($_SESSION['tad_faq_adm'])) {
 }
 
 $interface_menu[_MD_TADFAQ_ALL_FAQ] = 'index.php';
-if (isset($_SESSION['tad_faq_adm']) && $_SESSION['tad_faq_adm']) {
-    $interface_menu[_TAD_TO_ADMIN] = 'admin/main.php';
-}
+$interface_icon[_MD_TADFAQ_ALL_FAQ] = 'fa-question-circle ';

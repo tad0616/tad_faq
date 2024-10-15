@@ -34,8 +34,9 @@ function get_tad_faq_content($fqsn = '')
         return;
     }
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_faq_content') . " where fqsn=?";
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fqsn`=?';
     $result = Utility::query($sql, 'i', [$fqsn]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     $data = $xoopsDB->fetchArray($result);
 
     return $data;
@@ -46,13 +47,15 @@ function insert_tad_faq_cate($new_title = '')
 {
     global $xoopsDB;
     if (!empty($new_title)) {
-        $sql = 'INSERT INTO ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`) VALUES(?,?)";
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_cate') . '` (`of_fcsn`,`title`) VALUES (?,?)';
         Utility::query($sql, 'is', [$_POST['fcsn'], $new_title]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     } else {
         $description = Wcag::amend($_POST['description']);
 
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_faq_cate') . " (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) values(?,?,?,?,?)";
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_cate') . '` (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) VALUES (?,?,?,?,?)';
         Utility::query($sql, 'issis', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['sort'], $_POST['cate_pic']]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     }
 
     //取得最後新增資料的流水編號
@@ -90,11 +93,10 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
 //判斷某類別中有哪些觀看或發表的群組 $mode=name or id
 function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule;
+    global $xoopsDB, $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
-    $sql = 'select a.gperm_groupid,b.name from ' . $xoopsDB->prefix('group_permission') . ' as a left join ' . $xoopsDB->prefix('groups') . " as b on a.gperm_groupid=b.groupid where a.gperm_modid=? and a.gperm_name=? and a.gperm_itemid=?";
-
+    $sql = 'SELECT a.`gperm_groupid`, b.`name` FROM `' . $xoopsDB->prefix('group_permission') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('groups') . '` AS b ON a.`gperm_groupid`=b.`groupid` WHERE a.`gperm_modid`=? AND a.`gperm_name`=? AND a.`gperm_itemid`=?';
     $result = Utility::query($sql, 'isi', [$module_id, $kind, $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {
