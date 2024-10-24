@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Wcag;
 use XoopsModules\Tad_faq\Tools;
@@ -109,6 +110,8 @@ function list_faq($fcsn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsTpl;
     Utility::get_jquery(true);
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render("delete_tad_faq_content_func", "index.php?op=delete_tad_faq_content&fcsn=$fcsn&fqsn=", 'fqsn');
 
     //權限檢查
     $faq_read_power = Utility::power_chk('faq_read', $fcsn);

@@ -33,7 +33,7 @@ foreach ($item_list as $item_id => $item_name) {
 $main1 = $formi->render();
 $xoopsTpl->assign('main1', $main1);
 
-$formi = new \XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'faq_edit', $perm_desc, null, false);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }

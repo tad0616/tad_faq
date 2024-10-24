@@ -12,7 +12,6 @@ $fcsn = Request::getInt('fcsn');
 $categoryid = Request::getInt('categoryid');
 
 switch ($op) {
-    /*---判斷動作請貼在下方---*/
 
     case 'copyfaq':
         copyfaq($categoryid);
@@ -33,7 +32,7 @@ switch ($op) {
         list_smartfaq();
         $op = 'list_smartfaq';
         break;
-        /*---判斷動作請貼在上方---*/
+
 }
 
 /*-----------秀出結果區--------------*/

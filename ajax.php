@@ -2,7 +2,7 @@
 use XoopsModules\Tadtools\Utility;
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
-error_reporting(0);
+// 關閉除錯訊息
 $xoopsLogger->activated = false;
 
 $sn = (int) $_POST['sn'];

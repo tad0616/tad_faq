@@ -1,6 +1,7 @@
 <?php
 use Xmf\Request;
 use XoopsModules\Tadtools\CkEditor;
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Wcag;
 /*-----------引入檔案區--------------*/
@@ -124,6 +125,10 @@ function tad_faq_cate_form($fcsn = '')
 function list_tad_faq_cate()
 {
     global $xoopsDB, $xoopsTpl;
+
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render("delete_tad_faq_cate_func", "main.php?op=delete_tad_faq_cate&fcsn=", 'fcsn');
+
     $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 

@@ -1,10 +1,4 @@
 <script type="text/javascript">
-function delete_tad_faq_content_func(fqsn){
-    var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-    if (!sure)  return;
-    location.href="index.php?op=delete_tad_faq_content&fcsn=<{$fcsn|default:''}>&fqsn=" + fqsn;
-}
-
 $(document).ready(function(){
     <{if $smarty.session.tad_faq_adm|default:false}>
         $("#sort").sortable({ opacity: 0.6, cursor: "move", update: function() {

@@ -5,12 +5,6 @@
       <{if $all_content|default:false}>
       <{$jquery|default:''}>
       <script type='text/javascript'>
-        function delete_tad_faq_cate_func(fcsn){
-          var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-          if (!sure)  return;
-          location.href="main.php?op=delete_tad_faq_cate&fcsn=" + fcsn;
-        }
-
         $(document).ready(function(){
             $('#sort').sortable({ opacity: 0.6, cursor: 'move', update: function() {
                 var order = $(this).sortable('serialize');
