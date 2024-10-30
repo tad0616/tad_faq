@@ -6,7 +6,6 @@ use XoopsModules\Tad_faq\Tools;
 function tad_faq_show($options)
 {
     global $xoopsDB;
-    require_once XOOPS_ROOT_PATH . '/modules/tad_faq/function_block.php';
 
     $read_power = Tools::chk_faq_cate_power('faq_read');
     $counter = Tools::get_cate_count();

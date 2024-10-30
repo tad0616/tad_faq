@@ -2,12 +2,12 @@
 
 <form action="index.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
   <div class="form-group row mb-3">
-    <label class="col-sm-1 col-form-label text-sm-right control-label">
+    <label class="col-sm-1 col-form-label text-sm-right text-sm-end control-label">
       <{$smarty.const._MD_TADFAQ_CATE_MENU}>
     </label>
     <{if $faq_cate_opt|default:false}>
       <div class="col-sm-3">
-        <select name="fcsn" size=1 class="form-control">
+        <select name="fcsn" size=1 class="form-select">
           <{$faq_cate_opt|default:''}>
         </select>
       </div>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="form-group row mb-3">
-    <label class="col-sm-1 col-form-label text-sm-right control-label">
+    <label class="col-sm-1 col-form-label text-sm-right text-sm-end control-label">
       <{$smarty.const._MD_TADFAQ_FAQ_TITLE}>
     </label>
     <div class="col-sm-7">
@@ -50,7 +50,7 @@
   </div>
 
   <div class="form-group row mb-3">
-    <label class="col-sm-1 col-form-label text-sm-right control-label">
+    <label class="col-sm-1 col-form-label text-sm-right text-sm-end control-label">
       <{$smarty.const._MD_TADFAQ_CONTENT}>
     </label>
     <div class="col-sm-11">

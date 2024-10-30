@@ -50,7 +50,7 @@
         <div class="row">
           <div class="col-sm-9">
             <div class="form-group row mb-3">
-              <label class="col-sm-2 col-form-label text-sm-right control-label">
+              <label class="col-sm-2 col-form-label text-sm-right text-sm-end control-label">
                 <{$smarty.const._MA_TADFAQ_TITLE}>
               </label>
               <div class="col-sm-10">
@@ -59,7 +59,7 @@
             </div>
 
             <div class="form-group row mb-3">
-              <label class="col-sm-2 col-form-label text-sm-right control-label">
+              <label class="col-sm-2 col-form-label text-sm-right text-sm-end control-label">
                 <{$smarty.const._MA_TADFAQ_CONTENT}>
               </label>
               <div class="col-sm-10">

@@ -166,8 +166,8 @@ function update_tad_faq_cate($fcsn = '')
     $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
 
     //寫入權限
-    saveItem_Permissions($faq_read, $fcsn, 'faq_read');
-    saveItem_Permissions($faq_edit, $fcsn, 'faq_edit');
+    Utility::save_perm($faq_read, $fcsn, 'faq_read');
+    Utility::save_perm($faq_edit, $fcsn, 'faq_edit');
 
     return $fcsn;
 }

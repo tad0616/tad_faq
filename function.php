@@ -4,8 +4,6 @@ use XoopsModules\Tadtools\Wcag;
 
 xoops_loadLanguage('main', 'tadtools');
 
-require_once __DIR__ . '/function_block.php';
-
 //以流水號取得某筆tad_faq_cate資料
 function get_tad_faq_cate($fcsn = '')
 {
@@ -65,29 +63,10 @@ function insert_tad_faq_cate($new_title = '')
     $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
 
     //寫入權限
-    saveItem_Permissions($faq_read, $fcsn, 'faq_read');
-    saveItem_Permissions($faq_edit, $fcsn, 'faq_edit');
+    Utility::save_perm($faq_read, $fcsn, 'faq_read');
+    Utility::save_perm($faq_edit, $fcsn, 'faq_edit');
 
     return $fcsn;
-}
-
-//儲存權限
-function saveItem_Permissions($groups, $itemid, $perm_name)
-{
-    global $xoopsModule;
-    $module_id = $xoopsModule->getVar('mid');
-
-    $gpermHandler = xoops_getHandler('groupperm');
-
-    // First, if the permissions are already there, delete them
-    $gpermHandler->deleteByModule($module_id, $perm_name, $itemid);
-
-    // Save the new permissions
-    if (count($groups) > 0) {
-        foreach ($groups as $group_id) {
-            $gpermHandler->addRight($perm_name, $itemid, $group_id, $module_id);
-        }
-    }
 }
 
 //判斷某類別中有哪些觀看或發表的群組 $mode=name or id
