@@ -1,7 +1,4 @@
 <?php
-
-global $xoopsConfig;
-
 $modversion = [];
 global $xoopsConfig;
 
@@ -70,9 +67,9 @@ $modversion['templates'] = [
     ['file' => 'tad_faq_index.tpl', 'description' => 'tad_faq_index.tpl'],
 ];
 
-//---區塊設定---//
+//---區塊設定 (索引為固定值，若欲刪除區塊記得補上索引，避免區塊重複)---//
 $modversion['blocks'] = [
-    [
+    1 => [
         'file' => 'tad_faq_block.php',
         'name' => _MI_TADFAQ_BNAME1,
         'description' => _MI_TADFAQ_BDESC1,
