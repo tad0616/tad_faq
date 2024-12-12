@@ -36,7 +36,7 @@ $(document).ready(function(){
             <div class="input-group-prepend input-group-addon">
                 <span class="input-group-text"><{$smarty.const._MD_TADFAQ_CHANGE_CATE}></span>
             </div>
-            <select id="fcsn_select" class="form-select" placeholder="<{$smarty.const._MD_TADFAQ_SELECT_CATE}>" onchange="location.href='index.php?fcsn='+this.value">
+            <select id="fcsn_select" class="form-control form-select" placeholder="<{$smarty.const._MD_TADFAQ_SELECT_CATE}>" onchange="location.href='index.php?fcsn='+this.value">
             <{foreach from=$cates key=of_fcsn item=of_fcsn_cate}>
                 <{foreach from=$of_fcsn_cate key=fcsn item=cate}>
                     <option value="<{$fcsn|default:''}>" <{if $smarty.get.fcsn == $fcsn}>selected<{/if}>><{$cate.title}></option>
@@ -76,9 +76,9 @@ $(document).ready(function(){
                     <{if $smarty.session.tad_faq_adm|default:false || $edit_power|default:false}>
                         <a href="index.php?op=update_status&fcsn=<{$fcsn|default:''}>&fqsn=<{$data.fqsn}>&enable=<{$data.update_enable}>" class="btn btn-sm btn-xs btn-info"><i class="fa fa-power-off " aria-hidden="true"></i> <{$data.enable_txt}></a>
                         <{if $data.enable!="1"}>
-                        <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+                        <a href="javascript:delete_tad_faq_content_func(<{$data.fqsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
                         <{/if}>
-                        <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
+                        <a href="index.php?op=tad_faq_content_form&fqsn=<{$data.fqsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
                     <{/if}>
                     <span class="badge badge-info bg-info" id="counter_<{$data.fqsn}>"><{$data.counter}></span>
                 </div>

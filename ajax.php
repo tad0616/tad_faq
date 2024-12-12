@@ -3,6 +3,7 @@ use XoopsModules\Tadtools\Utility;
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 
 $sn = (int) $_POST['sn'];

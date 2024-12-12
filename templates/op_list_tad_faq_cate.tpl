@@ -35,8 +35,8 @@
             <td><{$faq.faq_read}></td>
             <td><{$faq.faq_edit}></td>
             <td>
-              <a href="javascript:delete_tad_faq_cate_func(<{$faq.fcsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
-              <a href="main.php?op=tad_faq_cate_form&fcsn=<{$faq.fcsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
+              <a href="javascript:delete_tad_faq_cate_func(<{$faq.fcsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+              <a href="main.php?op=tad_faq_cate_form&fcsn=<{$faq.fcsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
             </td>
           </tr>
         <{/foreach}>
@@ -80,7 +80,7 @@
             <div class="row text-center">
               <input type="hidden" name="fcsn" value="<{$fcsn|default:''}>">
               <input type="hidden" name="op" value="<{$op|default:''}>">
-              <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-disk" aria-hidden="true"></i> <{$smarty.const._TAD_SAVE}></button>
             </div>
           </div>
         </div>

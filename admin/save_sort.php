@@ -4,6 +4,7 @@ require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require dirname(__DIR__) . '/function.php';
 
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 $sort = 1;
 foreach ($_POST['tr'] as $recordIDValue) {

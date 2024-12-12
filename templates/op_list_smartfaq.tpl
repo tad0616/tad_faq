@@ -6,7 +6,7 @@
       <h1><{$smarty.const._MA_TADFAQ_NO_SFAQ}></h1>
     </div>
   <{else}>
-    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right float-right pull-end"><i class="fa fa-files-o" aria-hidden="true"></i> copy all</a>
+    <a href="copysfaq.php?op=copyfaq" class="btn btn-lg btn-info pull-right float-right pull-end"><i class="fa fa-file" aria-hidden="true"></i> copy all</a>
     <table class="table table-striped table-bordered table-hover">
     <tr>
       <th>#</th>
@@ -28,7 +28,7 @@
 
     <tr>
       <td><{$faq.i}></td>
-      <td><a href="copysfaq.php?op=delsfaq&categoryid=<{$faq.categoryid}>" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a></td>
+      <td><a href="copysfaq.php?op=delsfaq&categoryid=<{$faq.categoryid}>" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a></td>
       <td><{$faq.categoryid}></td>
       <td><{$faq.parentid}></td>
       <td><{$faq.name}></td>
