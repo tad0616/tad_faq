@@ -10,7 +10,7 @@ require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op   = Request::getString('op');
 $fcsn = Request::getInt('fcsn');
 $fqsn = Request::getInt('fqsn');
 
@@ -24,6 +24,7 @@ switch ($op) {
     //輸入表格
     case 'tad_faq_cate_form':
         tad_faq_cate_form($fcsn);
+        $op = 'list_tad_faq_cate';
         break;
 
     //刪除資料
@@ -129,23 +130,23 @@ function list_tad_faq_cate()
     $SweetAlert = new SweetAlert();
     $SweetAlert->render("delete_tad_faq_cate_func", "main.php?op=delete_tad_faq_cate&fcsn=", 'fcsn');
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
-    $i = 0;
+    $i    = 0;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
         $faq_read = get_cate_enable_group('faq_read', $fcsn, 'name');
         $faq_edit = get_cate_enable_group('faq_edit', $fcsn, 'name');
 
-        $data[$i]['fcsn'] = $fcsn;
-        $data[$i]['of_fcsn'] = $of_fcsn;
-        $data[$i]['title'] = $title;
+        $data[$i]['fcsn']        = $fcsn;
+        $data[$i]['of_fcsn']     = $of_fcsn;
+        $data[$i]['title']       = $title;
         $data[$i]['description'] = strip_tags($description);
-        $data[$i]['sort'] = $sort;
-        $data[$i]['cate_pic'] = $cate_pic;
-        $data[$i]['faq_read'] = implode(' , ', $faq_read);
-        $data[$i]['faq_edit'] = implode(' , ', $faq_edit);
+        $data[$i]['sort']        = $sort;
+        $data[$i]['cate_pic']    = $cate_pic;
+        $data[$i]['faq_read']    = implode(' , ', $faq_read);
+        $data[$i]['faq_edit']    = implode(' , ', $faq_edit);
 
         $i++;
     }
@@ -154,13 +155,13 @@ function list_tad_faq_cate()
 }
 
 //更新tad_faq_cate某一筆資料
-function update_tad_faq_cate($fcsn = '')
+function update_tad_faq_cate($fcsn = 0)
 {
     global $xoopsDB;
 
     $description = Wcag::amend($_POST['description']);
-    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_faq_cate') . '` SET `of_fcsn` = ?, `title` = ?, `description` = ?, `cate_pic` = ? WHERE `fcsn` = ?';
-    Utility::query($sql, 'isssi', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['cate_pic'], $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
+    $sql         = 'UPDATE `' . $xoopsDB->prefix('tad_faq_cate') . '` SET `of_fcsn` = ?, `title` = ?, `description` = ?, `cate_pic` = ? WHERE `fcsn` = ?';
+    Utility::query($sql, 'isssi', [(int) $_POST['of_fcsn'], (string) $_POST['title'], (string) $description, (string) $_POST['cate_pic'], (int) $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__, true);
 
     $faq_read = empty($_POST['faq_read']) ? [1, 2, 3] : $_POST['faq_read'];
     $faq_edit = empty($_POST['faq_edit']) ? [1] : $_POST['faq_edit'];
@@ -184,7 +185,7 @@ function delete_tad_faq_cate($fcsn = '')
 function get_max_sort()
 {
     global $xoopsDB;
-    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `of_fcsn`=?';
+    $sql    = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `of_fcsn`=?';
     $result = Utility::query($sql, 's', ['']) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($sort) = $xoopsDB->fetchRow($result);

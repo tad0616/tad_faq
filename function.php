@@ -9,16 +9,16 @@ function get_tad_faq_cate($fcsn = '')
 {
     global $xoopsDB;
     if (empty($fcsn)) {
-        $data = [];
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
+        $data   = [];
+        $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
         $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($cate = $xoopsDB->fetchArray($result)) {
             $data[$cate['of_fcsn']][$cate['fcsn']] = $cate;
         }
     } else {
-        $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `fcsn`=?';
+        $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` WHERE `fcsn`=?';
         $result = Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-        $data = $xoopsDB->fetchArray($result);
+        $data   = $xoopsDB->fetchArray($result);
     }
 
     return $data;
@@ -32,7 +32,7 @@ function get_tad_faq_content($fqsn = '')
         return;
     }
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fqsn`=?';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fqsn`=?';
     $result = Utility::query($sql, 'i', [$fqsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = $xoopsDB->fetchArray($result);
@@ -46,13 +46,13 @@ function insert_tad_faq_cate($new_title = '')
     global $xoopsDB;
     if (!empty($new_title)) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_cate') . '` (`of_fcsn`,`title`) VALUES (?,?)';
-        Utility::query($sql, 'is', [$_POST['fcsn'], $new_title]) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql, 'is', [(int) $_POST['fcsn'], $new_title]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     } else {
         $description = Wcag::amend($_POST['description']);
 
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_cate') . '` (`of_fcsn`,`title`,`description`,`sort`,`cate_pic`) VALUES (?,?,?,?,?)';
-        Utility::query($sql, 'issis', [$_POST['of_fcsn'], $_POST['title'], $description, $_POST['sort'], $_POST['cate_pic']]) or Utility::web_error($sql, __FILE__, __LINE__);
+        Utility::query($sql, 'issis', [(int) $_POST['of_fcsn'], $_POST['title'], $description, (int) $_POST['sort'], (string) $_POST['cate_pic']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     }
 
@@ -75,7 +75,7 @@ function get_cate_enable_group($kind = '', $fcsn = '', $mode = 'id')
     global $xoopsDB, $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
 
-    $sql = 'SELECT a.`gperm_groupid`, b.`name` FROM `' . $xoopsDB->prefix('group_permission') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('groups') . '` AS b ON a.`gperm_groupid`=b.`groupid` WHERE a.`gperm_modid`=? AND a.`gperm_name`=? AND a.`gperm_itemid`=?';
+    $sql    = 'SELECT a.`gperm_groupid`, b.`name` FROM `' . $xoopsDB->prefix('group_permission') . '` AS a LEFT JOIN `' . $xoopsDB->prefix('groups') . '` AS b ON a.`gperm_groupid`=b.`groupid` WHERE a.`gperm_modid`=? AND a.`gperm_name`=? AND a.`gperm_itemid`=?';
     $result = Utility::query($sql, 'isi', [$module_id, $kind, $fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_groupid, $name) = $xoopsDB->fetchRow($result)) {

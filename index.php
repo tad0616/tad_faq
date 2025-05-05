@@ -12,7 +12,7 @@ $xoopsOption['template_main'] = 'tad_faq_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
+$op   = Request::getString('op');
 $fcsn = Request::getInt('fcsn');
 $fqsn = Request::getInt('fqsn');
 
@@ -45,7 +45,7 @@ switch ($op) {
         break;
 
     default:
-        if (!empty($fcsn)) {
+        if (! empty($fcsn)) {
             list_faq($fcsn);
             $op = 'list_faq';
         } else {
@@ -74,13 +74,13 @@ function list_all()
 
     $counter = Tools::get_cate_count();
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
     $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
-    $i = 3;
+    $i    = 3;
     while (list($fcsn, $of_fcsn, $title, $description, $sort, $cate_pic) = $xoopsDB->fetchRow($result)) {
-        if (!in_array($fcsn, $read_power)) {
+        if (! in_array($fcsn, $read_power)) {
             continue;
         }
 
@@ -93,10 +93,10 @@ function list_all()
         }
         $num = (empty($counter[$fcsn])) ? 0 : $counter[$fcsn];
         //$data[$i]['num']     = sprintf(_MD_TADFAQ_FAQ_NUM, $num);
-        $data[$i]['num'] = $num;
-        $data[$i]['fcsn'] = $fcsn;
-        $data[$i]['img'] = $img;
-        $data[$i]['title'] = $title;
+        $data[$i]['num']     = $num;
+        $data[$i]['fcsn']    = $fcsn;
+        $data[$i]['img']     = $img;
+        $data[$i]['title']   = $title;
         $data[$i]['counter'] = $counter[$fcsn];
         $i++;
     }
@@ -118,7 +118,7 @@ function list_faq($fcsn = '')
     $faq_edit_power = Utility::power_chk('faq_edit', $fcsn);
 
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-    if (!$faq_read_power) {
+    if (! $faq_read_power) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADFAQ_NO_ACCESS_POWER);
     }
 
@@ -129,15 +129,15 @@ function list_faq($fcsn = '')
 
     $now_uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
 
-    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fcsn`=? ORDER BY `sort`';
+    $sql    = 'SELECT * FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fcsn`=? ORDER BY `sort`';
     $result = Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
-    $i = 1;
+    $i      = 1;
     while ($data = $xoopsDB->fetchArray($result)) {
 
-        $data['i'] = $i;
+        $data['i']             = $i;
         $data['update_enable'] = $data['enable'] ? '0' : '1';
-        $data['enable_txt'] = $data['enable'] ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
-        $data['edit_power'] = ($faq_edit_power and $now_uid == $data['uid']) ? true : false;
+        $data['enable_txt']    = $data['enable'] ? _MD_TADFAQ_UNABLE : _MD_TADFAQ_ENABLE;
+        $data['edit_power']    = ($faq_edit_power and $now_uid == $data['uid']) ? true : false;
 
         $faq[$i] = $data;
         $i++;
@@ -171,10 +171,10 @@ function update_status($fqsn = '', $enable = '')
 function get_faq_cate_opt($the_fcsn = '')
 {
     global $xoopsDB;
-    $opt = '';
+    $opt       = '';
     $edit_fcsn = Tools::chk_faq_cate_power('faq_edit');
-    $sql = 'SELECT `fcsn`, `title` FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
-    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql       = 'SELECT `fcsn`, `title` FROM `' . $xoopsDB->prefix('tad_faq_cate') . '` ORDER BY `sort`';
+    $result    = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($fcsn, $title) = $xoopsDB->fetchRow($result)) {
         $selected = ($the_fcsn == $fcsn) ? 'selected' : '';
@@ -192,14 +192,14 @@ function tad_faq_content_form($fcsn = '', $fqsn = '')
     global $xoopsTpl;
 
     //抓取預設值
-    $DBV = !empty($fqsn) ? get_tad_faq_content($fqsn) : [];
+    $DBV = ! empty($fqsn) ? get_tad_faq_content($fqsn) : [];
 
     //預設值設定
-    $fqsn = (!isset($DBV['fqsn'])) ? $fqsn : $DBV['fqsn'];
-    $fcsn = (!isset($DBV['fcsn'])) ? $fcsn : $DBV['fcsn'];
-    $title = (!isset($DBV['title'])) ? '' : $DBV['title'];
-    $content = (!isset($DBV['content'])) ? '' : $DBV['content'];
-    $enable = (!isset($DBV['enable'])) ? '1' : $DBV['enable'];
+    $fqsn    = (! isset($DBV['fqsn'])) ? $fqsn : $DBV['fqsn'];
+    $fcsn    = (! isset($DBV['fcsn'])) ? $fcsn : $DBV['fcsn'];
+    $title   = (! isset($DBV['title'])) ? '' : $DBV['title'];
+    $content = (! isset($DBV['content'])) ? '' : $DBV['content'];
+    $enable  = (! isset($DBV['enable'])) ? '1' : $DBV['enable'];
 
     $faq_cate_opt = get_faq_cate_opt($fcsn);
 
@@ -223,13 +223,13 @@ function insert_tad_faq_content()
     global $xoopsDB, $xoopsUser;
 
     $content = Wcag::amend($_POST['content']);
-    $fcsn = !empty($_POST['new_cate']) ? insert_tad_faq_cate($_POST['new_cate']) : $_POST['fcsn'];
+    $fcsn    = ! empty($_POST['new_cate']) ? insert_tad_faq_cate($_POST['new_cate']) : $_POST['fcsn'];
 
-    $uid = ($xoopsUser) ? $xoopsUser->uid() : 0;
+    $uid  = ($xoopsUser) ? $xoopsUser->uid() : 0;
     $sort = get_max_faq_sort($fcsn);
-    $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_content') . '` (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) VALUES(?,?,?,?,?,?,?)';
-    Utility::query($sql, 'isiissi', [$fcsn, $_POST['title'], $sort, $uid, $now, $content, $_POST['enable']]) or Utility::web_error($sql, __FILE__, __LINE__);
+    $now  = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $sql  = 'INSERT INTO `' . $xoopsDB->prefix('tad_faq_content') . '` (`fcsn`,`title`,`sort`,`uid`,`post_date`,`content`,`enable`) VALUES(?,?,?,?,?,?,?)';
+    Utility::query($sql, 'isiissi', [(int) $fcsn, $_POST['title'], $sort, $uid, $now, $content, $_POST['enable']]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
 }
@@ -239,9 +239,9 @@ function update_tad_faq_content($fqsn = '')
 {
     global $xoopsDB;
     $content = Wcag::amend($_POST['content']);
-    $fcsn = !empty($_POST['new_cate']) ? insert_tad_faq_cate($_POST['new_cate']) : $_POST['fcsn'];
-    $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
-    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_faq_content') . '` SET `fcsn` = ?, `title` = ?, `post_date` = ?, `content` = ?, `enable` = ? WHERE `fqsn` = ?';
+    $fcsn    = ! empty($_POST['new_cate']) ? insert_tad_faq_cate($_POST['new_cate']) : $_POST['fcsn'];
+    $now     = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+    $sql     = 'UPDATE `' . $xoopsDB->prefix('tad_faq_content') . '` SET `fcsn` = ?, `title` = ?, `post_date` = ?, `content` = ?, `enable` = ? WHERE `fqsn` = ?';
     Utility::query($sql, 'isisii', [$fcsn, $_POST['title'], $now, $content, $_POST['enable'], $fqsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     return $fcsn;
@@ -251,7 +251,7 @@ function update_tad_faq_content($fqsn = '')
 function get_max_faq_sort($fcsn = '')
 {
     global $xoopsDB;
-    $sql = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fcsn` = ?';
+    $sql    = 'SELECT MAX(`sort`) FROM `' . $xoopsDB->prefix('tad_faq_content') . '` WHERE `fcsn` = ?';
     $result = Utility::query($sql, 'i', [$fcsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     list($sort) = $xoopsDB->fetchRow($result);
